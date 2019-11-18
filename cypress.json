@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "env": {
+    "API_URI": "http://localhost:8000/graphql/"
+  },
+  "viewportWidth": 1400,
+  "viewportHeight": 660,
+  "projectId": "ftxg4w"
+}
