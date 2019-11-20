@@ -38,7 +38,7 @@ const Page: React.FC<{
       <div className="home-page__hero-text">
         <div>
           <span className="home-page__hero__title">
-            <h1>Final reduction</h1>
+            <h1>testing</h1>
           </span>
         </div>
         <div>
