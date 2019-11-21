@@ -1,20 +1,51 @@
 @import "../../../globalStyles/scss/variables.scss";
 
+.startpack{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+  background: #1F2421;
+  border-radius: 20px;
+  width: 132px;
+  height: 41px;
+  justify-content: center;
+  margin-top: -12px;
+}
+header{
+  background-color: $blue-overlay;
+}
+.navbar-item{
+  margin: 0 10px;
+  font-weight: 500;
+}
+.navbar-item-dk{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #575656;
+}
 .main-menu {
   align-items: center;
   align-items: stretch;
-  background-color: $white;
-  border-bottom: 1px solid $gray-light;
+  background-color: $blue-overlay;
   display: flex;
   flex-direction: row;
   height: 3.55rem;
   position: relative;
 
   &__left {
-    flex-basis: calc(50% - 2rem);
+    flex-basis: 50%;
 
     @media (min-width: $small-screen) {
-      flex-basis: calc(50% - 4rem);
+      flex-basis: 50%;
     }
 
     ul {
@@ -25,10 +56,10 @@
   }
 
   &__right {
-    flex-basis: calc(50% - 2rem);
+    flex-basis: 50%;
 
     @media (min-width: $small-screen) {
-      flex-basis: calc(50% - 4rem);
+      flex-basis: 50%;
     }
 
     ul {
@@ -68,7 +99,6 @@
   }
 
   &__hamburger {
-    border-right: 1px solid $gray-light;
     cursor: pointer;
     padding: $spacer;
 

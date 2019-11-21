@@ -1,10 +1,99 @@
 @import "../../../globalStyles/scss/variables.scss";
 
+.footer-home {
+  height: 30vh;
+  width: 100%;
+  background-color: "red";
+}
+.right-container{
+  &__hero{
+    position: absolute;
+    height: calc( 100vh - 56px );
+    width: 300px;
+    right: 0;
+    top: 0;
+    background-color: $green-hp;
+    color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+    padding: 20px;
+
+    &__works-text{
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 21px;
+      display: flex;
+      align-items: center;
+
+      color: #FFFFFF;
+
+    }
+  }
+}
+.card-container{
+  display: flex;
+    flex-direction: column;
+    height: calc( 100vh - 56px - 80px );
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.card-step{
+    width: 264px;
+    height: 30%;
+    max-height: 170px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 14px;
+
+    p{
+      margin-top: 10px;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 19px;
+      display: flex;
+      align-items: center;
+
+      color: #1F2421;
+    }
+    span{
+      font-style: normal;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+      color: #575656;
+    }
+    &__image{
+
+      height: 50%;
+      background: #E4572E;
+      border: 2px solid #000000;
+      box-sizing: border-box;
+      border-radius: 24px;
+      position: relative;
+      img{
+        height: 100%;
+        object-fit: contain;
+        position: absolute;
+        bottom: -1px;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        height: 120%;
+      }
+    }
+}
 .home-page {
   &__hero {
     background-color: $blue-overlay;
     padding: 20px 0;
-
+    height: calc( 70vh - 56px );
+    position: relative;
     &-text {
       overflow: hidden;
     }
@@ -62,10 +151,47 @@
       display: flex;
       width: calc( 100% - 345px );
       &__c1{
-        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        p{
+          font-style: normal;
+          font-weight: bold;
+          font-size: 40px;
+          line-height: 47px;
+          color: #000000;
+          width: 384px;
+          margin-bottom: 22px;
+        }
+        span{
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 140.62%;
+          color: #575656;
+          width: 384px;
+        }
+        button{
+          margin-top: 30px;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 21px;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          color: #FFFFFF;
+          background: #1F2421;
+          border-radius: 24px;
+          width: 176px;
+          height: 53px;
+          justify-content: center;
+        }
       }
       &__c2{
-        width: 60%;
+        width: 50%;
 
         img{
           width: 100%;
