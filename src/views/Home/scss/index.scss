@@ -3,7 +3,90 @@
 .footer-home {
   height: 30vh;
   width: 100%;
-  background-color: "red";
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.separator-v{
+  width: 1px;
+  height: 26vh;
+  background-color: black;
+}
+.footer-c2{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+
+  &__c1{
+    display: flex;
+    flex-wrap: nowrap;
+
+    .iconos{
+      display: flex;
+      flex-direction: row;
+    }
+    .column-f{
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px 0 0;
+      min-width: 145px;
+
+      p{
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 20px;
+        color: #000000;
+        margin-bottom: 10px;
+      }
+      a{
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 20px;
+        color: #575656;
+        margin: 2px 0;
+      }
+    }
+  }
+  .footer-bottom{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    color: #000000;
+    margin-top: 10px;
+  }
+}
+.footer-c1{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  p{
+    width: 346px;
+    height: 65px;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 135.94%;
+    text-align: center;
+    color: #575656;
+  }
+  span{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: center;
+    margin-top: 12px;
+    color: #000000;
+  }
 }
 .right-container{
   &__hero{
@@ -94,7 +177,7 @@
   &__hero {
     background-color: $blue-overlay;
     padding: 20px 0;
-    height: calc( 70vh - 56px );
+    height: calc( 100vh - 56px );
     position: relative;
     &-text {
       overflow: hidden;
@@ -151,7 +234,9 @@
   }
   &__cont-home{
       display: flex;
-      width: calc( 100% - 345px );
+      width: calc( 100% - 240px );
+      align-items: center;
+
       &__c1{
         display: flex;
         flex-direction: column;
@@ -169,7 +254,7 @@
         }
         span{
           font-style: normal;
-          font-weight: normal;
+          font-weight: 300;
           font-size: 18px;
           line-height: 140.62%;
           color: #575656;
@@ -194,9 +279,12 @@
       }
       &__c2{
         width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         img{
-          width: 100%;
+          width: 90%;
         }
       }
   }

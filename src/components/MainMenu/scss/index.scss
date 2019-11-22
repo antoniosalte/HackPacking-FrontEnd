@@ -1,5 +1,9 @@
 @import "../../../globalStyles/scss/variables.scss";
 
+.user-icon{
+  width: 20px;
+  object-fit: contain;
+}
 .startpack{
   font-style: normal;
   font-weight: 500;
@@ -25,7 +29,7 @@ header{
 }
 .navbar-item-dk{
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 18px;
   line-height: 21px;
   display: flex;
@@ -33,6 +37,7 @@ header{
   color: #575656;
 }
 .main-menu {
+  margin: 0 20px;
   align-items: center;
   align-items: stretch;
   background-color: $blue-overlay;

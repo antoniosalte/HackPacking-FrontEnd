@@ -20,13 +20,14 @@ import {
 import { TypedMainMenuQuery } from "./queries";
 import hamburgerImg from "../../images/hamburger.svg";
 import logoImg from "../../images/hp-logo-svg.svg";
+import iconuser from "../../images/hp-iconuser.png";
 
 const MainMenu: React.FC = () => {
   const [signOut] = useSignOut();
   return (
     <OverlayContext.Consumer>
       {overlayContext => (
-        <nav className="main-menu container" id="header">
+        <nav className="main-menu" id="header">
           <div className="main-menu__left">
             <TypedMainMenuQuery renderOnError displayLoader={false}>
               {() => {
@@ -120,8 +121,23 @@ const MainMenu: React.FC = () => {
                       query={{ minWidth: mediumScreen }}
                       render={() =>
                         (
-                          <Link to="/login" className="navbar-item">
-                          <p className="navbar-item-dk" >SignIn</p>
+                          <Link to="/login" className="navbar-item"
+                            style={ {
+                              display: "flex",
+                              width: 66,
+                              justifyContent: "space-between",
+                              marginTop: -10,
+                              alignItems: "flex-start",
+                              marginRight: 26,
+                            }}
+                          >
+                            <img className="user-icon" src={ iconuser } alt="img"/>
+                            <p className="navbar-item-dk"
+                            style={ {
+                              fontWeight: 400,
+                              fontSize: 14,
+                            }}
+                            >SignIn</p>
                         </Link> )}
                     />
                   </li>

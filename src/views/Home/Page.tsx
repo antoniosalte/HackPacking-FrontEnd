@@ -1,7 +1,7 @@
 import "./scss/index.scss";
 import * as React from "react";
 import { Link } from "react-router-dom";
-
+import Footer from "./Footer";
 import homeHero from "../../images/hp-homehero.png";
 import Step1 from "../../images/step1-hp.svg"
 import Step2 from "../../images/step2-hp.svg"
@@ -49,10 +49,7 @@ const Page: React.FC<{
             <img src={ homeHero } alt="imghome"/>
           </div>
         </div>
-        <div className="footer-home">
-
-
-        </div>
+        <Footer />
       </div>
       <div className="right-container__hero">
         <p className="right-container__hero__works-text">How it works</p>

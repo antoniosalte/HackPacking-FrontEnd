@@ -17,6 +17,13 @@ import OrderConfirmation from "../views/OrderConfirmation/View";
 import { ProductPage } from "../views/Product";
 import { SearchPage } from "../views/Search";
 
+import { About } from "../views/About";
+import { Why } from "../views/Why";
+import { How } from "../views/How";
+import { FAQ } from "../views/Faq";
+import { Blog } from "../views/Blog";
+
+
 const slugUrl = ":slug([a-z-0-9]+)/:id([0-9]+)/";
 export const baseUrl = "/";
 export const searchUrl = `${baseUrl}search/`;
@@ -32,6 +39,12 @@ export const accountUrl = `${baseUrl}account/`;
 export const orderHistoryUrl = `${baseUrl}order-history/`;
 export const addressBookUrl = `${baseUrl}address-book/`;
 export const paymentOptionsUrl = `${baseUrl}payment-options/`;
+// hackpacking
+export const aboutUrl = `${baseUrl}about/`;
+export const whyUrl = `${baseUrl}why/`;
+export const howUrl = `${baseUrl}how/`;
+export const faqUrl = `${baseUrl}faq/`;
+export const blogUrl = `${baseUrl}blog/`;
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -51,6 +64,13 @@ export const Routes: React.FC = () => (
     <Route path={orderHistoryUrl} component={Account} />
     <Route path={addressBookUrl} component={Account} />
     <Route path={paymentOptionsUrl} component={Account} />
+
+    <Route path={aboutUrl} component={About} />
+    <Route path={whyUrl} component={Why} />
+    <Route path={howUrl} component={How} />
+    <Route path={faqUrl} component={FAQ} />
+    <Route path={blogUrl} component={Blog} />
+
     <Route component={NotFound} />
   </Switch>
 );
