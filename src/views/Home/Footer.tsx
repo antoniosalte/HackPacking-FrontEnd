@@ -10,9 +10,13 @@ import TwitterIcon from "../../images/Twitter.svg";
 
 const Footer = ( props ) => {
     return (
-        <div className="footer-home">
+        <div
+            className={ props.home ? "footer-home" : "footer-all"}
+        >
           <div className="container">
-            <div className="home-page__cont-home">
+            <div className="home-page__cont-home"
+                style={ props.home ? {} : {width: "100%"}}
+                >
                 <div className="footer-c1">
                     <p>“Hack Packing let’s me enjoy my trips without caring about the weight of my luggage.”</p>
                     <ReactSVG

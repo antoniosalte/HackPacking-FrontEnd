@@ -49,7 +49,7 @@ const Page: React.FC<{
             <img src={ homeHero } alt="imghome"/>
           </div>
         </div>
-        <Footer />
+        <Footer home/>
       </div>
       <div className="right-container__hero">
         <p className="right-container__hero__works-text">How it works</p>

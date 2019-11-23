@@ -1,0 +1,124 @@
+@import "../../globalStyles/scss/variables.scss";
+
+.container-blog{
+    background-color: #E5E5E5;
+}
+.container-blog-c{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+
+    &__title{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 56px;
+        display: flex;
+        align-items: center;
+        color: #000000;
+        margin: 20px 0;
+    }
+    &__whycontainer{
+        background: #84BD00;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+        width: 100%;
+        color: white;
+        padding: 30px;
+        margin-bottom: 20px;
+        p{
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 42px;
+            display: flex;
+            align-items: center;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+        span{
+            font-size: 14px;
+            line-height: 19px;
+            color: #F2F2F2;
+            font-weight: 300;
+        }
+        div{
+            font-size: 14px;
+            line-height: 14px;
+            color: #F2F2F2;
+            font-weight: 300;
+            margin-top: 20px;
+        }       
+    }
+}
+.blog-right{
+    align-self: flex-end;
+
+    .item-blog-container__cont-text{
+        text-align: end !important;
+        p{
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}
+.blog-left{
+    align-self: flex-start;
+    .item-blog-container__cont-text{
+        text-align: start !important;
+    }
+    p{
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+.item-blog-container{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+    width: 70%;
+    max-width: 640px;
+    padding: 20px;
+    display: flex;
+    margin: 20px 0;
+
+    &__cont-image{
+        background: #84BD00;
+        border: 2px solid #000000;
+        box-sizing: border-box;
+        border-radius: 24px;
+        width: 240px;
+        height: 140px;
+
+        img{
+            width: 100%;
+            object-fit: contain;
+            height: 100%;
+        }
+    }
+    &__cont-text{
+        width: 370px;
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px 20px 20px;
+
+        p{
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 40px;
+            display: flex;
+            align-items: center;
+            color: #1F2421;
+        }
+        span{
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            color: #575656;
+        }
+    }
+}

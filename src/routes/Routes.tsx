@@ -22,6 +22,7 @@ import { Why } from "../views/Why";
 import { How } from "../views/How";
 import { FAQ } from "../views/Faq";
 import { Blog } from "../views/Blog";
+import { Start } from "../views/Start";
 
 
 const slugUrl = ":slug([a-z-0-9]+)/:id([0-9]+)/";
@@ -45,6 +46,7 @@ export const whyUrl = `${baseUrl}why/`;
 export const howUrl = `${baseUrl}how/`;
 export const faqUrl = `${baseUrl}faq/`;
 export const blogUrl = `${baseUrl}blog/`;
+export const startUrl = `${baseUrl}start/`;
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -70,6 +72,7 @@ export const Routes: React.FC = () => (
     <Route path={howUrl} component={How} />
     <Route path={faqUrl} component={FAQ} />
     <Route path={blogUrl} component={Blog} />
+    <Route path={startUrl} component={Start} />
 
     <Route component={NotFound} />
   </Switch>

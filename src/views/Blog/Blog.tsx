@@ -1,9 +1,10 @@
 import * as React from "react";
 
-const Blog = () => {
+const Blog: React.FC = () => {
     return (
         <div>
-            Blog
+            <br/>
+            blog
         </div>
     )
 }
