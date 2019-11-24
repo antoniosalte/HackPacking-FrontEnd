@@ -1,0 +1,198 @@
+@import "../../../globalStyles/scss/variables.scss";
+
+.start-page{
+    background-color: $blue-overlay;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+
+
+    &__title{
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 42px;
+        display: flex;
+        align-items: center;
+        color: #000000;
+        margin-top: 20px;
+    }
+    &__main-banner{
+        background: #FFFFFF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: flex-start;
+
+        &__bg-image{
+            background: #84BD00;
+            border: 2px solid #000000;
+            box-sizing: border-box;
+            border-radius: 24px;
+            width: 386px;
+            height: 140px;
+            display: flex;
+            justify-content: center;
+
+            img{
+                width: 100%;
+                height: 180px;
+                object-fit: contain;
+                margin-top: -50px;
+            }
+        }
+        &__cont-text {
+            width: 470px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 20px 20px 20px;
+
+            p{
+                font-weight: bold;
+                font-size: 20px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                color: #1F2421;
+            }
+            span{
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                color: #575656;
+            }
+        }
+    }
+}
+.container-step1{
+
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 1fr;
+    .i-left{
+        padding-left: 0 !important;
+    }
+    .i-right{
+        padding-right: 0 !important;
+        
+        div{
+            background: #84BD00;
+            color: white;
+        }
+    }
+    &__item{
+        width: 100%;
+        height: 160px;
+        padding: 10px;
+        div{
+            width: 100%;
+            height: 100%;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            p{
+                font-weight: 400;
+                font-size: 12px;
+                text-align: center;
+                line-height: 1rem;
+            }
+            img{
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
+.container-maps{
+    width: 100%;
+    height: 200px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+    overflow: hidden;
+}
+.start-page-steps{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    z-index: 10;
+}
+.open-s{
+    animation-name: showEffectSidebar;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+.close-s{
+    animation-name: hideEffectSidebar;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+.start-page-sidebar{
+    position: fixed;
+    top: 56px;
+    right: 0;
+    width: 300px;
+    height: calc( 100vh - 56px - 80px );
+    z-index: 10;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    &__container{
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+        width: 250px;
+        height: 100%;
+        background-color: #84BD00;
+
+    }
+    &__button{
+        width: 50px;
+        height: 100px;
+        background-color: #84BD00;
+        border-bottom-left-radius: 100px;
+        border-top-left-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        
+        .left-arrow {
+            border-color: transparent white;
+            border-style: solid;
+            border-width: 20px 20px 20px 0px;
+            height: 0px;
+            width: 0px;
+        }
+        .right-arrow {
+            border-color: transparent white;
+            border-style: solid;
+            border-width: 20px 0px 20px 20px;
+            height: 0px;
+            width: 0px;
+            margin-left: 15px;
+        }
+    }
+}
+@keyframes showEffectSidebar {
+    0%   { right: -250px;}
+    100% {right: 0;}
+}
+@keyframes hideEffectSidebar {
+    0%   { right: 0;}
+    100% {right: -250px;}
+}

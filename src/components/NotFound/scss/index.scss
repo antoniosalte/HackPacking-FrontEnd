@@ -6,14 +6,15 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  padding: $spacer * 2 $spacer;
+  padding: $spacer * 2 $spacer; 
+  background-color: $blue-overlay;
 
   &__header {
     font-size: 15rem;
     font-family: "Montserrat";
     font-weight: 900;
     line-height: 100%;
-    color: $blue;
+    color: $green-hp;
     padding-bottom: 20px;
 
     @media (max-width: $small-screen) {
@@ -22,7 +23,7 @@
   }
 
   &__ruler {
-    background: $blue;
+    background: $blue-overlay;
     min-width: $spacer * 10;
     height: 2px;
     margin-top: $spacer;
@@ -40,5 +41,24 @@
   &__button {
     margin: $spacer * 2 0;
     min-width: 88%;
+    display: flex;
+    justify-content: center;
+
+    .btn-home{
+      margin-top: 30px;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #FFFFFF;
+      background: #1F2421;
+      border-radius: 24px;
+      width: 176px;
+      height: 53px;
+      justify-content: center;
+    }
   }
 }
