@@ -1,5 +1,6 @@
 import { hot } from "react-hot-loader";
 import { ThemeProvider } from "styled-components";
+import "react-datepicker/dist/react-datepicker.css";
 
 import { NotificationTemplate } from "@components/atoms";
 import {

@@ -88,7 +88,7 @@
         width: 100%;
         height: 160px;
         padding: 10px;
-        div{
+        .item-div{
             width: 100%;
             height: 100%;
             background: #FFFFFF;
@@ -195,4 +195,17 @@
 @keyframes hideEffectSidebar {
     0%   { right: 0;}
     100% {right: -250px;}
+}
+
+/*datepicker*/
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__month-text--selected, .react-datepicker__month-text--in-selecting-range, .react-datepicker__month-text--in-range, .react-datepicker__quarter-text--selected, .react-datepicker__quarter-text--in-selecting-range, .react-datepicker__quarter-text--in-range {
+    background-color: #84BD00 !important;
+}
+.react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover, .react-datepicker__month-text--selected:hover, .react-datepicker__month-text--in-selecting-range:hover, .react-datepicker__month-text--in-range:hover, .react-datepicker__quarter-text--selected:hover, .react-datepicker__quarter-text--in-selecting-range:hover, .react-datepicker__quarter-text--in-range:hover{
+    background-color: #84BD00 !important;
+}
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected {
+    border-radius: 0.3rem;
+    background-color: #84BD00;
+    color: #fff;
 }
