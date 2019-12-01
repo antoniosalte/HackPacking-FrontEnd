@@ -80,13 +80,8 @@ class Step1 extends React.Component {
                 <p
                     style={{ fontWeight: "700", fontSize: 12}}
                 >Important: Currently, the service is only available in Lima - Peru</p>
-                <GoogleMaps
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwfk-BqDdBvqSvYbVp2rcjpmYoXeTpY2U&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div className="container-maps"/>}
-                    mapElement={<div style={{ height: `100%` }} />}
-                />
-                <br /><br /><br /><br />
+                
+                <br /><br />
                 <br /><br />
             </div>
         )

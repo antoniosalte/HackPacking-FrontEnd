@@ -39,12 +39,30 @@
                 }
                 &__c2{
                     font-size: 10px;
+                    display: flex;
+
+                    .item-color{
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 7.5px;
+                        border: black 2px solid;
+                        margin: 0 2px;
+                        cursor: pointer;
+                    }
+                    .selected-color{
+                        border: #84BD00 2px solid;
+                    }
                 }
             }
             .description-item{
                 font-size: 10px;
                 font-weight: 300;
                 margin-top: -5px;
+                height: 30px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 250px;
             }
         }
         .details-wear-item{
@@ -57,15 +75,85 @@
             .count-item{
                 font-size: 12px;
                 font-weight: 600;
+                display: flex;
+                font-size: 18px;
+            }
+            .plus-i{
+                color: #84BD00;
+                font-size: 34px;
+                font-weight: 500;
+                margin: 0 10px;
+                cursor: pointer;           
             }
             .talla-item{
                 font-size: 12px;
                 font-weight: 600;
+
+                select{
+                    width: 60px;
+                    border: none;
+                    background-color: white;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    padding: 1px 20px;
+                    font-size: 18px;
+                    background: url("../../../images/droparrow.png") 96% / 22% no-repeat;
+                }
             }
             .price-item{
                 font-style: italic;
                 font-size: 12px;
             }
+            .verticalline{
+                width: 1px;
+                border: 0.5px solid #C4C4C4;
+                height: 100%;
+                margin: 0 14px;
+            }
         }
     }
+}
+
+/*overview*/
+.containr-overview{
+    padding: 20px;
+    width: 100%;
+    min-height: 400px;
+}
+.c-overview{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;
+    width: 100%;
+    min-height: 400px;
+    padding: 20px 40px;
+
+    table{
+        width: 100%;
+        margin: 0;
+    }
+
+    hr{    
+        width: 90%;
+    }
+}
+.cnt-btn-checkout{
+    display: flex;
+    justify-content: center;
+
+    button{
+        background: #171717;
+        border-radius: 24px;
+        color: white;
+        padding: 12px 32px;
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+.color-point{
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    border: solid 1px black;
 }

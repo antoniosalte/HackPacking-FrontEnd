@@ -34,30 +34,35 @@ class Start extends React.Component {
                     arrival: getCurrentDate(),
                     departure: getCurrentDate(),
                 },
-                step2:{
-
-                }
+                step2:{ items:[] },
+                step3:{ items:[] },
+                step4:{ items:[] },
+                step5:{ items:[] },
+                step6:{ items:[] },
             },
             changes: 1,
-            step: 2,
+            step: 1,
             open:false,
         }
         this.setData = this.setData.bind( this );
         this.openSidebar= this.openSidebar.bind( this);
+        this.toCheckout = this.toCheckout.bind( this);
     }
     openSidebar(){ 
         this.setState(prevState => ({
             open: !prevState.open
         }))
-        console.log( this.state.open ) 
+    }
+    toCheckout(){
+        this.setState({
+            step: 7
+        }, () => this.openSidebar())
     }
     setData( newdata ){
-        console.log( newdata )
         const { data, changes, open } = this.state;
         this.setState( {
             data: { ...data, ...newdata },
-        } )
-        console.log( this.state.data )
+        }, this.forceUpdate() )
     }
     renderStep() {
         let StepElement = null;
@@ -86,6 +91,11 @@ class Start extends React.Component {
             )
     }
     goTo( step ){
+        if( step === 7){
+            this.setState({
+                open:false,
+            })
+        }
         this.setState({
             step,
         })
@@ -107,7 +117,9 @@ class Start extends React.Component {
                         <div className={ !open ? "left-arrow" : "right-arrow"  }/>
                     </div>
                     <div className="start-page-sidebar__container">
-                        <Sidebar data={ data } />
+                        <Sidebar data={ data } setData={ this.setData }
+                        toCheckout={ this.toCheckout }
+                        />
                     </div>
                 </div>
             </div>
