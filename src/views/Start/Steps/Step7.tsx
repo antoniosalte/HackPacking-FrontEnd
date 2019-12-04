@@ -80,14 +80,14 @@ const Step7 = ( props ) => {
                         <p>Total price: ${total}</p>
                     </center>
                     <br /><br /><br />
-                    <br /><br /><br />
                 </div>
             </div>
             <div className="cnt-btn-checkout">
-                <button>
+                <button onClick={ () => { alert("checkout") } }>
                     Checkout 
                 </button>
             </div>
+            <br /><br /><br /><br /><br /><br />
         </div>
     )
 }

@@ -157,3 +157,23 @@
     border-radius: 7.5px;
     border: solid 1px black;
 }
+
+.input-location,
+.input-location:active,
+.input-location:hover{
+    border: none;
+    margin-left: 6px;
+    cursor: pointer;
+}
+ul.react-autocomplete-input{
+    border: none;
+}
+ul.react-autocomplete-input > li{
+    color: #171717;
+    background-color: white;
+    padding: 6px 12px;
+    font-size: 12px;
+}
+ul.react-autocomplete-input > li.active{
+    background-color: #84BD00;
+}

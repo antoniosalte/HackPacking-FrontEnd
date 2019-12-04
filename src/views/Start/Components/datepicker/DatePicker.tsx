@@ -17,6 +17,7 @@ const Picker = ( props ) => {
     );
     return (
       <DatePicker
+        dateFormat="dd/MM/yyyy"
         selected={startDate}
         onSelect={date => { 
                 props.onSelect(date)

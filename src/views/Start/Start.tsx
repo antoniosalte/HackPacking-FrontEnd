@@ -30,7 +30,7 @@ class Start extends React.Component {
         this.state = {
             data:{
                 step1:{
-                    destination: "Treehouse, Lima - PE",
+                    destination: "Lima, miraflores",
                     arrival: getCurrentDate(),
                     departure: getCurrentDate(),
                 },
@@ -86,6 +86,7 @@ class Start extends React.Component {
         }
         return ( <StepElement
             { ...this.props }
+            goTo={ (step) => this.goTo(step) }
             data={ this.state.data }
             setData={ this.setData }/> 
             )
