@@ -1,14 +1,34 @@
 
+.title-steps{
+    font-weight: bold;
+    font-size: 18px;
+}
 .container-wears{
     width: 100%;
     height: 350px;
     display: flex;
    flex-wrap: nowrap;
    overflow-x: auto;
+   overflow-y: hidden;
    -webkit-overflow-scrolling: touch;
    -ms-overflow-style: -ms-autohiding-scrollbar; 
     padding: 20px;
 
+
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+        height: 11px;
+        width: 100px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        border: 2px solid #e5e5e5;
+        background-color: rgba(0, 0, 0, .5);
+    }
     &__item{
         width: 300px;
         height: 300px;

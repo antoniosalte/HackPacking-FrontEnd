@@ -93,15 +93,15 @@ module.exports = ({ sourceDir, distDir }) => ({
     }),
     // PWA plugins
     new WebappWebpackPlugin({
-      logo: `${sourceDir}/images/favicon.png`,
+      logo: "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97",
       prefix: "images/favicons/",
       favicons: {
-        appName: "Saleor",
-        appDescription: "Storefront for the Saleor e-commerce platform",
+        appName: "HackPacking",
+        appDescription: "Never travel with luggage again.",
         display: "standalone",
         developerURL: null, // prevent retrieving from the nearest package.json
         background: "#ddd",
-        theme_color: "#333"
+        theme_color: "#84BD00"
       }
     }),
     new webpack.EnvironmentPlugin({

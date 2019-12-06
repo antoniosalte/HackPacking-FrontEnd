@@ -77,7 +77,7 @@ const Footer = ( props ) => {
                         </div>
                     </div>
                     <div className="footer-bottom">
-                        <p>© 2010 — 2020 <Link to="/privacy">Privacy — Terms</Link></p>
+                        <p>© 2010 — 2020 <Link to="/privacy">Privacy</Link> - <Link to="/terms">Terms</Link></p>
                     </div>
                 </div>
             </div>

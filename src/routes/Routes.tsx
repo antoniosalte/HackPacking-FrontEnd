@@ -25,6 +25,7 @@ import { FAQ } from "../views/Faq";
 import { Blog } from "../views/Blog";
 import { Start } from "../views/Start";
 import { Privacy } from "../views/Privacy";
+import { Terms } from "../views/Terms";
 
 
 const slugUrl = ":slug([a-z-0-9]+)/:id([0-9]+)/";
@@ -51,6 +52,7 @@ export const faqUrl = `${baseUrl}faq/`;
 export const blogUrl = `${baseUrl}blog/`;
 export const startUrl = `${baseUrl}start/`;
 export const privacyUrl = `${baseUrl}privacy/`;
+export const termsUrl = `${baseUrl}terms/`;
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -81,6 +83,7 @@ export const Routes: React.FC = () => (
     <Route path={blogUrl} component={Blog} />
     <Route path={startUrl} component={Start} />
     <Route path={privacyUrl} component={Privacy} />
+    <Route path={termsUrl} component={Terms} />
 
     <Route component={NotFound} />
   </Switch>

@@ -20,7 +20,7 @@ const CheckoutRegister: React.FC<{}> = () => {
   }
   return (
     <>
-    <div className="container" style={{ backgroundColor: "#e5e5e5"}}>
+    <div style={{ backgroundColor: "#e5e5e5"}}>
       <Online>
         <div className="checkout-login">
           <div className="checkout-login__user">

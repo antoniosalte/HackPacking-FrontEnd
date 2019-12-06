@@ -47,7 +47,7 @@ class Step3 extends React.Component{
                             >
                             <React.Fragment>
                                 <br/>
-                                <p>Choose your lowerwear</p>
+                                <p className="title-steps">Choose your lowerwear</p>
                                 <div className="container-wears">
                                     {
                                         data.products.edges.map( (item,index) => {

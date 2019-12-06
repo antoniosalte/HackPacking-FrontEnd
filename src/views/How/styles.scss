@@ -1,0 +1,17 @@
+.triangle-image{
+    display: flex;
+    justify-content: center;
+
+    img{
+        width: 100px;
+        animation-name: scrollanim;
+        animation-duration: 2s;
+        position: relative;
+        animation-timing-function: ease-out;
+        animation-iteration-count: infinite;
+    }
+}
+@-webkit-keyframes scrollanim {
+    0%   {top: 0px;}
+    100% {top:30px;}
+}

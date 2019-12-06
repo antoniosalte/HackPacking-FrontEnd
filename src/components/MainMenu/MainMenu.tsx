@@ -149,13 +149,13 @@ const MainMenu: React.FC = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               marginTop: -10,
-                              alignItems: "flex-start",
+                              alignItems: "center",
                             }}
                             >
                               <p className="navbar-item-dk"
                                   style={ {
                                     fontWeight: 400,
-                                    fontSize: 14,
+                                    fontSize: 16,
                                     marginRight: 5,
                                   }}
                                   >{ user.email }</p>
@@ -199,7 +199,7 @@ const MainMenu: React.FC = () => {
                               display: "flex",
                               justifyContent: "space-between",
                               marginTop: -10,
-                              alignItems: "flex-start",
+                              alignItems: "center",
                             }}
                           >
                             <p className="navbar-item-dk"

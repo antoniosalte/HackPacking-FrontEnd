@@ -66,7 +66,9 @@ const BottomNav = ( props ) => {
             className="container-bottomnav__item-o">
                 <div>
                     <img src={Overview} alt="trip"/>
-                    <p>Overview</p>
+                    <p style={
+                        props.step == 7 ?
+                        {color: "black",fontWeight:500}:{}}>Overview</p>
                 </div>
             </div>
         </div>

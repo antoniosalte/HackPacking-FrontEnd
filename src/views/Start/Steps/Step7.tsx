@@ -12,26 +12,96 @@ const getTotal = items => {
   }
   return total;
 };
-const renderItem = (item, type) => {
+
+const deleteCount = (it, step, props) => {
+  let { items } = props.data[step];
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
+    if( item.id === it.id && item.details.countItem > 0){
+      item.details.countItem -= 1;
+    }
+  }
+  props.setData( { [step]:{ items} } );
+}
+const addCount = (it, step, props) => {
+  let { items } = props.data[step];
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
+    if( item.id === it.id ){
+      item.details.countItem += 1;
+    }
+  }
+  props.setData( { [step]:{ items} } );
+}
+const deleteItem = (id, step, props) => {
+    let { items } = props.data[step];
+    let newItems = items.filter( i => i.id !== id)
+    props.setData( { [step]:{ items: newItems} } );
+}
+const renderItem = (item, type, step, props) => {
   return (
     <React.Fragment>
       {item.map(item => {
         return (
           <tr>
-            <td>{item.name}</td>
-            <td>{item.details.countItem}</td>
-            <td>{type}</td>
-            <td>
+            <td style={{textAlign: "start"}}>{item.name}</td>
+            <td style={{textAlign: "center", display: "flex"}}>
+            <div
+                className="color-point"
+                onClick={ () => deleteCount(item, step, props) }
+                style={{
+                  backgroundColor: "#84BD00",
+                  color: "white",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  border: "none",
+                }}
+            >-</div>{item.details.countItem}
+            <div
+                className="color-point"
+                onClick={ () => addCount(item, step, props) }
+                style={{
+                  backgroundColor: "#84BD00",
+                  color: "white",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                  border: "none",
+                }}
+            >+</div>
+              </td>
+            <td style={{textAlign: "center"}}>{type}</td>
+            <td style={{textAlign: "center"}}>
               <div
                 className="color-point"
                 style={{
-                  backgroundColor: "white"
+                  backgroundColor: "white",
+                  margin: "0 auto",
                 }}
               />
             </td>
-            <td>M</td>
-            <td>$ {item.price.amount * item.details.countItem}</td>
-            <td>x</td>
+            <td style={{textAlign: "center"}}>M</td>
+            <td style={{textAlign: "end"}}>$ {item.price.amount * item.details.countItem}</td>
+            <td>
+            <div
+                className="color-point"
+                onClick={ () => deleteItem(item.id, step, props) }
+                style={{
+                  backgroundColor: "black",
+                  color: "white",
+                  margin: "0 auto",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+            >x</div>
+            </td>
           </tr>
         );
       })}
@@ -79,18 +149,18 @@ const Step7 = props => {
           <div className="c-overview">
             <table>
               <tr>
-                <th>Clothes</th>
-                <th>Quantity</th>
-                <th>Type</th>
-                <th>Color</th>
-                <th>Size</th>
-                <th>Total</th>
+                <th style={{textAlign: "start"}}>Clothes</th>
+                <th style={{textAlign: "center"}}>Quantity</th>
+                <th style={{textAlign: "center"}}>Type</th>
+                <th style={{textAlign: "center"}}>Color</th>
+                <th style={{textAlign: "center"}}>Size</th>
+                <th style={{textAlign: "end"}}>Total</th>
               </tr>
-              {renderItem(step2.items, "Upperwear")}
-              {renderItem(step3.items, "Lowerwear")}
-              {renderItem(step4.items, "Underwear")}
-              {renderItem(step5.items, "Socks")}
-              {renderItem(step6.items, "Accesories")}
+              {renderItem(step2.items, "Upperwear","step2",props)}
+              {renderItem(step3.items, "Lowerwear","step3",props)}
+              {renderItem(step4.items, "Underwear","step4",props)}
+              {renderItem(step5.items, "Socks","step5",props)}
+              {renderItem(step6.items, "Accesories","step6",props)}
             </table>
             <hr />
             <center>

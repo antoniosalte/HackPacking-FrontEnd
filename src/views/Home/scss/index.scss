@@ -29,7 +29,9 @@
   &__c1{
     display: flex;
     flex-wrap: nowrap;
-
+    justify-content: space-between;
+    width: 100%;
+    
     .iconos{
       display: flex;
       flex-direction: row;

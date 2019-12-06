@@ -39,8 +39,7 @@ export const SOCIAL_MEDIA = [
 export const META_DEFAULTS = {
   custom: [],
   description: "HackPacking",
-
-  image: `${window.location.origin}${require("../images/logo.jpg")}`,
+  image: "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97",
   title: "HackPacking",
   type: "website",
   url: window.location.origin,
