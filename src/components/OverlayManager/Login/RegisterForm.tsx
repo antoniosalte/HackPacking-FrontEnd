@@ -45,13 +45,15 @@ const RegisterForm: React.FC<{ hide: () => void }> = ({ hide }) => {
             <TextField
               name="email"
               autoComplete="email"
-              type="email or username"
+              type="email"
+              placeholder="email or username"
               required
             />
             <TextField
               name="password"
               autoComplete="password"
               type="password"
+              placeholder="password"
               required
             />
             <div className="btn-login">
