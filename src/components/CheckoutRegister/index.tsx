@@ -8,13 +8,12 @@ import { useUserDetails } from "@sdk/react";
 import { Offline, OfflinePlaceholder, Online, OverlayContext } from "..";
 
 import { baseUrl as checkoutUrl } from "../../checkout/routes";
-
-import ResetPasswordForm from "./ResetPasswordForm";
-import SignInForm from "./SignInForm";
 import Footer from "../../views/Home/Footer";
+import SignInForm from "./SignInForm";
 
-const CheckoutLogin: React.FC<{}> = () => {
+const CheckoutRegister: React.FC<{}> = () => {
   const [resetPassword, setResetPassword] = useState(false);
+  const overlay = useContext(OverlayContext);
   const { data: user } = useUserDetails();
   if (user) {
     return <Redirect to={checkoutUrl} />;
@@ -25,19 +24,7 @@ const CheckoutLogin: React.FC<{}> = () => {
       <Online>
         <div className="checkout-login">
           <div className="checkout-login__user">
-            {resetPassword ? (
-              <ResetPasswordForm
-                onClick={() => {
-                  setResetPassword(false);
-                }}
-              />
-            ) : (
-              <SignInForm
-                onClick={() => {
-                  setResetPassword(true);
-                }}
-              />
-            )}
+              <SignInForm />
           </div>
         </div>
       </Online>
@@ -50,4 +37,4 @@ const CheckoutLogin: React.FC<{}> = () => {
   );
 };
 
-export default CheckoutLogin;
+export default CheckoutRegister;

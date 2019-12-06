@@ -1,6 +1,6 @@
 // colors
-export const autofillColor = "rgb(250, 255, 189)";
-export const autofillColorSelected = "rgb(232, 240, 254)";
+export const autofillColor = "white";
+export const autofillColorSelected = "white";
 export const baseFontColor = "#323232";
 export const black = "#323232";
 export const blue = "rgb(33,18,94)";

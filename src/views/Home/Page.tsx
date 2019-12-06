@@ -37,8 +37,8 @@ const Page: React.FC<{
       <div className="container">
         <div className="home-page__cont-home">
           <div className="home-page__cont-home__c1">
-            <p>Clothes wherever you are. Never travel with luggage again.</p>
-            <span>We bring you clean and confortable clothes to your trip so you don’t have to pack your luggage when you need to fly.</span>
+            <p>Never travel with luggage again.</p>
+            <span>We deliver you clean and confortable clothes to your trip so you don’t have to pack your luggage everytime you fly. </span>
             <Link to="/start">
               <button>
                 Get Started

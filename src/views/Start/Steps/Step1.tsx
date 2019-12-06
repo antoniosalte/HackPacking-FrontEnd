@@ -7,6 +7,7 @@ import { MetaWrapper } from "../../../components";
 import Image from "../../../images/hp-start-banner.svg";
 import IconLocation from "../../../images/hp-location-icon.svg";
 import IconCalendar from "../../../images/hp-calendar-icon.svg";
+import LOGO from "../../../images/logo.jpg";
 import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
 
@@ -55,6 +56,7 @@ class Step1 extends React.Component {
                 meta={{
                     description: "Start Packing",
                     title: "HackPacking - Start Packing",
+                    image: LOGO
                 }}
             >
                 <div className="container">

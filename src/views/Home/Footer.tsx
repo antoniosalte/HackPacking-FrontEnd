@@ -31,29 +31,29 @@ const Footer = ( props ) => {
                     <div className="footer-c2__c1">
                         <div className="column-f">
                             <p>Product</p>
-                            <Link to="/">Login</Link>
-                            <Link to="/">Register</Link>
-                            <Link to="/">Shopping cart</Link>
-                            <Link to="/">Status of your order</Link>
-                            <Link to="/">Support</Link>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
+                            <Link to="/account">Shopping cart</Link>
+                            <Link to="/account">Status of your order</Link>
+                            <Link to="/account">Support</Link>
                         </div>
                         <div className="column-f" style={{minWidth: 100}}>
                             <p>Company</p>
                             <Link to="/">Home</Link>
-                            <Link to="/">About</Link>
-                            <Link to="/">Why</Link>
-                            <Link to="/">How</Link>
-                            <Link to="/">FAQ</Link>
+                            <Link to="/about">About</Link>
+                            <Link to="/why">Why</Link>
+                            <Link to="/how">How</Link>
+                            <Link to="/faq">FAQ</Link>
                         </div>
                         <div className="iconos">
-                            <a href="/" target="_blank">
+                            <a href="https://www.facebook.com/Hackpacking.life/" target="_blank">
                                 <ReactSVG
                                     svgStyle={{
                                     width: 42,
                                     }}
                                     path={FacebookIcon} />
                             </a>
-                            <a href="/" target="_blank">
+                            <a href="https://www.instagram.com/hack.packing" target="_blank">
                                 <ReactSVG
                                     svgStyle={{
                                     width: 42,
@@ -67,7 +67,7 @@ const Footer = ( props ) => {
                                     }}
                                     path={WhatsappIcon} />
                             </a>
-                            <a href="/" target="_blank">
+                            <a href="https://twitter.com/HackPacking_" target="_blank">
                                 <ReactSVG
                                     svgStyle={{
                                     width: 42,
@@ -77,7 +77,7 @@ const Footer = ( props ) => {
                         </div>
                     </div>
                     <div className="footer-bottom">
-                        <p>© 2010 — 2020 Privacy — Terms</p>
+                        <p>© 2010 — 2020 <Link to="/privacy">Privacy — Terms</Link></p>
                     </div>
                 </div>
             </div>

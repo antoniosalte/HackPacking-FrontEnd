@@ -13,6 +13,7 @@
     flex-direction: column;
     height: inherit;
     width: 100%;
+    border-radius: 30px;
 
     @media (min-width: $small-screen) {
       height: auto;

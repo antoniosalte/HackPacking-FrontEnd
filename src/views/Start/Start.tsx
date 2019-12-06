@@ -102,14 +102,14 @@ class Start extends React.Component {
         })
     }
     render() {
-        const { data, open } = this.state;
+        const { data, open, step } = this.state;
         return (
             <div className="start-page">
                 {
                     this.renderStep()
                 }
                 <div className="start-page-steps">
-                    <BottomNav goTo={ (step) => this.goTo(step) } />
+                    <BottomNav goTo={ (step) => this.goTo(step) } step={ step } />
                 </div>
                 <div className={ open ? "start-page-sidebar open-s" : "start-page-sidebar close-s" } >
                     <div

@@ -2,12 +2,12 @@ import {
   mediumScreen,
 } from "../../globalStyles/scss/variables.scss";
 import "./scss/index.scss";
-
 import { useSignOut } from "@sdk/react";
 import * as React from "react";
 import Media from "react-media";
 import { Link } from "react-router-dom";
 import ReactSVG from "react-svg";
+import { Trans } from "@lingui/react";
 
 import {
   OverlayContext,
@@ -21,12 +21,29 @@ import { TypedMainMenuQuery } from "./queries";
 import hamburgerImg from "../../images/hamburger.svg";
 import logoImg from "../../images/hp-logo-svg.svg";
 import iconuser from "../../images/hp-iconuser.png";
+import Modal from "../../components/Modal";
+import LoginForm from "../LoginForm";
+import RegisterForm from "../OverlayManager/Login/RegisterForm";
+import { useUserDetails } from "@sdk/react";
+import {
+  MenuDropdown,
+  Offline,
+  Online,
+} from "..";
+import {
+  accountUrl,
+} from "../../routes";
 
 const MainMenu: React.FC = () => {
   const [signOut] = useSignOut();
+  const [displayNewModal, setDisplayNewModal] = React.useState(false);
+  const [ SignIn,setSignIn]=React.useState(false);
+  const { data: user } = useUserDetails();
   return (
     <OverlayContext.Consumer>
-      {overlayContext => (
+      {overlayContext => 
+      {
+      return(
         <nav className="main-menu" id="header">
           <div className="main-menu__left">
             <TypedMainMenuQuery renderOnError displayLoader={false}>
@@ -88,9 +105,11 @@ const MainMenu: React.FC = () => {
                             <Link to="/faq" className="navbar-item">
                               <p className="navbar-item-dk" >FAQ</p>
                             </Link>
-                            <Link to="/blog" className="navbar-item">
+                            <a href="https://medium.com/@hackpacking" 
+                            target="_blank"
+                            className="navbar-item">
                               <p className="navbar-item-dk" >Blog</p>
-                            </Link>
+                            </a>
                           </>
                         )
                       }
@@ -120,25 +139,80 @@ const MainMenu: React.FC = () => {
                     <Media
                       query={{ minWidth: mediumScreen }}
                       render={() =>
+                        <>
+                        {user ?
                         (
-                          <Link to="/login" className="navbar-item"
+                          <MenuDropdown
+                          head={
+                            <li className="main-menu__icon main-menu__user--active"
                             style={ {
                               display: "flex",
-                              width: 66,
                               justifyContent: "space-between",
                               marginTop: -10,
                               alignItems: "flex-start",
-                              marginRight: 26,
+                            }}
+                            >
+                              <p className="navbar-item-dk"
+                                  style={ {
+                                    fontWeight: 400,
+                                    fontSize: 14,
+                                    marginRight: 5,
+                                  }}
+                                  >{ user.email }</p>
+                               <img className="user-icon" src={ iconuser } alt="img"/>
+                            </li>
+                          }
+                          content={
+                            <ul className="main-menu__dropdown">
+                              <li>
+                                <Link to={accountUrl}>
+                                  <Trans id="My Account" />
+                                </Link>
+                              </li>
+                              {/* 
+                              <li>
+                                <Link to={orderHistoryUrl}>
+                                  <Trans id="Order history" />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link to={addressBookUrl}>
+                                  <Trans id="Address book" />
+                                </Link>
+                              </li>
+                              <li>
+                                <Link to={paymentOptionsUrl}>
+                                  Payment options
+                                </Link>
+                              </li>
+                              */}
+                              <li onClick={signOut} data-testid="logout-link">
+                                Log Out
+                              </li>
+                            </ul>
+                          }
+                        />
+                        ):
+                        (
+                          <button onClick={ () =>setDisplayNewModal(true)}  className="navbar-item"
+                            style={ {
+                              display: "flex",
+                              justifyContent: "space-between",
+                              marginTop: -10,
+                              alignItems: "flex-start",
                             }}
                           >
-                            <img className="user-icon" src={ iconuser } alt="img"/>
                             <p className="navbar-item-dk"
                             style={ {
                               fontWeight: 400,
                               fontSize: 14,
+                              marginRight: 6,
                             }}
-                            >SignIn</p>
-                        </Link> )}
+                            >Sign In</p>
+                            <img className="user-icon" src={ iconuser } alt="img"/>
+                        </button> )
+                      }</>  
+                      }
                     />
                   </li>
                   <li>
@@ -153,8 +227,56 @@ const MainMenu: React.FC = () => {
                     </li>
                 </ul>
             </div>
+            <Modal
+              loading={ false }
+              title=""
+              hide={ () =>setDisplayNewModal(false)}
+              show={displayNewModal}>
+                <div>
+                    <div
+                      style={{
+                        padding: 20,
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: 30,                   
+                      }}
+                    >
+                      <button
+                      style={{
+                        fontWeight: SignIn ? 400 : 500,
+                        fontSize: 18,
+                        padding: "0 20px",
+                        borderRight: "1px solid rgba(0,0,0,0.2)",
+                      }}
+                      onClick={ () => setSignIn(false)}>Sign In</button>
+                      <button
+                      style={{
+                        fontWeight: !SignIn ? 400 : 500,
+                        fontSize: 18,
+                        padding: "0 20px",
+                      }}
+                      onClick={ () => setSignIn(true)}>Sign Up</button>
+                    </div>
+                    <div style={{padding: 20}}>
+                    {
+                      SignIn ?
+                      <RegisterForm hide={ () =>{ 
+                      setDisplayNewModal(false);
+                      setSignIn(false);
+                      }
+                    }/>:
+                      <LoginForm hide={ () =>{ 
+                        setDisplayNewModal(false);
+                        setSignIn(false);
+                        } }/>
+                    }
+                    </div>
+                </div>
+                
+                
+              </Modal>
         </nav>
-      )}
+      )}}
     </OverlayContext.Consumer>
   );
 };

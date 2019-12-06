@@ -49,11 +49,12 @@ const Step7 = props => {
     ...step6.items
   ];
   const total = getTotal(allItems);
+  const shippingPrice = 5;
   return (
     <div className="container">
       <CulqiProvider
         publicKey="pk_test_6cZH0KR8piY52AOG"
-        amount={total * 100}
+        amount={( total + shippingPrice )* 100}
         title="HackPacking"
         description="HackPacking Description"
         onToken={token => {
@@ -93,10 +94,10 @@ const Step7 = props => {
             </table>
             <hr />
             <center>
-              <p>Total price: ${total}</p>
+              <br/><br/>
+              <p>Shipping Price: $ {shippingPrice}</p>
+              <p>Total price: $ {total + 5 }</p>
             </center>
-            <br />
-            <br />
             <br />
           </div>
         </div>

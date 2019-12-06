@@ -52,3 +52,18 @@
     }
   }
 }
+
+.btn-login{
+  display: flex;
+  justify-content: center;
+
+  button{
+    color: white;
+    background-color: #84BD00;
+    border-radius: 24px;
+    color: white;
+    padding: 12px 32px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

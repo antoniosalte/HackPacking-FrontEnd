@@ -32,35 +32,10 @@ const Modal: React.FC<IModalProps> = ({
 }) =>
   target && show
     ? ReactDOM.createPortal(
-        <div className="overlay overlay--modal">
+        <div className="overlay overlay--modal" onClick={hide}>
           <div className="overlay__modal">
-            <div className="modal">
-              <div className="modal__title">
-                <p>{title}</p>
-                <ReactSVG
-                  path={closeImg}
-                  className="modal__close"
-                  onClick={hide}
-                />
-              </div>
+            <div className="modal" onClick={(e)=>{e.stopPropagation()}}>
               <div className="modal__content">{children}</div>
-              <div className="modal__footer">
-                {cancelBtnText && (
-                  <button className="modal__cancelBtn" onClick={hide}>
-                    {cancelBtnText}
-                  </button>
-                )}
-                {submitBtnText && (
-                  <Button
-                    type="submit"
-                    form={formId}
-                    disabled={loading}
-                    className="modal__button"
-                  >
-                    {loading ? "Loading" : submitBtnText}
-                  </Button>
-                )}
-              </div>
             </div>
           </div>
         </div>,

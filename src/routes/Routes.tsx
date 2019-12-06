@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { CheckoutLogin, NotFound } from "../components";
+import CheckoutRegister from "../components/CheckoutRegister/index"
 import UserAccount, {
   baseUrl as userAccountBaseUrl,
   userOrderDetailsUrl,
@@ -23,6 +24,7 @@ import { How } from "../views/How";
 import { FAQ } from "../views/Faq";
 import { Blog } from "../views/Blog";
 import { Start } from "../views/Start";
+import { Privacy } from "../views/Privacy";
 
 
 const slugUrl = ":slug([a-z-0-9]+)/:id([0-9]+)/";
@@ -33,6 +35,7 @@ export const collectionUrl = `${baseUrl}collection/${slugUrl}`;
 export const productUrl = `${baseUrl}product/${slugUrl}`;
 export const cartUrl = `${baseUrl}cart/:token?/`;
 export const checkoutLoginUrl = `${baseUrl}login/`;
+export const checkoutRegisterUrl = `${baseUrl}register/`;
 export const pageUrl = `${baseUrl}page/:slug/`;
 export const guestOrderDetailsUrl = `/order/:token/`;
 export const orderConfirmationUrl = `${baseUrl}order-confirmation/`;
@@ -47,6 +50,7 @@ export const howUrl = `${baseUrl}how/`;
 export const faqUrl = `${baseUrl}faq/`;
 export const blogUrl = `${baseUrl}blog/`;
 export const startUrl = `${baseUrl}start/`;
+export const privacyUrl = `${baseUrl}privacy/`;
 
 export const Routes: React.FC = () => (
   <Switch>
@@ -57,6 +61,9 @@ export const Routes: React.FC = () => (
     <Route path={productUrl} component={ProductPage} />
     <Route path={cartUrl} component={CartPage} />
     <Route path={checkoutLoginUrl} component={CheckoutLogin} />
+    <Route path={checkoutRegisterUrl} component={CheckoutRegister} />
+
+
     <Route path={pageUrl} component={ArticlePage} />
     <Route path={userAccountBaseUrl} component={UserAccount} />
     <Route path={userOrderDetailsUrl} component={OrderDetails} />
@@ -73,6 +80,7 @@ export const Routes: React.FC = () => (
     <Route path={faqUrl} component={FAQ} />
     <Route path={blogUrl} component={Blog} />
     <Route path={startUrl} component={Start} />
+    <Route path={privacyUrl} component={Privacy} />
 
     <Route component={NotFound} />
   </Switch>

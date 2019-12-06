@@ -29,10 +29,10 @@ const PasswordResetForm: React.FC = () => (
               type="email"
               required
             />
-            <div className="password-reset-form__button">
-              <Button type="submit" {...loading && { disabled: true }}>
+            <div className="btn-login">
+              <button type="submit" {...loading && { disabled: true }}>
                 {loading ? "Loading" : "Reset password"}
-              </Button>
+              </button>
             </div>
           </Form>
         );
