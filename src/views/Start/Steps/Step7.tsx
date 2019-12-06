@@ -13,42 +13,42 @@ const getTotal = items => {
   return total;
 };
 
-const deleteCount = (it, step, props) => {
+const deleteCount = (it, step, props) => {
   let { items } = props.data[step];
   for (let index = 0; index < items.length; index++) {
     const item = items[index];
-    if( item.id === it.id && item.details.countItem > 0){
+    if (item.id === it.id && item.details.countItem > 0) {
       item.details.countItem -= 1;
     }
   }
-  props.setData( { [step]:{ items} } );
-}
-const addCount = (it, step, props) => {
+  props.setData({ [step]: { items } });
+};
+const addCount = (it, step, props) => {
   let { items } = props.data[step];
   for (let index = 0; index < items.length; index++) {
     const item = items[index];
-    if( item.id === it.id ){
+    if (item.id === it.id) {
       item.details.countItem += 1;
     }
   }
-  props.setData( { [step]:{ items} } );
-}
-const deleteItem = (id, step, props) => {
-    let { items } = props.data[step];
-    let newItems = items.filter( i => i.id !== id)
-    props.setData( { [step]:{ items: newItems} } );
-}
+  props.setData({ [step]: { items } });
+};
+const deleteItem = (id, step, props) => {
+  let { items } = props.data[step];
+  let newItems = items.filter(i => i.id !== id);
+  props.setData({ [step]: { items: newItems } });
+};
 const renderItem = (item, type, step, props) => {
   return (
     <React.Fragment>
       {item.map(item => {
         return (
           <tr>
-            <td style={{textAlign: "start"}}>{item.name}</td>
-            <td style={{textAlign: "center", display: "flex"}}>
-            <div
+            <td style={{ textAlign: "start" }}>{item.name}</td>
+            <td style={{ textAlign: "center", display: "flex" }}>
+              <div
                 className="color-point"
-                onClick={ () => deleteCount(item, step, props) }
+                onClick={() => deleteCount(item, step, props)}
                 style={{
                   backgroundColor: "#84BD00",
                   color: "white",
@@ -57,12 +57,15 @@ const renderItem = (item, type, step, props) => {
                   justifyContent: "center",
                   alignItems: "center",
                   cursor: "pointer",
-                  border: "none",
+                  border: "none"
                 }}
-            >-</div>{item.details.countItem}
-            <div
+              >
+                -
+              </div>
+              {item.details.countItem}
+              <div
                 className="color-point"
-                onClick={ () => addCount(item, step, props) }
+                onClick={() => addCount(item, step, props)}
                 style={{
                   backgroundColor: "#84BD00",
                   color: "white",
@@ -71,26 +74,30 @@ const renderItem = (item, type, step, props) => {
                   justifyContent: "center",
                   alignItems: "center",
                   cursor: "pointer",
-                  border: "none",
+                  border: "none"
                 }}
-            >+</div>
-              </td>
-            <td style={{textAlign: "center"}}>{type}</td>
-            <td style={{textAlign: "center"}}>
+              >
+                +
+              </div>
+            </td>
+            <td style={{ textAlign: "center" }}>{type}</td>
+            <td style={{ textAlign: "center" }}>
               <div
                 className="color-point"
                 style={{
                   backgroundColor: "white",
-                  margin: "0 auto",
+                  margin: "0 auto"
                 }}
               />
             </td>
-            <td style={{textAlign: "center"}}>M</td>
-            <td style={{textAlign: "end"}}>$ {item.price.amount * item.details.countItem}</td>
+            <td style={{ textAlign: "center" }}>M</td>
+            <td style={{ textAlign: "end" }}>
+              $ {item.price.amount * item.details.countItem}
+            </td>
             <td>
-            <div
+              <div
                 className="color-point"
-                onClick={ () => deleteItem(item.id, step, props) }
+                onClick={() => deleteItem(item.id, step, props)}
                 style={{
                   backgroundColor: "black",
                   color: "white",
@@ -98,9 +105,11 @@ const renderItem = (item, type, step, props) => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  cursor: "pointer",
+                  cursor: "pointer"
                 }}
-            >x</div>
+              >
+                x
+              </div>
             </td>
           </tr>
         );
@@ -124,9 +133,10 @@ const Step7 = props => {
     <div className="container">
       <CulqiProvider
         publicKey="pk_test_6cZH0KR8piY52AOG"
-        amount={( total + shippingPrice )* 100}
+        amount={(total + shippingPrice) * 100}
         title="HackPacking"
-        description="HackPacking Description"
+        currency="USD"
+        description="Travel luggage free from anywhere in the World"
         onToken={token => {
           console.log("token received", token);
         }}
@@ -134,6 +144,7 @@ const Step7 = props => {
           console.error("something bad happened", error);
         }}
         options={{
+          lang: "en",
           style: {
             maincolor: "#84BD00",
             buttontext: "#FFFFFF",
@@ -149,24 +160,25 @@ const Step7 = props => {
           <div className="c-overview">
             <table>
               <tr>
-                <th style={{textAlign: "start"}}>Clothes</th>
-                <th style={{textAlign: "center"}}>Quantity</th>
-                <th style={{textAlign: "center"}}>Type</th>
-                <th style={{textAlign: "center"}}>Color</th>
-                <th style={{textAlign: "center"}}>Size</th>
-                <th style={{textAlign: "end"}}>Total</th>
+                <th style={{ textAlign: "start" }}>Clothes</th>
+                <th style={{ textAlign: "center" }}>Quantity</th>
+                <th style={{ textAlign: "center" }}>Type</th>
+                <th style={{ textAlign: "center" }}>Color</th>
+                <th style={{ textAlign: "center" }}>Size</th>
+                <th style={{ textAlign: "end" }}>Total</th>
               </tr>
-              {renderItem(step2.items, "Upperwear","step2",props)}
-              {renderItem(step3.items, "Lowerwear","step3",props)}
-              {renderItem(step4.items, "Underwear","step4",props)}
-              {renderItem(step5.items, "Socks","step5",props)}
-              {renderItem(step6.items, "Accesories","step6",props)}
+              {renderItem(step2.items, "Upperwear", "step2", props)}
+              {renderItem(step3.items, "Lowerwear", "step3", props)}
+              {renderItem(step4.items, "Underwear", "step4", props)}
+              {renderItem(step5.items, "Socks", "step5", props)}
+              {renderItem(step6.items, "Accesories", "step6", props)}
             </table>
             <hr />
             <center>
-              <br/><br/>
+              <br />
+              <br />
               <p>Shipping Price: $ {shippingPrice}</p>
-              <p>Total price: $ {total + 5 }</p>
+              <p>Total price: $ {total + 5}</p>
             </center>
             <br />
           </div>
@@ -175,6 +187,9 @@ const Step7 = props => {
           {({ openCulqi, setAmount, amount }) => {
             return (
               <div className="cnt-btn-checkout">
+                // Antes de Culqi deberia pedirte los datos de Envio // Luego
+                verificar si estas logeado o no, sino no estas Logeado deberias
+                logearte para pagar // Luego de logearte se abre el Checkout
                 <button onClick={openCulqi}>Checkout</button>
               </div>
             );
