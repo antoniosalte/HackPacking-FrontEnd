@@ -93,7 +93,7 @@ module.exports = ({ sourceDir, distDir }) => ({
     }),
     // PWA plugins
     new WebappWebpackPlugin({
-      logo: "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97",
+      logo: `${sourceDir}/images/logo.jpg`,
       prefix: "images/favicons/",
       favicons: {
         appName: "HackPacking",
