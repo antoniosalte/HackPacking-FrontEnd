@@ -41,7 +41,7 @@ class Start extends React.Component {
                 step6:{ items:[] },
             },
             changes: 1,
-            step: 7,
+            step: 1,
             open:false,
         }
         this.setData = this.setData.bind( this );

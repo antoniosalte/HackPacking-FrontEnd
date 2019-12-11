@@ -157,8 +157,8 @@ const Step7 = (props) => {
                         email: data.email,
                         lines: data.items,
                         destination: destination,
-                        arrival: (new Date(arrival)).toString().split("T")[0],
-                        departure: (new Date(departure)).toString().split("T")[0],
+                        arrival: new Date(arrival).toISOString().split("T")[0],
+                        departure: new Date(departure).toISOString().split("T")[0],
                         shippingAddress: {
                           firstName: data.firstName,
                           lastName: data.lastName,
