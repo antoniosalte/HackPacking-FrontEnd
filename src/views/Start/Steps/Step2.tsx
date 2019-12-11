@@ -37,6 +37,7 @@ class Step2 extends React.Component{
             <div className="container">
                 <TypedStep2Query alwaysRender displayLoader={false} errorPolicy="all">
                     {({ data, loading }) => {
+                        console.log(data)
                         if (canDisplay(data)) {
                         return (
                             <MetaWrapper

@@ -337,6 +337,9 @@ export interface CheckoutCreateInput {
   email?: string | null;
   shippingAddress?: AddressInput | null;
   billingAddress?: AddressInput | null;
+  destination?: string | null;
+  arrival?: Date | null;
+  departure?: Date | null;
 }
 
 export interface CheckoutLineInput {

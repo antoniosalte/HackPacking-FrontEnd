@@ -1,9 +1,6 @@
 @import "../../../globalStyles/scss/variables.scss";
 
 .address-form {
-  button {
-    margin: $spacer * 2 0 0 $spacer * 2;
-  }
 
   .react-select-wrapper {
     margin-bottom: 1rem;
@@ -48,5 +45,19 @@
       display: block;
       margin-top: 1.5rem;
     }
+  }
+}
+.btn-login{
+  display: flex;
+  justify-content: center;
+
+  button{
+    color: white;
+    background-color: #84BD00;
+    border-radius: 24px;
+    color: white;
+    padding: 12px 32px;
+    font-size: 18px;
+    font-weight: 500;
   }
 }

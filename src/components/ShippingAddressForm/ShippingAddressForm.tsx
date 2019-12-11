@@ -31,97 +31,55 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
         >
           {children}
           <fieldset disabled={shippingAsBilling}>
-            <div className="address-form__grid">
               <TextField
-                label="First Name"
                 type="given-name"
                 name="firstName"
                 autoComplete="given-name"
+                placeholder="Firstname"
                 required
               />
               <TextField
-                label="Last Name"
                 type="family-name"
                 name="lastName"
                 autoComplete="family-name"
+                placeholder="Lastname"
                 required
               />
-            </div>
-            <div className="address-form__grid">
               <TextField
-                label="Street Name"
                 type="address-line1"
                 name="streetAddress1"
                 autoComplete="address-line1"
+                placeholder="Street Address"
                 required
               />
               <TextField
-                label="Company name (optional)"
-                type="organization"
-                name="companyName"
-                autoComplete="organization"
-              />
-            </div>
-            <div className="address-form__grid address-form__grid--uneven">
-              <TextField
-                label="ZIP Code"
                 type="postal-code"
                 name="postalCode"
+                placeholder="Postal code"
                 autoComplete="postal-code"
                 required
               />
               <TextField
-                label="City"
                 type="city"
                 name="city"
+                placeholder="City"
                 autoComplete="address-level2"
                 required
               />
-            </div>
-            <div className="address-form__grid">
-              <TextField
-                label="State/Province"
-                type="state"
-                name="countryArea"
-                autoComplete="address-level1"
-              />
               <Select
-                label="Country"
                 name="country"
                 options={countries.map(country => ({
                   label: country.country,
                   value: country.code,
                 }))}
-                autoComplete="country"
+                autoComplete="Country"
               />
-            </div>
-            <div
-              className={classNames("address-form__grid", {
-                "address-form__grid--full": type === "billing",
-              })}
-            >
-              {type === "shipping" && (
-                <TextField
-                  label="Email Address"
-                  type="email"
-                  autoComplete="email"
-                  name="email"
-                  required
-                />
-              )}
-
-              <TextField
-                label="Phone number"
-                type="tel"
-                name="phone"
-                autoComplete="phone"
-                required
-              />
-            </div>
           </fieldset>
-          <Button type="submit" disabled={loading}>
-            {loading ? "Loading" : buttonText}
-          </Button>
+          <div className="btn-login">
+            <button type="submit" disabled={loading} >
+              {loading ? "Loading" : buttonText}
+            </button>
+          </div>
         </Form>
       )}
     </ShopContext.Consumer>

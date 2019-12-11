@@ -14,7 +14,6 @@ export const checkoutAddressFragment = gql`
     id
     firstName
     lastName
-    companyName
     streetAddress1
     streetAddress2
     city

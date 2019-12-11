@@ -1,6 +1,15 @@
 import * as React from "react";
 import "../styles/styles.scss";
 import { CulqiProvider, Culqi } from "react-culqi";
+import Modal from "../../../components/Modal";
+import ShippingAdressForm from "../../../components/ShippingAddressForm";
+import LoginForm from "../../../components/LoginForm";
+import {
+  useUserDetails } from "@sdk/react";
+import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
+import { maybe } from "../../../core/utils";
+import { CheckoutContext } from "../../../checkout/context";
+import { CountryCode } from "types/globalTypes";
 
 const getTotal = items => {
   let total = 0;
@@ -38,6 +47,7 @@ const deleteItem = (id, step, props) => {
   let newItems = items.filter(i => i.id !== id);
   props.setData({ [step]: { items: newItems } });
 };
+
 const renderItem = (item, type, step, props) => {
   return (
     <React.Fragment>
@@ -117,9 +127,138 @@ const renderItem = (item, type, step, props) => {
     </React.Fragment>
   );
 };
-
-const Step7 = props => {
-  const { step2, step3, step4, step5, step6 } = props.data;
+const Step7 = (props) => {
+  const { data: user } = useUserDetails();
+  return(
+  <>
+  <CheckoutContext.Consumer>
+      {({ checkout, update, loading: checkoutLoading }) => (
+        <TypedCreateCheckoutMutation
+          onCompleted={async ({ checkoutCreate: { checkout, errors } }) => {
+            if (!errors.length) {
+              await update({ checkout });
+            }
+            console.log( "checkout",checkoutLoading, checkout, errors );
+          }}
+        >
+          {(createCheckout, { loading: mutationLoading }) => (
+            <Step7Container { ...props }
+              checkoutId={maybe(() => checkout.id, null)}
+              user={user}
+              checkout={checkout}
+              createCheckout={createCheckout}
+              onClick={(data) => {
+                if (user /*&& !checkout*/) {
+                  const { destination, arrival, departure,
+                  } = props.data.step1;
+                  createCheckout({
+                    variables: {
+                      checkoutInput: { 
+                        email: data.email,
+                        lines: data.items,
+                        destination: destination,
+                        arrival: (new Date(arrival)).toString().split("T")[0],
+                        departure: (new Date(departure)).toString().split("T")[0],
+                        shippingAddress: {
+                          firstName: data.firstName,
+                          lastName: data.lastName,
+                          streetAddress1: data.streetAddress1,
+                          city: data.city,
+                          postalCode: data.postalCode,
+                          country: maybe(() => "PE", "PE" ) as CountryCode
+                        }
+                      },
+                    },
+                  });
+                } else {
+                  console.log( "ya existe checkout", this.props, checkout )
+                }
+              }}
+             />
+          )}
+        </TypedCreateCheckoutMutation>
+      )}
+    </CheckoutContext.Consumer>
+  </> )
+}
+const getLines = (items) => {
+  let lines = []
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index];
+    const variant = item.variants ? item.variants[0] : null;
+    const id = variant ? variant.id : null
+    if ( id ) {
+      const object = {
+        quantity: 1,
+        variantId: id
+      }
+      lines.push(object)
+    }
+  }
+  return lines;
+} 
+class  Step7Container extends React.Component {
+  constructor( props ){
+    super( props );
+    this.state={
+      displayNewModal: false,
+      showLogin: false,
+      culqi: ()=>{},
+    }
+    this.setLogin = this.setLogin.bind(this);
+    this.setDisplayNewModal = this.setDisplayNewModal.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.setCulqi = this.setCulqi.bind(this);
+  }
+  setCulqi(culqi){
+    this.setState({
+      culqi,
+    })
+    this.setDisplayNewModal(true)
+  }
+  setLogin( login ){
+    this.setState({
+      showLogin: login,
+    })
+  }
+  setDisplayNewModal( modal ){
+    this.setState({
+      displayNewModal: modal,
+    })
+  }
+  onSubmit( data ){
+    const { step2, step3, step4, step5, step6 } = this.props.data;
+    const allItems = [
+      ...step2.items,
+      ...step3.items,
+      ...step4.items,
+      ...step5.items,
+      ...step6.items
+    ];
+    if( this.props.user ){
+      this.setDisplayNewModal(false)
+      const linesStep = getLines(allItems) 
+      console.log("Lines", linesStep)
+      this.props.onClick(
+        {
+          email: "kevin@gmail.com",
+          items:linesStep,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          streetAddress1: data.streetAddress1,
+          city: data.city,
+          postalCode: data.postalCode,
+        }
+      )
+      this.state.culqi();
+      console.log("USER", this.props, data)
+    }else {
+      this.setLogin(true)
+    }
+  }
+render(){
+  
+  const { step2, step3, step4, step5, step6 } = this.props.data;
   const allItems = [
     ...step2.items,
     ...step3.items,
@@ -129,6 +268,7 @@ const Step7 = props => {
   ];
   const total = getTotal(allItems);
   const shippingPrice = 5;
+  const { displayNewModal,showLogin  } = this.state;
   return (
     <div className="container">
       <CulqiProvider
@@ -139,9 +279,11 @@ const Step7 = props => {
         description="Travel luggage free from anywhere in the World"
         onToken={token => {
           console.log("token received", token);
+          alert("Payment success")
         }}
         onError={error => {
           console.error("something bad happened", error);
+          alert("Error")
         }}
         options={{
           lang: "en",
@@ -167,11 +309,11 @@ const Step7 = props => {
                 <th style={{ textAlign: "center" }}>Size</th>
                 <th style={{ textAlign: "end" }}>Total</th>
               </tr>
-              {renderItem(step2.items, "Upperwear", "step2", props)}
-              {renderItem(step3.items, "Lowerwear", "step3", props)}
-              {renderItem(step4.items, "Underwear", "step4", props)}
-              {renderItem(step5.items, "Socks", "step5", props)}
-              {renderItem(step6.items, "Accesories", "step6", props)}
+              {renderItem(step2.items, "Upperwear", "step2", this.props)}
+              {renderItem(step3.items, "Lowerwear", "step3", this.props)}
+              {renderItem(step4.items, "Underwear", "step4", this.props)}
+              {renderItem(step5.items, "Socks", "step5", this.props)}
+              {renderItem(step6.items, "Accesories", "step6", this.props)}
             </table>
             <hr />
             <center>
@@ -187,10 +329,7 @@ const Step7 = props => {
           {({ openCulqi, setAmount, amount }) => {
             return (
               <div className="cnt-btn-checkout">
-                // Antes de Culqi deberia pedirte los datos de Envio // Luego
-                verificar si estas logeado o no, sino no estas Logeado deberias
-                logearte para pagar // Luego de logearte se abre el Checkout
-                <button onClick={openCulqi}>Checkout</button>
+                  <button id="openculqi"  onClick={ ()=>this.setCulqi(openCulqi) }>Checkout</button>:
               </div>
             );
           }}
@@ -202,7 +341,38 @@ const Step7 = props => {
         <br />
         <br />
       </CulqiProvider>
+      <Modal
+        loading={ false }
+        title=""
+        hide={ () => this.setDisplayNewModal(false)}
+        show={displayNewModal}>
+          <div>
+            <div
+              style={{
+                padding: 20,
+                display: "flex",
+                justifyContent: "center",
+                marginTop: 30,                   
+              }}
+            >
+              {
+                !showLogin?
+                <ShippingAdressForm
+                    hide={ () => this.setDisplayNewModal(false) }
+                    buttonText="Checkout"
+                    onSubmit={ ( data ) => this.onSubmit(data ) }
+                    /> :
+                <LoginForm hide={ () =>{
+                  this.setDisplayNewModal(false);
+                } }/>
+
+              }
+              
+            </div>
+          </div>
+      </Modal>
     </div>
   );
+  }
 };
 export default Step7;

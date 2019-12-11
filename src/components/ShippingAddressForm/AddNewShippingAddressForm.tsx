@@ -49,12 +49,6 @@ export const AddNewShippingAddressForm: React.FC<
             autoComplete="address-line1"
             required
           />
-          <TextField
-            label="Company name (optional)"
-            type="organization"
-            name="companyName"
-            autoComplete="organization"
-          />
           <div className="address-form__grid address-form__grid--modal">
             <TextField
               label="ZIP Code"
@@ -96,23 +90,6 @@ export const AddNewShippingAddressForm: React.FC<
               }
             )}
           >
-            {type === "shipping" && (
-              <TextField
-                label="Email Address"
-                type="email"
-                autoComplete="email"
-                name="email"
-                required
-              />
-            )}
-
-            <TextField
-              label="Phone number"
-              type="tel"
-              name="phone"
-              autoComplete="tel"
-              required
-            />
           </div>
           <label className="checkbox checkbox__bottom">
             <input name="asNew" type="checkbox" />

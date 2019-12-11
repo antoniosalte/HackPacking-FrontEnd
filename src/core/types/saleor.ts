@@ -2214,6 +2214,9 @@ export interface CheckoutCreateInput {
   lines?: (CheckoutLineInput | null)[] | null;
   email?: string | null;
   shippingAddress?: AddressInput | null;
+  destination?: string | null;
+  arrival?: Date | null;
+  departure?: Date | null;
 }
 
 // null

@@ -1,7 +1,8 @@
 import gql from "graphql-tag";
 
 import { TypedQuery } from "../../../../core/queries";
-import { ProductsList } from "../types/ProductsList";
+import { TypedMutation } from "../../../../core/mutations";
+import { ProductsList, Checkout } from "../types/ProductsList";
 
 // STEP Upperwer
 
@@ -19,15 +20,20 @@ query {
           name
         }
         description,
-        attributes {
-          attribute {
-            name
-          }
-          values{
-            name
-          }
+        variants{
+	  id
+          stockQuantity
+          name
+        	attributes {
+          	attribute {
+            	name
+          	}
+          	values{
+            	name
+          	}
+        	}
         },
-	collections {
+				collections {
           name
         },
         price {
@@ -59,15 +65,20 @@ query {
           name
         }
         description,
-        attributes {
-          attribute {
-            name
-          }
-          values{
-            name
-          }
+        variants{
+	  id
+          stockQuantity
+          name
+        	attributes {
+          	attribute {
+            	name
+          	}
+          	values{
+            	name
+          	}
+        	}
         },
-	collections {
+				collections {
           name
         },
         price {
@@ -99,15 +110,20 @@ query {
           name
         }
         description,
-        attributes {
-          attribute {
-            name
-          }
-          values{
-            name
-          }
+        variants{
+	  id
+          stockQuantity
+          name
+        	attributes {
+          	attribute {
+            	name
+          	}
+          	values{
+            	name
+          	}
+        	}
         },
-	collections {
+				collections {
           name
         },
         price {
@@ -139,15 +155,20 @@ query {
           name
         }
         description,
-        attributes {
-          attribute {
-            name
-          }
-          values{
-            name
-          }
+        variants{
+	  id
+          stockQuantity
+          name
+        	attributes {
+          	attribute {
+            	name
+          	}
+          	values{
+            	name
+          	}
+        	}
         },
-        collections {
+				collections {
           name
         },
         price {
@@ -167,36 +188,101 @@ export const TypedStep5Query = TypedQuery<ProductsList, {}>(Step5Query);
 // STEP 6 accesories
 export const Step6Query = gql`
 query {
-    products(first: 100, filter: {
-      categories: ["Q2F0ZWdvcnk6MTA=="]
-    }) {
-      edges {
-        node {
-          id,
-          name,
-          category {
-            id
-            name
-          }
-          description,
-          attributes {
-            attribute {
-              name
-            }
-            values{
-              name
-            }
-          }
-          price {
-            amount
-          },
-          images {
-            url
-          }
+  products(first: 100, filter: {
+    categories: ["Q2F0ZWdvcnk6MTA="]
+  }) {
+    edges {
+      node {
+        id,
+        name,
+        category {
+          id
+          name
+        }
+        description,
+        variants{
+	  id
+          stockQuantity
+          name
+        	attributes {
+          	attribute {
+            	name
+          	}
+          	values{
+            	name
+          	}
+        	}
+        },
+				collections {
+          name
+        },
+        price {
+          amount
+        },
+        images {
+          url
         }
       }
     }
   }
+}
 `;
 
 export const TypedStep6Query = TypedQuery<ProductsList, {}>(Step6Query);
+
+export const Step7Query = gql`
+mutation {
+  checkoutCreate(
+    input: {
+      email: "antonio@dreamlabs.pe",
+      destination: "Lima",
+      arrival: "2019-10-01",
+      departure: "2019-10-10"
+      lines: [{ quantity: 1, variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3" }]
+      shippingAddress: {
+        firstName: "Antonio"
+        lastName: "Salazar"
+        streetAddress1: "Juan de Rada 342"
+        city: "Lima"
+        postalCode: "15039"
+        country: PE
+      }
+      billingAddress: {
+        firstName: "Antonio"
+        lastName: "Salazar"
+        streetAddress1: "Juan de Rada 342"
+        city: "Lima"
+        postalCode: "15039"
+        country: PE
+      }
+    }
+  ) {
+    checkout {
+      id
+      totalPrice {
+        gross {
+          amount
+          currency
+        }
+      }
+      isShippingRequired
+      availableShippingMethods {
+        id
+        name
+      }
+      availablePaymentGateways {
+        name
+        config {
+          field
+          value
+        }
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
+`
+export const TypedStep7Query = TypedMutation<Checkout, {}>(Step7Query);
