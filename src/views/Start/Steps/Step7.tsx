@@ -1,6 +1,7 @@
 import * as React from "react";
 import "../styles/styles.scss";
 import { CulqiProvider, Culqi } from "react-culqi";
+import { MutationFn } from "react-apollo";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
@@ -9,7 +10,11 @@ import {
 import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
+import { CartContext } from "../../../components/CartProvider/context";
 import { CountryCode } from "types/globalTypes";
+
+import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
+import { createPayment, createPaymentVariables } from "../../../checkout/views/Payment/types/createPayment";
 
 const getTotal = items => {
   let total = 0;
@@ -49,9 +54,11 @@ const deleteItem = (id, step, props) => {
 };
 
 const renderItem = (item, type, step, props) => {
+
   return (
     <React.Fragment>
       {item.map(item => {
+        const size = item.variants.find( x => x.id === item.details.selectedSize)
         return (
           <tr>
             <td style={{ textAlign: "start" }}>{item.name}</td>
@@ -100,7 +107,7 @@ const renderItem = (item, type, step, props) => {
                 }}
               />
             </td>
-            <td style={{ textAlign: "center" }}>M</td>
+            <td style={{ textAlign: "center" }}>{size.name}</td>
             <td style={{ textAlign: "end" }}>
               $ {item.price.amount * item.details.countItem}
             </td>
@@ -133,22 +140,27 @@ const Step7 = (props) => {
   <>
   <CheckoutContext.Consumer>
       {({ checkout, update, loading: checkoutLoading }) => (
+        <CartContext.Consumer>
+          {cart => { 
+            console.log( cart )
+            return(
         <TypedCreateCheckoutMutation
           onCompleted={async ({ checkoutCreate: { checkout, errors } }) => {
             if (!errors.length) {
               await update({ checkout });
             }
-            console.log( "checkout",checkoutLoading, checkout, errors );
+            console.log( "checkout",update, checkout, errors );
           }}
         >
           {(createCheckout, { loading: mutationLoading }) => (
             <Step7Container { ...props }
+              cart={cart}
               checkoutId={maybe(() => checkout.id, null)}
               user={user}
               checkout={checkout}
               createCheckout={createCheckout}
               onClick={(data) => {
-                if (user /*&& !checkout*/) {
+                if (user && !checkout) {
                   const { destination, arrival, departure,
                   } = props.data.step1;
                   createCheckout({
@@ -171,12 +183,15 @@ const Step7 = (props) => {
                     },
                   });
                 } else {
-                  console.log( "ya existe checkout", this.props, checkout )
+                  update({ checkout })
+                  console.log( "ya existe checkout",update, this.props, checkout, cart )
                 }
               }}
              />
           )}
         </TypedCreateCheckoutMutation>
+        )}}
+        </CartContext.Consumer>
       )}
     </CheckoutContext.Consumer>
   </> )
@@ -227,22 +242,12 @@ class  Step7Container extends React.Component {
     })
   }
   onSubmit( data ){
-    const { step2, step3, step4, step5, step6 } = this.props.data;
-    const allItems = [
-      ...step2.items,
-      ...step3.items,
-      ...step4.items,
-      ...step5.items,
-      ...step6.items
-    ];
     if( this.props.user ){
       this.setDisplayNewModal(false)
-      const linesStep = getLines(allItems) 
-      console.log("Lines", linesStep)
       this.props.onClick(
         {
           email: "kevin@gmail.com",
-          items:linesStep,
+          items: this.props.cart.lines,
           firstName: data.firstName,
           lastName: data.lastName,
           streetAddress1: data.streetAddress1,
@@ -254,8 +259,10 @@ class  Step7Container extends React.Component {
       console.log("USER", this.props, data)
     }else {
       this.setLogin(true)
+      console.log("need login", this.props, data)
     }
   }
+  
 render(){
   
   const { step2, step3, step4, step5, step6 } = this.props.data;
@@ -269,6 +276,7 @@ render(){
   const total = getTotal(allItems);
   const shippingPrice = 5;
   const { displayNewModal,showLogin  } = this.state;
+  console.log( this.props )
   return (
     <div className="container">
       <CulqiProvider
@@ -280,6 +288,7 @@ render(){
         onToken={token => {
           console.log("token received", token);
           alert("Payment success")
+          window.location.href = "/account/";
         }}
         onError={error => {
           console.error("something bad happened", error);
@@ -361,10 +370,40 @@ render(){
                     hide={ () => this.setDisplayNewModal(false) }
                     buttonText="Checkout"
                     onSubmit={ ( data ) => this.onSubmit(data ) }
-                    /> :
+                    >
+                      <div>
+                      <button
+                        style={{
+                          fontWeight:500,
+                          fontSize: 18,
+                          padding: "0 20px",
+                        }}
+                        >Shipping Adress</button>
+                        <br/>
+                        <br/>
+                      </div>
+                    </ShippingAdressForm> :
+                    <div
+                    style={{
+                      display:"flex",
+                      flexDirection: "column",
+                      alignItems: "center"
+                    }}
+                    >
+                    <button
+                      style={{
+                        fontWeight:500,
+                        fontSize: 18,
+                        padding: "0 20px",
+                      }}
+                      >Sign In</button>
+                      <br/>
                 <LoginForm hide={ () =>{
                   this.setDisplayNewModal(false);
+                  this.setLogin(false);
+                  this.state.culqi();
                 } }/>
+                </div>
 
               }
               

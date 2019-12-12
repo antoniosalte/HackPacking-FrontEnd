@@ -10,7 +10,7 @@ class ItemSteps extends React.Component {
         this.state={
             selectedColor: 1,
             countItem: 0,
-            selectedSize: 1,
+            selectedSize: null,
         }
         this.setSelectedColor = this.setSelectedColor.bind(this);
         this.setCountItem = this.setCountItem.bind( this );
@@ -19,10 +19,11 @@ class ItemSteps extends React.Component {
     componentDidMount(){
         const { selectedColor,countItem,selectedSize } = this.props.details ?
         this.props.details :{ selectedColor:null,countItem:null,selectedSize:null };
+        const item = this.props.item.node
         this.setState({
             selectedColor:  selectedColor  ||  1,
             countItem: countItem || 0,
-            selectedSize: selectedSize || 1,
+            selectedSize: selectedSize || item.variants[0].id,
         })
     }
     setSelectedColor(selectedColor){
@@ -35,16 +36,17 @@ class ItemSteps extends React.Component {
             countItem
         }, () => this.props.onAddItem( this.state )) 
     }
-    setSelectedSize( selectedSize){
+    setSelectedSize( e){
+        const selectedSize = e.target.value
         this.setState({
-            selectedSize
-        }, () => this.props.onAddItem( this.state )) 
+            selectedSize,
+            countItem: 0,
+        })
     }
     render() {
         const item = this.props.item.node
         const { countItem, selectedColor, selectedSize } = this.state;
-        const colors = [ { color: "black",id: 1 }, { color: "white", id: 2} ]
-        const sizes = [ { name: "S",id: 1 }, { name: "M", id: 2}, { name: "L", id: 3} ]
+        const {variants} = item;
         return (
             <div className="container-wears__item">
                 <img src={ item.images[0] ? item.images[0].url : ImageDefault } alt="image"/>
@@ -52,20 +54,6 @@ class ItemSteps extends React.Component {
                     <div className="title-colors">
                         <span className="title-colors__c1">
                             { item.name }
-                        </span>
-                        <span className="title-colors__c2">
-                            {
-                                colors.map( (item,i) =>{
-                                    return <div
-                                        key={`coloritem-${i}`}
-                                        className={ item.id === selectedColor ? "item-color selected-color" : "item-color" }
-                                        style={{
-                                            backgroundColor: item.color
-                                        }}
-                                        onClick={ () => this.setSelectedColor(item.id) }
-                                    />
-                                } )
-                            }
                         </span>
                     </div>
                     <p className="description-item">
@@ -75,7 +63,7 @@ class ItemSteps extends React.Component {
                         <div>
                             <span className="count-item">
                                 <span
-                                    onClick={ () => this.setCountItem(countItem-1)}
+                                    onClick={ () => this.setCountItem(countItem > 0 ? countItem-1:countItem)}
                                     className="plus-i"
                                     style={{ fontSize: 50}}
                                 >-</span>
@@ -85,16 +73,18 @@ class ItemSteps extends React.Component {
                             </span>
                             <div className="verticalline" />
                             <span className="talla-item">
-                                <select name="select">
+                                <select name="select"
+                                onChange={ this.setSelectedSize}
+                                >
                                     {
-                                        sizes.map( (size,index) =>{
+                                        variants.map( (variant,index) =>{
                                             return(
                                                 <option
                                                 key={ `sizes-${index}`}
-                                                value={ size.id }
-                                                selected={ size.id === selectedSize }
-                                                onChange={ ()=>this.setSelectedSize(size.id)}>
-                                                    {size.name}
+                                                value={ variant.id }
+                                                selected={ variant.id == selectedSize }
+                                                >
+                                                    {variant.name.split("/").pop()}
                                                 </option> 
                                             )
                                         } )
