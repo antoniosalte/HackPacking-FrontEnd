@@ -239,22 +239,6 @@ mutation {
       arrival: "2019-10-01",
       departure: "2019-10-10"
       lines: [{ quantity: 1, variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3" }]
-      shippingAddress: {
-        firstName: "Antonio"
-        lastName: "Salazar"
-        streetAddress1: "Juan de Rada 342"
-        city: "Lima"
-        postalCode: "15039"
-        country: PE
-      }
-      billingAddress: {
-        firstName: "Antonio"
-        lastName: "Salazar"
-        streetAddress1: "Juan de Rada 342"
-        city: "Lima"
-        postalCode: "15039"
-        country: PE
-      }
     }
   ) {
     checkout {

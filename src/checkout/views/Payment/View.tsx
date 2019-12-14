@@ -74,7 +74,6 @@ class View extends React.Component<
     const {
       checkout: { billingAddress, totalPrice, id },
     } = checkout;
-
     if (token) {
       createPaymentMethod({
         variables: {

@@ -1,7 +1,8 @@
 import * as React from "react";
 import "../styles/styles.scss";
+import { History } from "history";
 import { CulqiProvider, Culqi } from "react-culqi";
-import { MutationFn } from "react-apollo";
+import { AlertManager, useAlert } from "react-alert";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
@@ -12,9 +13,18 @@ import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
 import { CartContext } from "../../../components/CartProvider/context";
 import { CountryCode } from "types/globalTypes";
+import { CartSummary } from "../Components/cart/index"
 
+import { TypedUpdateCheckoutShippingOptionsMutation } from "../../../checkout/views/ShippingOptions/queries";
 import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
-import { createPayment, createPaymentVariables } from "../../../checkout/views/Payment/types/createPayment";
+import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
+import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
+
+
+const convertDate = (date) => {
+  const [ day, month, year] = date.split("-");
+  return month + "-" + day + "-"+year
+}
 
 const getTotal = items => {
   let total = 0;
@@ -53,89 +63,51 @@ const deleteItem = (id, step, props) => {
   props.setData({ [step]: { items: newItems } });
 };
 
-const renderItem = (item, type, step, props) => {
+function proceedToBilling(data,update,token
+) {
+  const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
+  if (canProceed) {
+    update({ checkout: data.checkoutShippingMethodUpdate.checkout });
+  }
+}
+const completeCheckout = (
+  data: completeCheckout,
+  history: History,
+  clearCheckout: () => void,
+  clearCart: () => void,
+  alert: AlertManager
+) => {
+  const canProceed = !data.checkoutComplete.errors.length;
 
-  return (
-    <React.Fragment>
-      {item.map(item => {
-        const size = item.variants.find( x => x.id === item.details.selectedSize)
-        return (
-          <tr>
-            <td style={{ textAlign: "start" }}>{item.name}</td>
-            <td style={{ textAlign: "center", display: "flex" }}>
-              <div
-                className="color-point"
-                onClick={() => deleteCount(item, step, props)}
-                style={{
-                  backgroundColor: "#84BD00",
-                  color: "white",
-                  margin: "0 auto",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  border: "none"
-                }}
-              >
-                -
-              </div>
-              {item.details.countItem}
-              <div
-                className="color-point"
-                onClick={() => addCount(item, step, props)}
-                style={{
-                  backgroundColor: "#84BD00",
-                  color: "white",
-                  margin: "0 auto",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  border: "none"
-                }}
-              >
-                +
-              </div>
-            </td>
-            <td style={{ textAlign: "center" }}>{type}</td>
-            <td style={{ textAlign: "center" }}>
-              <div
-                className="color-point"
-                style={{
-                  backgroundColor: "white",
-                  margin: "0 auto"
-                }}
-              />
-            </td>
-            <td style={{ textAlign: "center" }}>{size.name}</td>
-            <td style={{ textAlign: "end" }}>
-              $ {item.price.amount * item.details.countItem}
-            </td>
-            <td>
-              <div
-                className="color-point"
-                onClick={() => deleteItem(item.id, step, props)}
-                style={{
-                  backgroundColor: "black",
-                  color: "white",
-                  margin: "0 auto",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  cursor: "pointer"
-                }}
-              >
-                x
-              </div>
-            </td>
-          </tr>
-        );
-      })}
-    </React.Fragment>
-  );
+  if (canProceed) {
+    clearCheckout();
+    clearCart();
+    history.push({
+      pathname: "/order-history/",
+    });
+  } else {
+    data.checkoutComplete.errors.map(error => {
+      alert.show(
+        { title: error.message },
+        {
+          type: "error",
+        }
+      );
+    });
+  }
 };
 const Step7 = (props) => {
   const { data: user } = useUserDetails();
+  const {
+    cardData,
+    dummyStatus,
+    checkout,
+    clear: clearCheckout,
+    step,
+  } = React.useContext(CheckoutContext);
+  const alert = useAlert();
+  const { clear: clearCart } = React.useContext(CartContext);
+  const [ errors, setErrors ] = React.useState([]),
   return(
   <>
   <CheckoutContext.Consumer>
@@ -149,69 +121,142 @@ const Step7 = (props) => {
             if (!errors.length) {
               await update({ checkout });
             }
-            console.log( "checkout",update, checkout, errors );
+            setErrors(errors)
           }}
         >
           {(createCheckout, { loading: mutationLoading }) => (
-            <Step7Container { ...props }
-              cart={cart}
-              checkoutId={maybe(() => checkout.id, null)}
-              user={user}
-              checkout={checkout}
-              createCheckout={createCheckout}
-              onClick={(data) => {
-                if (user && !checkout) {
-                  const { destination, arrival, departure,
-                  } = props.data.step1;
-                  createCheckout({
-                    variables: {
-                      checkoutInput: { 
-                        email: data.email,
-                        lines: data.items,
-                        destination: destination,
-                        arrival: new Date(arrival).toISOString().split("T")[0],
-                        departure: new Date(departure).toISOString().split("T")[0],
-                        shippingAddress: {
-                          firstName: data.firstName,
-                          lastName: data.lastName,
-                          streetAddress1: data.streetAddress1,
-                          city: data.city,
-                          postalCode: data.postalCode,
-                          country: maybe(() => "PE", "PE" ) as CountryCode
-                        }
-                      },
-                    },
-                  });
-                } else {
-                  update({ checkout })
-                  console.log( "ya existe checkout",update, this.props, checkout, cart )
+            <TypedUpdateCheckoutShippingOptionsMutation
+              onCompleted={data =>
+                { 
+                  console.log( "ONCLMPLETE UPDAT", data )
+                  proceedToBilling(data, update, "token")
                 }
-              }}
-             />
-          )}
-        </TypedCreateCheckoutMutation>
+              }
+            >
+              {(updateCheckoutShippingOptions, { loading }) => (
+                <TypedPaymentMethodCreateMutation
+                onCompleted={ async (dataPayment) => {
+                  const canProceed = !dataPayment.checkoutPaymentCreate.errors.length;
+                  console.log( "CHECKOUT CULQI" , dataPayment,canProceed )
+                } }
+              >
+                {(
+                  createPaymentMethod
+                ) => (
+                <TypedCompleteCheckoutMutation
+                  onCompleted={data =>
+                    completeCheckout(
+                      data,
+                      props.history,
+                      clearCheckout,
+                      clearCart,
+                      alert
+                    )
+                  }
+                >
+                  {(completeCheckout, { loading }) => (
+              <Step7Container { ...props }
+                cart={cart}
+                checkoutId={maybe(() => checkout.id, null)}
+                user={user} 
+                checkout={checkout}
+                createCheckout={createCheckout}
+                errors={errors}
+                onPayment={ async () => {
+                    const { token } = checkout;
+                    if (checkout && token) {
+                      const { billingAddress, subtotalPrice, shippingPrice } = checkout;
+                      const total = subtotalPrice.gross.amount +  shippingPrice.gross.amount;
+                      console.log(createPaymentMethod,billingAddress)
+                      await createPaymentMethod({
+                        variables: {
+                          checkoutId:  checkout.id,
+                          input: {
+                            amount: total,
+                            billingAddress: {
+                              city: billingAddress.city,
+                              country: billingAddress.country.code as CountryCode,
+                              countryArea: billingAddress.countryArea,
+                              firstName: billingAddress.firstName,
+                              lastName: billingAddress.lastName,
+                              postalCode: billingAddress.postalCode,
+                              streetAddress1: billingAddress.streetAddress1,
+                            },
+                            gateway: "Dummy",
+                            token,
+                          },
+                        },
+                      })
+                      await completeCheckout({
+                        variables: {
+                          checkoutId: checkout.id,
+                        },
+                      })
+                  }else{
+                    alert("Payment cannot be created, invalid token")
+                  }
+                }}  
+                onClick={(data) => {
+                  if (user && !checkout) {
+                    const { destination, arrival, departure,
+                    } = props.data.step1;
+                    const arrivalNew = convertDate(arrival)
+                    const departureNew = convertDate(departure)
+                    createCheckout({
+                      variables: {
+                        checkoutInput: { 
+                          email: data.email,
+                          lines: data.items,
+                          destination: destination,
+                          arrival: new Date(arrivalNew).toISOString().split("T")[0],
+                          departure: new Date(departureNew).toISOString().split("T")[0],
+                          shippingAddress: {
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            streetAddress1: data.streetAddress1,
+                            city: data.city,
+                            postalCode: data.postalCode,
+                            country: maybe(() => "PE", "PE" ) as CountryCode
+                          },
+                          billingAddress:{
+                            firstName: data.firstName,
+                            lastName: data.lastName,
+                            streetAddress1: data.streetAddress1,
+                            city: data.city,
+                            postalCode: data.postalCode,
+                            country: maybe(() => "PE", "PE" ) as CountryCode
+                          },
+                        },
+                      },
+                    });
+                  } else {
+                    console.log( "ya existe checkout",update, this.props, checkout, cart )
+                    const shippingMethods =
+                        checkout.availableShippingMethods || [];
+                    updateCheckoutShippingOptions({
+                      variables: {
+                        checkoutId: checkout.id,
+                        shippingMethodId: shippingMethods[ 1 ].id,
+                      },
+                    });
+                  }
+                }}
+              />
+              )}
+                </TypedCompleteCheckoutMutation>
+              )}
+                </TypedPaymentMethodCreateMutation>
+              )}
+              </TypedUpdateCheckoutShippingOptionsMutation>
+              )}
+              </TypedCreateCheckoutMutation>
         )}}
         </CartContext.Consumer>
       )}
     </CheckoutContext.Consumer>
   </> )
 }
-const getLines = (items) => {
-  let lines = []
-  for (let index = 0; index < items.length; index++) {
-    const item = items[index];
-    const variant = item.variants ? item.variants[0] : null;
-    const id = variant ? variant.id : null
-    if ( id ) {
-      const object = {
-        quantity: 1,
-        variantId: id
-      }
-      lines.push(object)
-    }
-  }
-  return lines;
-} 
+
 class  Step7Container extends React.Component {
   constructor( props ){
     super( props );
@@ -219,17 +264,39 @@ class  Step7Container extends React.Component {
       displayNewModal: false,
       showLogin: false,
       culqi: ()=>{},
+      setAmount: () => {}
     }
     this.setLogin = this.setLogin.bind(this);
     this.setDisplayNewModal = this.setDisplayNewModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.setCulqi = this.setCulqi.bind(this);
   }
-  setCulqi(culqi){
+  componentDidUpdate(){
+    console.log( "RENDER COMPONENT UPDATE PROPS" )
+    const { checkout } = this.props;
+    if( checkout && !checkout.shippingMethod ){
+      console.log("SUS PROPS",this.props );
+      this.props.onClick();
+    }
+  }
+  setCulqi(culqi,setAmount){
     this.setState({
       culqi,
+      setAmount,
     })
-    this.setDisplayNewModal(true)
+    const { checkout } = this.props;
+    if( checkout ){
+      const total = ( checkout.subtotalPrice.gross.amount +  checkout.shippingPrice.gross.amount).toFixed(2);
+      console.log( total * 100 )
+      setAmount( total * 100)
+      culqi();
+    }
+    else {
+      if( !this.props.user ){
+        this.setLogin(true)
+      }
+      this.setDisplayNewModal(true)
+    }
   }
   setLogin( login ){
     this.setState({
@@ -255,26 +322,16 @@ class  Step7Container extends React.Component {
           postalCode: data.postalCode,
         }
       )
-      this.state.culqi();
       console.log("USER", this.props, data)
     }else {
       this.setLogin(true)
       console.log("need login", this.props, data)
     }
   }
-  
 render(){
-  
-  const { step2, step3, step4, step5, step6 } = this.props.data;
-  const allItems = [
-    ...step2.items,
-    ...step3.items,
-    ...step4.items,
-    ...step5.items,
-    ...step6.items
-  ];
-  const total = getTotal(allItems);
-  const shippingPrice = 5;
+  const { checkout } = this.props;
+  const total = checkout ? checkout.totalPrice.gross.amount : 0;
+  const shippingPrice = 0;
   const { displayNewModal,showLogin  } = this.state;
   console.log( this.props )
   return (
@@ -287,8 +344,8 @@ render(){
         description="Travel luggage free from anywhere in the World"
         onToken={token => {
           console.log("token received", token);
-          alert("Payment success")
-          window.location.href = "/account/";
+          this.props.onPayment()
+          // window.location.href = "/order-history/";
         }}
         onError={error => {
           console.error("something bad happened", error);
@@ -309,36 +366,20 @@ render(){
         <p style={{ fontSize: 18, fontWeight: "500" }}>Overview</p>
         <div className="containr-overview">
           <div className="c-overview">
-            <table>
-              <tr>
-                <th style={{ textAlign: "start" }}>Clothes</th>
-                <th style={{ textAlign: "center" }}>Quantity</th>
-                <th style={{ textAlign: "center" }}>Type</th>
-                <th style={{ textAlign: "center" }}>Color</th>
-                <th style={{ textAlign: "center" }}>Size</th>
-                <th style={{ textAlign: "end" }}>Total</th>
-              </tr>
-              {renderItem(step2.items, "Upperwear", "step2", this.props)}
-              {renderItem(step3.items, "Lowerwear", "step3", this.props)}
-              {renderItem(step4.items, "Underwear", "step4", this.props)}
-              {renderItem(step5.items, "Socks", "step5", this.props)}
-              {renderItem(step6.items, "Accesories", "step6", this.props)}
-            </table>
-            <hr />
-            <center>
-              <br />
-              <br />
-              <p>Shipping Price: $ {shippingPrice}</p>
-              <p>Total price: $ {total + 5}</p>
-            </center>
-            <br />
+            <CartSummary checkout={this.props.checkout}></CartSummary>
           </div>
+        { this.props.errors.map( err => 
+          <p style={{color:"red", fontSize: 12}}>{err.message}</p>
+        )}
         </div>
         <Culqi>
           {({ openCulqi, setAmount, amount }) => {
             return (
               <div className="cnt-btn-checkout">
-                  <button id="openculqi"  onClick={ ()=>this.setCulqi(openCulqi) }>Checkout</button>:
+                  <button id="openculqi"  onClick={ ()=>this.setCulqi(openCulqi,setAmount) }>
+            {
+              checkout ? "Checkout" : "Add Shipping Address"
+            }</button>
               </div>
             );
           }}
@@ -378,7 +419,7 @@ render(){
                           fontSize: 18,
                           padding: "0 20px",
                         }}
-                        >Shipping Adress</button>
+                        >Shipping Address</button>
                         <br/>
                         <br/>
                       </div>
@@ -401,7 +442,6 @@ render(){
                 <LoginForm hide={ () =>{
                   this.setDisplayNewModal(false);
                   this.setLogin(false);
-                  this.state.culqi();
                 } }/>
                 </div>
 
