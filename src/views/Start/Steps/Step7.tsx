@@ -83,7 +83,7 @@ const completeCheckout = (
     clearCheckout();
     clearCart();
     history.push({
-      pathname: "/order-history/",
+      pathname: "/account",
     });
   } else {
     data.checkoutComplete.errors.map(error => {

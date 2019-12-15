@@ -39,6 +39,7 @@ export const AccountUpdateForm: React.FC<{
                 <S.ContentExtendInput>
                   <TextField
                     name="firstName"
+                    placeholder="First Name"
                     label="First Name"
                     type="text"
                     value={values.firstName}
@@ -49,8 +50,9 @@ export const AccountUpdateForm: React.FC<{
                 <S.ContentExtendInput>
                   <TextField
                     name="lastName"
+                    placeholder="Last Name"
                     label="Last Name"
-                    type="text"
+                    type="text" 
                     value={values.lastName}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -58,13 +60,22 @@ export const AccountUpdateForm: React.FC<{
                 </S.ContentExtendInput>
               </S.ContentEditOneLine>
               <S.FormButtons>
-                <ButtonLink type="button" color="secondary" onClick={hide}>
+                <ButtonLink type="button" color="secondary" onClick={hide}
+                style={{
+                  color: "#c4c4c4",
+                  height: 32,
+                  fontSize: 12,
+                }}
+                >
                   Cancel
                 </ButtonLink>
                 <Button
                   type="submit"
                   disabled={isSubmitting || !isValid}
                   size="sm"
+                  style={{
+                    height: 32,
+                  }}
                 >
                   Save
                 </Button>

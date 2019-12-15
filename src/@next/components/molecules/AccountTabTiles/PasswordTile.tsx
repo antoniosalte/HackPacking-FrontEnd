@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Attribute, IconButton, Tile } from "@components/atoms";
+import { Attribute, Button, Tile } from "@components/atoms";
 
 import { usePasswordChange } from "@sdk/react";
 import { PasswordChangeForm } from "./PasswordChangeForm";
@@ -20,14 +20,7 @@ export const PasswordTile: React.FC = () => {
       <Tile>
         <S.Wrapper>
           <S.Header>
-            MY PASSWORD
-            {!isEditing && (
-              <IconButton
-                name="edit"
-                size={22}
-                onClick={() => setIsEditing(isEditing => !isEditing)}
-              />
-            )}
+            Change Password
           </S.Header>
           <S.Content>
             {isEditing ? (
@@ -42,11 +35,26 @@ export const PasswordTile: React.FC = () => {
                   error={error ? error!.extraInfo!.userInputErrors : []}
                 />
               </S.ContentEdit>
+              
             ) : (
+              <>
               <Attribute
                 description="Password"
                 attributeValue="**************"
               />
+              <br/>
+              <Button
+                  type="button"
+                  onClick={() => setIsEditing(isEditing => !isEditing)}
+                  style={{
+                    padding: "5px 20px",
+                    fontSize: 12,
+                  }}
+                  size="sm"
+                >
+                  Change
+                </Button>
+              </>
             )}
           </S.Content>
         </S.Wrapper>

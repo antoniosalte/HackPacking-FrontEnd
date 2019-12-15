@@ -11,12 +11,14 @@ export const Wrapper = styled.div`
 export const TileWrapper = styled.div`
   height: auto;
   margin-bottom: 1.5rem;
+  background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 24px;
 `;
 
 export const Header = styled.div`
   width: 95%;
   padding-bottom: 1rem;
-  border-bottom: 1px solid ${props => props.theme.colors.dividerDark};
   font-weight: ${props => props.theme.typography.boldFontWeight};
   font-size: ${props => props.theme.typography.h4FontSize};
   display: flex;
@@ -31,15 +33,17 @@ export const HeaderSmall = styled(Header)`
 `;
 
 export const Content = styled.div`
-  padding: 1.5rem 0;
+  padding: 0;
   width: 95%;
 `;
 
 export const ContentOneLine = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 70%;
+  width: 50%;
+  flex-direction: column;
+  align-items: flex-start;
+  
+
   ${media.smallScreen`
     flex-direction: column;
     width: 100%;
@@ -55,11 +59,13 @@ export const ContentEdit = styled.div`
 export const ContentEditOneLine = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 
+
   > div {
-    width: 48%;
+    max-width: 90%;
+    width: 200px;
     ${media.smallScreen`
       width: 100%;
     `}
@@ -75,7 +81,7 @@ export const ContentExtendInput = styled.div`
 `;
 
 export const Form = styled.form`
-  background-color: ${props => props.theme.tile.backgroundColor};
+  background-color: white;
 `;
 
 export const FormButtons = styled.div`
@@ -83,8 +89,8 @@ export const FormButtons = styled.div`
   padding-top: 2rem;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: flex-start;
   button {
-    margin-left: 2rem;
+    margin-right: 2rem;
   }
 `;

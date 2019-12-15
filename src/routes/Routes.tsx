@@ -9,6 +9,7 @@ import UserAccount, {
 } from "../userAccount/routes";
 import { OrderDetails } from "../userAccount/views";
 import { Account } from "../views/Account";
+import { Account2 } from "../views/OrderDetails";
 import { ArticlePage } from "../views/Article";
 import { CartPage } from "../views/Cart";
 import { CategoryPage } from "../views/Category";
@@ -72,9 +73,9 @@ export const Routes: React.FC = () => (
     <Route path={guestOrderDetailsUrl} component={OrderDetails} />
     <Route path={orderConfirmationUrl} component={OrderConfirmation} />
     <Route path={accountUrl} component={Account} />
-    <Route path={orderHistoryUrl} component={Account} />
-    <Route path={addressBookUrl} component={Account} />
-    <Route path={paymentOptionsUrl} component={Account} />
+    <Route path={orderHistoryUrl} component={Account2} />
+    <Route path={addressBookUrl} component={Account2} />
+    <Route path={paymentOptionsUrl} component={Account2} />
 
     <Route path={aboutUrl} component={About} />
     <Route path={whyUrl} component={Why} />

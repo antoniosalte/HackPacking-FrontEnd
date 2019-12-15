@@ -6,8 +6,9 @@ interface WrapperProps {
 }
 
 export const Wrapper = styled.div<WrapperProps>`
-  background-color: ${props => props.theme.tile.backgroundColor};
+  background-color: white;
   border: 1px transparent solid;
+  border-radius: 24px;
   overflow: auto;
   height: 100%;
   padding: 0;

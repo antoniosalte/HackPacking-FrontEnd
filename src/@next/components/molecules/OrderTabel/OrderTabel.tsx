@@ -9,29 +9,10 @@ import { generateProductUrl } from "../../../../core/utils";
 import * as S from "./styles";
 import { IProps } from "./types";
 
-const header = (matches: boolean) => (
-  <S.HeaderRow>
-    <S.IndexNumber>
-      <Trans id="Index Number" />
-    </S.IndexNumber>
-    {matches && (
-      <>
-        <S.ProductsOrdered>
-          <Trans id="Products Ordered" />
-        </S.ProductsOrdered>
-        <S.DateOfOrder>
-          <Trans id="Date of Order" />
-        </S.DateOfOrder>
-        <S.Value>
-          <Trans id="Value" />
-        </S.Value>
-      </>
-    )}
-    <S.Status>
-      <Trans id="Status" />
-    </S.Status>
-  </S.HeaderRow>
-);
+import Icon1 from "../../../../images/hp-order-step1.svg";
+import Icon2 from "../../../../images/hp-order-step2.svg";
+import Icon3 from "../../../../images/hp-order-step3.svg";
+
 
 export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
   const theme = React.useContext(ThemeContext);
@@ -43,11 +24,11 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
         }}
       >
         {(matches: boolean) => {
+          console.log( "MATHCERS: ",matches, orders)
           return (
             <>
-              <S.Row>{header(matches)}</S.Row>
               {orders &&
-                orders.map(order => {
+                orders.slice( 0,1 ).map(order => {
                   const date = new Date(order.node.created);
                   return (
                     <S.Row
@@ -57,39 +38,60 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                         history.push(`/order/${order.node.token}`);
                       }}
                     >
-                      <S.IndexNumber>{order.node.number}</S.IndexNumber>
-                      {matches ? (
-                        <>
-                          <S.ProductsOrdered>
-                            {order.node.lines
-                              .slice(0, 5)
-                              .map((product: any) => (
-                                <span
-                                  key={product.variant.product.id}
-                                  onClick={evt => {
-                                    evt.stopPropagation();
-                                    history.push(
-                                      generateProductUrl(
-                                        product.variant.product.id,
-                                        product.variant.product.name
-                                      )
-                                    );
-                                  }}
-                                >
-                                  <Thumbnail source={product} />
-                                </span>
-                              ))}
-                          </S.ProductsOrdered>
-                          <S.DateOfOrder>
-                            {`${date.getMonth() +
-                              1}/${date.getDate()}/${date.getFullYear()}`}
-                          </S.DateOfOrder>
-                          <S.Value>{order.node.total.gross.localized}</S.Value>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <S.Status>{order.node.statusDisplay}</S.Status>
+                      <p style={{
+                        fontWeight: 700,
+                        width:"100%",
+                        textAlign: "start",
+                      }}>Current Order - Tracking #{order.node.id}</p>
+                      <S.DivOrder>
+                        <S.DivORow>
+                          <p>Shipped Via</p>
+                          <span>UPS</span>
+                        </S.DivORow>
+                        <S.DivORow>
+                          <p>Status</p>
+                          <span>{order.node.statusDisplay}</span>
+                        </S.DivORow>
+                        <S.DivORow>
+                          <p>Expected</p>
+                          <span>Thursday, November 7</span>
+                        </S.DivORow>
+                      </S.DivOrder>
+                      <S.ContainerProgress>
+                        <S.LineP>
+                          <div className="activedot left"/>
+                        </S.LineP>
+                        <S.LineP>
+                          <div className="right"/>
+                        </S.LineP>
+                        <S.ItemProgress className="activedot">
+                          <div className="activedot">
+                            <img
+                              src={ Icon1 }
+                              alt="asad"
+                            />
+                          </div>
+                          <p>Order Placed</p>
+                        </S.ItemProgress>
+                        <S.ItemProgress>
+                          <div className="activedot">
+                          <img
+                              src={ Icon2 }
+                              alt="asad"
+                            />
+                          </div>
+                          <p>In Transit</p>
+                        </S.ItemProgress>
+                        <S.ItemProgress>
+                          <div>
+                          <img
+                              src={ Icon3 }
+                              alt="asad"
+                            />
+                          </div>
+                          <p>Completed</p>
+                        </S.ItemProgress>
+                      </S.ContainerProgress>
                     </S.Row>
                   );
                 })}

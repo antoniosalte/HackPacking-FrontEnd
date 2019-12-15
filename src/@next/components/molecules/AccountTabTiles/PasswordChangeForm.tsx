@@ -112,13 +112,21 @@ export const PasswordChangeForm: React.FC<{
                 }
               />
               <S.FormButtons>
-                <ButtonLink type="button" color="secondary" onClick={hide}>
+                <ButtonLink type="button" color="secondary" onClick={hide}
+                style={{
+                  color: "#c4c4c4",
+                  height: 32,
+                  fontSize: 12,
+                }}>
                   Cancel
                 </ButtonLink>
                 <Button
                   type="submit"
                   disabled={isSubmitting || !isValid}
                   size="sm"
+                  style={{
+                  height: 32
+                  }}
                 >
                   Save
                 </Button>

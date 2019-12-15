@@ -2,7 +2,7 @@ import React from "react";
 
 import { useAccountUpdate, useUserDetails } from "@sdk/react";
 
-import { Attribute, IconButton, Tile } from "@components/atoms";
+import { Attribute, Button, Tile } from "@components/atoms";
 
 import { AccountUpdateForm } from "./AccountUpdateForm";
 import * as S from "./styles";
@@ -21,18 +21,8 @@ export const AccountTile: React.FC = () => {
     <S.TileWrapper>
       <Tile>
         <S.Wrapper>
-          <S.Header>MY DATA</S.Header>
+          <S.Header>User information</S.Header>
           <S.Content>
-            <S.HeaderSmall>
-              Personal details
-              {!isEditing && (
-                <IconButton
-                  name="edit"
-                  size={22}
-                  onClick={() => setIsEditing(isEditing => !isEditing)}
-                />
-              )}
-            </S.HeaderSmall>
             {isEditing ? (
               <AccountUpdateForm
                 initialValues={{
@@ -52,10 +42,21 @@ export const AccountTile: React.FC = () => {
                   description="First Name"
                   attributeValue={(user && user.firstName) || "-"}
                 />
+                <br />
                 <Attribute
                   description="Last Name"
                   attributeValue={(user && user.lastName) || "-"}
                 />
+                <br />
+                <Button
+                  type="button"
+                  onClick={() => setIsEditing(isEditing => !isEditing)}
+                  style={{
+                    padding: "5px 20px",
+                  }}
+                >
+                  Edit
+                </Button>
               </S.ContentOneLine>
             )}
           </S.Content>

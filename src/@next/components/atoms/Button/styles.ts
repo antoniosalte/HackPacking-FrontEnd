@@ -20,6 +20,7 @@ export const Primary = styled.button<{
     props.theme.button.colors[props.color].background};
   padding: ${props => padding[props.size]};
   border: none;
+  border-radius: 30px;
   transition: 0.3s;
   outline: none;
   cursor: pointer;
@@ -63,12 +64,7 @@ export const Secondary = styled(Primary)`
 
 export const Text = styled.span<{ size: Size }>`
   display: inline-block;
-  font-size: ${({
-    size,
-    theme: {
-      button: { typography },
-    },
-  }) => fontSize(typography.fontSize, typography.smallFontSize)[size]};
+  font-size: 12px;
   text-transform: uppercase;
   font-weight: ${props => props.theme.typography.boldFontWeight};
   line-height: ${props => props.theme.typography.baseLineHeight};
