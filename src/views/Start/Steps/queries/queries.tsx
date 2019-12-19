@@ -21,17 +21,9 @@ query {
         }
         description,
         variants{
-	  id
+	        id
           stockQuantity
           name
-        	attributes {
-          	attribute {
-            	name
-          	}
-          	values{
-            	name
-          	}
-        	}
         },
 				collections {
           name
@@ -66,17 +58,9 @@ query {
         }
         description,
         variants{
-	  id
+	        id
           stockQuantity
           name
-        	attributes {
-          	attribute {
-            	name
-          	}
-          	values{
-            	name
-          	}
-        	}
         },
 				collections {
           name
@@ -114,14 +98,6 @@ query {
 	  id
           stockQuantity
           name
-        	attributes {
-          	attribute {
-            	name
-          	}
-          	values{
-            	name
-          	}
-        	}
         },
 				collections {
           name
@@ -159,14 +135,6 @@ query {
 	  id
           stockQuantity
           name
-        	attributes {
-          	attribute {
-            	name
-          	}
-          	values{
-            	name
-          	}
-        	}
         },
 				collections {
           name
@@ -204,14 +172,6 @@ query {
 	  id
           stockQuantity
           name
-        	attributes {
-          	attribute {
-            	name
-          	}
-          	values{
-            	name
-          	}
-        	}
         },
 				collections {
           name

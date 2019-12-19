@@ -3,6 +3,10 @@ import {} from "react"
 
 const ImageDefault = "https://cdn11.bigcommerce.com/s-hcp6qon/stencil/01eb2250-b30a-0137-ba33-0242ac110046/icons/icon-no-image.svg";
 
+function createMarkup( html ) {
+    return {__html: html};
+}
+
 class ItemSteps extends React.Component {
     constructor(props){
         super(props);
@@ -62,9 +66,8 @@ class ItemSteps extends React.Component {
                             { item.name }
                         </span>
                     </div>
-                    <p className="description-item">
-                        { item.description }
-                    </p>
+                    <p className="description-item"
+                    dangerouslySetInnerHTML={createMarkup( item.description )} />
                     <div className="details-wear-item">
                         <div>
                             <span className="count-item">

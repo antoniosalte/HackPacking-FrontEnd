@@ -11,8 +11,11 @@ import { CartContext } from "../../components/CartProvider/context";
 
 import BottomNav from "./Components/BottomNav";
 
-const getCurrentDate = () => {
+const getCurrentDate = ( deap = false) => {
     const value = new Date();
+    if (deap ){
+        value.setDate(value.getDate() + 3);
+    }
     const year = value.getFullYear();
     let month = value.getMonth()+1;
     let dt = value.getDate();
@@ -24,7 +27,6 @@ const getCurrentDate = () => {
     }
     return `${dt}-${month}-${year}`;
 }
-
 class Start extends React.Component {
     constructor( props ){
         super( props );
@@ -33,7 +35,7 @@ class Start extends React.Component {
                 step1:{
                     destination: "Lima, miraflores",
                     arrival: getCurrentDate(),
-                    departure: getCurrentDate(),
+                    departure: getCurrentDate(true),
                 },
                 step2:{ items:[] },
                 step3:{ items:[] },
