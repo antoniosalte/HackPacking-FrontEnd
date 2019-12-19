@@ -35,7 +35,7 @@ const Footer = ( props ) => {
                             <Link to="/register">Register</Link>
                             <Link to="/account">Shopping cart</Link>
                             <Link to="/account">Status of your order</Link>
-                            <Link to="/account">Support</Link>
+                            <Link to="/faq">Support</Link>
                         </div>
                         <div className="column-f" style={{minWidth: 100}}>
                             <p>Company</p>

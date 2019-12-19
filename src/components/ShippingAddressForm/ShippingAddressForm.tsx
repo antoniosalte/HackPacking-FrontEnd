@@ -46,6 +46,13 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 required
               />
               <TextField
+                type="phone"
+                name="phone"
+                autoComplete="phone"
+                placeholder="Phone"
+                required
+              />
+              <TextField
                 type="address-line1"
                 name="streetAddress1"
                 autoComplete="address-line1"
@@ -65,7 +72,7 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 placeholder="City"
                 autoComplete="address-level2"
                 required
-              />
+              /> 
               <Select
                 name="country"
                 options={countries.map(country => ({

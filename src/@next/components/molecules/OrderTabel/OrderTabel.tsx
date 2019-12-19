@@ -24,7 +24,6 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
         }}
       >
         {(matches: boolean) => {
-          console.log( "MATHCERS: ",matches, orders)
           return (
             <>
               {orders &&

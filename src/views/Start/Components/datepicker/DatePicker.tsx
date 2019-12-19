@@ -3,20 +3,27 @@ import DatePicker from "react-datepicker";
 require('react-datepicker/dist/react-datepicker.css')
 
 const Picker = ( props ) => {
-    const [startDate, setStartDate] = React.useState(new Date());
+    let minDate = new Date();
+    if ( !props.arrival ){
+      minDate.setDate(minDate.getDate() + 3);
+    }
+    const [startDate, setStartDate] = React.useState(minDate);
     const ExampleCustomInput = ({ value, onClick }) => (
       <div
-        id={ props.id }
         style={{
             cursor: "pointer",
+            borderBottom: "solid 1px #c4c4c4",
+            padding: "0 5px",
         }}
         className="example-custom-input"
-        onClick={onClick}>
+        onClick={ onClick }>
         {value}
       </div>
     );
+    
     return (
       <DatePicker
+        id={ props.id }
         dateFormat="dd/MM/yyyy"
         selected={startDate}
         onSelect={date => { 
@@ -24,7 +31,7 @@ const Picker = ( props ) => {
                 setStartDate(date)
             }
         }
-        minDate={ new Date() }
+        minDate={ minDate }
         customInput={<ExampleCustomInput />}
       />
     );

@@ -7,6 +7,7 @@ import Step4 from "./Steps/Step4";
 import Step5 from "./Steps/Step5";
 import Step6 from "./Steps/Step6";
 import Step7 from "./Steps/Step7";
+import { CartContext } from "../../components/CartProvider/context";
 
 import BottomNav from "./Components/BottomNav";
 
@@ -64,7 +65,7 @@ class Start extends React.Component {
             data: { ...data, ...newdata },
         }, this.forceUpdate() )
     }
-    renderStep() {
+    renderStep( cart ) {
         let StepElement = null;
         switch( this.state.step ){
             case 1:
@@ -88,7 +89,9 @@ class Start extends React.Component {
             { ...this.props }
             goTo={ (step) => this.goTo(step) }
             data={ this.state.data }
-            setData={ this.setData }/> 
+            setData={ this.setData }
+            cart={cart}
+            /> 
             )
     }
     goTo( step ){
@@ -105,24 +108,30 @@ class Start extends React.Component {
         const { data, open, step } = this.state;
         return (
             <div className="start-page">
-                {
-                    this.renderStep()
-                }
-                <div className="start-page-steps">
-                    <BottomNav goTo={ (step) => this.goTo(step) } step={ step } />
-                </div>
-                <div className={ open ? "start-page-sidebar open-s" : "start-page-sidebar close-s" } >
-                    <div
-                        onClick={ this.openSidebar }
-                        className="start-page-sidebar__button">
-                        <div className={ !open ? "left-arrow" : "right-arrow"  }/>
+                <CartContext.Consumer>
+                {cart => (
+                    <>
+                    {
+                        this.renderStep(cart)
+                    }
+                    <div className="start-page-steps">
+                        <BottomNav goTo={ (step) => this.goTo(step) } step={ step } />
                     </div>
-                    <div className="start-page-sidebar__container">
-                        <Sidebar data={ data } setData={ this.setData }
-                        toCheckout={ this.toCheckout }
-                        />
+                    <div className={ open ? "start-page-sidebar open-s" : "start-page-sidebar close-s" } >
+                        <div
+                            onClick={ this.openSidebar }
+                            className="start-page-sidebar__button">
+                            <div className={ !open ? "left-arrow" : "right-arrow"  }/>
+                        </div>
+                        <div className="start-page-sidebar__container">
+                            <Sidebar data={ data } setData={ this.setData }
+                            toCheckout={ this.toCheckout }
+                            cart={cart}
+                            />
+                        </div>
                     </div>
-                </div>
+                    </>)}
+                </CartContext.Consumer>
             </div>
         )
     }

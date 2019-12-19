@@ -6,46 +6,52 @@ const ImageDefault = "https://cdn11.bigcommerce.com/s-hcp6qon/stencil/01eb2250-b
 class ItemSteps extends React.Component {
     constructor(props){
         super(props);
-        
         this.state={
-            selectedColor: 1,
             countItem: 0,
-            selectedSize: null,
+            variant: null,
         }
-        this.setSelectedColor = this.setSelectedColor.bind(this);
-        this.setCountItem = this.setCountItem.bind( this );
-        this.setSelectedSize = this.setSelectedSize.bind(this);
+        this.onAdd = this.onAdd.bind( this );
+        this.onRemove = this.onRemove.bind( this );
+        this.setVariant = this.setVariant.bind(this);
     }
     componentDidMount(){
-        const { selectedColor,countItem,selectedSize } = this.props.details ?
-        this.props.details :{ selectedColor:null,countItem:null,selectedSize:null };
-        const item = this.props.item.node
         this.setState({
-            selectedColor:  selectedColor  ||  1,
-            countItem: countItem || 0,
-            selectedSize: selectedSize || item.variants[0].id,
+            countItem: this.props.countItem,
+            variant: this.props.variant,
         })
     }
-    setSelectedColor(selectedColor){
+    onRemove(){
+        let { countItem, variant } =this.state;
+        if ( countItem > 0 ) {
+            countItem -= 1;
+            this.props.onRemove(variant)
+        }
         this.setState({
-            selectedColor
-        }, () => this.props.onAddItem( this.state ))
+            countItem,
+        })
     }
-    setCountItem(countItem){
+    onAdd(){
+        let { countItem,variant } =this.state;
+        if ( countItem < 100 ) {
+            countItem += 1;
+            this.props.onAdd(variant)
+        }
         this.setState({
-            countItem
-        }, () => this.props.onAddItem( this.state )) 
+            countItem,
+        })
     }
-    setSelectedSize( e){
-        const selectedSize = e.target.value
+    setVariant( e){
+        const { variant } = this.state;
+        const newvariant = e.target.value
         this.setState({
-            selectedSize,
+            variant: newvariant,
             countItem: 0,
         })
+        this.props.cart.remove( variant )
     }
     render() {
         const item = this.props.item.node
-        const { countItem, selectedColor, selectedSize } = this.state;
+        const { countItem, variant: variantId } = this.state;
         const {variants} = item;
         return (
             <div className="container-wears__item">
@@ -63,18 +69,18 @@ class ItemSteps extends React.Component {
                         <div>
                             <span className="count-item">
                                 <span
-                                    onClick={ () => this.setCountItem(countItem > 0 ? countItem-1:countItem)}
+                                    onClick={ this.onRemove }
                                     className="plus-i"
                                     style={{ fontSize: 50}}
                                 >-</span>
                                 <div>{ countItem }</div>
-                                <span onClick={ () => this.setCountItem(countItem+1) }
+                                <span onClick={ this.onAdd }
                                 className="plus-i">+</span>
                             </span>
                             <div className="verticalline" />
                             <span className="talla-item">
                                 <select name="select"
-                                onChange={ this.setSelectedSize}
+                                onChange={ this.setVariant}
                                 >
                                     {
                                         variants.map( (variant,index) =>{
@@ -82,7 +88,7 @@ class ItemSteps extends React.Component {
                                                 <option
                                                 key={ `sizes-${index}`}
                                                 value={ variant.id }
-                                                selected={ variant.id == selectedSize }
+                                                selected={ variant.id == variantId }
                                                 >
                                                     {variant.name.split("/").pop()}
                                                 </option> 

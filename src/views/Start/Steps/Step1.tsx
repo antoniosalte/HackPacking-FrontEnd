@@ -10,7 +10,7 @@ import IconCalendar from "../../../images/hp-calendar-icon.svg";
 import LOGO from "../../../images/logo.jpg";
 import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
-
+import { quiqkTrip } from "./static";
 const cities = [
     "Lima, miraflores",
     "Lima, San Isidro",
@@ -26,8 +26,15 @@ class Step1 extends React.Component {
         super(props);
         this.handleRequestOptions = this.handleRequestOptions.bind(this);
         this.quickSetup = this.quickSetup.bind( this );
+        this.destinationRef =  React.createRef();
+        this.depRef = React.createRef();
     }
     quickSetup(){
+        this.props.cart.clear()
+        for (let index = 0; index < quiqkTrip.length; index++) {
+            const element = quiqkTrip[index];
+            this.props.cart.add( element.variantId, element.quantity )
+        }
         this.props.goTo(7);
     }
     handleRequestOptions( text ) {
@@ -74,10 +81,18 @@ class Step1 extends React.Component {
                     <p className="start-page__title">Setup your trip information</p>
                     <div className="container-step1">
                         <div className="container-step1__item i-left">
-                            <div className="item-div">
-                                <img src={ IconLocation } alt="img"/>
+                            <div className="item-div"
+                            style={{
+                                cursor: "pointer"
+                            }}
+                            onClick={ ()=> this.destinationRef.current.refInput.focus() }
+                            >
+                                <img
+                                    src={ IconLocation } alt="img"
+                                />
                                 <p>Destination:
                                     <TextInput
+                                        ref={ this.destinationRef }
                                         onRequestOptions={this.handleRequestOptions} 
                                         Component="input"
                                         maxOptions={ 6 }
@@ -93,18 +108,21 @@ class Step1 extends React.Component {
                             </div>
                         </div>
                         <div className="container-step1__item">
-                            <div className="item-div">
+                            <div className="item-div"
+                            >
                                 <img src={ IconCalendar } alt="img"/>
                                 <p>Arrival:&nbsp;&nbsp;
                                 <Picker
                                     id="arrivalp"
                                     onSelect={ (value) => this.changeData("arrival", value) }
+                                    arrival
                                 />
                                 </p>
                             </div>
                         </div>
                         <div className="container-step1__item">
-                            <div className="item-div">
+                            <div className="item-div"
+                            >
                                 <img src={ IconCalendar } alt="img"/>
                                 <p>Departure:&nbsp;&nbsp;
                                 <Picker

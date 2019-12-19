@@ -20,15 +20,7 @@ const Cart: React.FC<{
         >
           {({ data }) => (
             <>
-            <table>
-              <tr>
-                <th style={{ textAlign: "start" }}>Clothes</th>
-                <th style={{ textAlign: "center" }}>Quantity</th>
-                <th style={{ textAlign: "center" }}>Type</th>
-                <th style={{ textAlign: "center" }}>Color</th>
-                <th style={{ textAlign: "center" }}>Size</th>
-                <th style={{ textAlign: "end" }}>Total</th>
-              </tr>
+              <div style={{height: 250,overflowY: "scroll"}}>
               {
                 lines.length > 0 ?
                 data.productVariants.edges.map(({ node }) =>(
@@ -40,37 +32,20 @@ const Cart: React.FC<{
                       lines.find(({ variantId }) => variantId === node.id).quantity : 0
                     }
                   />)
-                ) :
-                null
+                ) : <p>You haven't added items yet</p>
               }
-              </table>
-              {
-                lines.length < 1 ?
-                <center>
-                  <br /><br /><br />
-                  <p>You haven't added items yet</p>
-                </center> : null
-              }
+              </div>
               <Subtotal checkout={checkout} variants={data} lines={lines} />
             </>
           )}
         </TypedProductVariantsQuery>
       ) : (
         <>
-        <table>
-              <tr>
-                <th style={{ textAlign: "start" }}>Clothes</th>
-                <th style={{ textAlign: "center" }}>Quantity</th>
-                <th style={{ textAlign: "center" }}>Type</th>
-                <th style={{ textAlign: "center" }}>Color</th>
-                <th style={{ textAlign: "center" }}>Size</th>
-                <th style={{ textAlign: "end" }}>Total</th>
-              </tr>
-              {checkout.lines.map(({ variant, quantity, id }) => (
+        <div style={{height: 200,overflowY: "scroll"}}>
+          {checkout.lines.map(({ variant, quantity, id }) => (
             <Line key={id} {...variant} quantity={quantity} />
-          ))}
-          </table>
-          
+          ))}          
+          </div>
           <Subtotal checkout={checkout} lines={lines} />
 
           <div

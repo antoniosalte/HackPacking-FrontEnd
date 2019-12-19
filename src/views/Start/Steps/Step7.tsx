@@ -114,7 +114,6 @@ const Step7 = (props) => {
       {({ checkout, update, loading: checkoutLoading }) => (
         <CartContext.Consumer>
           {cart => { 
-            console.log( cart )
             return(
         <TypedCreateCheckoutMutation
           onCompleted={async ({ checkoutCreate: { checkout, errors } }) => {
@@ -128,7 +127,6 @@ const Step7 = (props) => {
             <TypedUpdateCheckoutShippingOptionsMutation
               onCompleted={data =>
                 { 
-                  console.log( "ONCLMPLETE UPDAT", data )
                   proceedToBilling(data, update, "token")
                 }
               }
@@ -137,7 +135,6 @@ const Step7 = (props) => {
                 <TypedPaymentMethodCreateMutation
                 onCompleted={ async (dataPayment) => {
                   const canProceed = !dataPayment.checkoutPaymentCreate.errors.length;
-                  console.log( "CHECKOUT CULQI" , dataPayment,canProceed )
                 } }
               >
                 {(
@@ -167,7 +164,6 @@ const Step7 = (props) => {
                     if (checkout && token) {
                       const { billingAddress, subtotalPrice, shippingPrice } = checkout;
                       const total = subtotalPrice.gross.amount +  shippingPrice.gross.amount;
-                      console.log(createPaymentMethod,billingAddress)
                       await createPaymentMethod({
                         variables: {
                           checkoutId:  checkout.id,
@@ -230,7 +226,6 @@ const Step7 = (props) => {
                       },
                     });
                   } else {
-                    console.log( "ya existe checkout",update, this.props, checkout, cart )
                     const shippingMethods =
                         checkout.availableShippingMethods || [];
                     updateCheckoutShippingOptions({
@@ -272,10 +267,8 @@ class  Step7Container extends React.Component {
     this.setCulqi = this.setCulqi.bind(this);
   }
   componentDidUpdate(){
-    console.log( "RENDER COMPONENT UPDATE PROPS" )
     const { checkout } = this.props;
     if( checkout && !checkout.shippingMethod ){
-      console.log("SUS PROPS",this.props );
       this.props.onClick();
     }
   }
@@ -287,7 +280,6 @@ class  Step7Container extends React.Component {
     const { checkout } = this.props;
     if( checkout ){
       const total = ( checkout.subtotalPrice.gross.amount +  checkout.shippingPrice.gross.amount).toFixed(2);
-      console.log( total * 100 )
       setAmount( total * 100)
       culqi();
     }
@@ -322,10 +314,8 @@ class  Step7Container extends React.Component {
           postalCode: data.postalCode,
         }
       )
-      console.log("USER", this.props, data)
     }else {
       this.setLogin(true)
-      console.log("need login", this.props, data)
     }
   }
 render(){
@@ -333,7 +323,6 @@ render(){
   const total = checkout ? checkout.totalPrice.gross.amount : 0;
   const shippingPrice = 0;
   const { displayNewModal,showLogin  } = this.state;
-  console.log( this.props )
   return (
     <div className="container">
       <CulqiProvider
@@ -343,7 +332,6 @@ render(){
         currency="USD"
         description="Travel luggage free from anywhere in the World"
         onToken={token => {
-          console.log("token received", token);
           this.props.onPayment()
           // window.location.href = "/order-history/";
         }}
