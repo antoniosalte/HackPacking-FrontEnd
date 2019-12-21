@@ -325,6 +325,7 @@ export interface AddressInput {
   country?: CountryCode | null;
   countryArea?: string | null;
   phone?: string | null;
+  comment?: string | null;
 }
 
 export interface AttributeInput {
@@ -340,6 +341,7 @@ export interface CheckoutCreateInput {
   destination?: string | null;
   arrival?: Date | null;
   departure?: Date | null;
+  comment?: string | null;
 }
 
 export interface CheckoutLineInput {

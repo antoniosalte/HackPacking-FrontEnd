@@ -120,6 +120,7 @@ const Step7 = props => {
                       await update({ checkout });
                     }
                     setErrors(errors);
+                    console.log( "ONcomplete",checkout, errors )
                   }}
                 >
                   {(createCheckout, { loading: mutationLoading }) => (
@@ -226,6 +227,7 @@ const Step7 = props => {
                                             departure: new Date(departureNew)
                                               .toISOString()
                                               .split("T")[0],
+                                            comment: "",
                                             shippingAddress: {
                                               firstName: data.firstName,
                                               lastName: data.lastName,
@@ -338,15 +340,17 @@ class Step7Container extends React.Component {
   onSubmit(data) {
     if (this.props.user) {
       this.setDisplayNewModal(false);
-      this.props.onClick({
-        email: "kevin@gmail.com",
+      const dataShippingAdress = {
+        email: this.props.user.email,
         items: this.props.cart.lines,
         firstName: data.firstName,
         lastName: data.lastName,
         streetAddress1: data.streetAddress1,
         city: data.city,
         postalCode: data.postalCode
-      });
+      }
+      console.log(dataShippingAdress, this.props.user)
+      this.props.onClick(dataShippingAdress);
     } else {
       this.setLogin(true);
     }

@@ -1109,6 +1109,7 @@ export interface createCheckout_checkoutCreate_checkout_billingAddress {
   country: createCheckout_checkoutCreate_checkout_billingAddress_country;
   countryArea: string;
   phone: string | null;
+  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate_checkout_shippingAddress_country {
@@ -1127,6 +1128,7 @@ export interface createCheckout_checkoutCreate_checkout_shippingAddress {
   country: createCheckout_checkoutCreate_checkout_shippingAddress_country;
   countryArea: string;
   phone: string | null;
+  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate_checkout_availableShippingMethods_price {
@@ -1224,6 +1226,7 @@ export interface createCheckout_checkoutCreate_checkout {
   shippingMethod: createCheckout_checkoutCreate_checkout_shippingMethod | null;
   shippingPrice: createCheckout_checkoutCreate_checkout_shippingPrice | null;
   lines: (createCheckout_checkoutCreate_checkout_lines | null)[] | null;
+  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate {
@@ -2088,6 +2091,7 @@ export interface Checkout {
   shippingMethod: Checkout_shippingMethod | null;
   shippingPrice: Checkout_shippingPrice | null;
   lines: (Checkout_lines | null)[] | null;
+  comment?: string | null; 
 }
 
 /* tslint:disable */
@@ -2217,6 +2221,7 @@ export interface CheckoutCreateInput {
   destination?: string | null;
   arrival?: Date | null;
   departure?: Date | null;
+  comment?: string | null;
 }
 
 // null

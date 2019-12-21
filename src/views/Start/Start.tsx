@@ -33,7 +33,7 @@ class Start extends React.Component {
         this.state = {
             data:{
                 step1:{
-                    destination: "Lima, miraflores",
+                    destination: "Lima, Perú",
                     arrival: getCurrentDate(),
                     departure: getCurrentDate(true),
                 },

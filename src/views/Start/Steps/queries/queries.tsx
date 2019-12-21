@@ -199,6 +199,7 @@ mutation {
       arrival: "2019-10-01",
       departure: "2019-10-10"
       lines: [{ quantity: 1, variantId: "UHJvZHVjdFZhcmlhbnQ6Mjk3" }]
+      comment: ""
     }
   ) {
     checkout {
