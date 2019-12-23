@@ -117,7 +117,7 @@ class Start extends React.Component {
                         this.renderStep(cart)
                     }
                     <div className="start-page-steps">
-                        <BottomNav goTo={ (step) => this.goTo(step) } step={ step } />
+                        <BottomNav goTo={ (step) => this.goTo(step) } step={ step } cart={cart} />
                     </div>
                     <div className={ open ? "start-page-sidebar open-s" : "start-page-sidebar close-s" } >
                         <div

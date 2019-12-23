@@ -88,9 +88,18 @@
         .details-wear-item{
             display: flex;
             justify-content: space-between;
-
             div{
                 display: flex;
+            }
+            input{
+                display: flex;
+                width: 38px;
+                border: none;
+                padding: 0;
+                margin: auto;
+                font-size: 20px;
+                margin-top: -1px;
+                text-align: center;
             }
             .count-item{
                 font-size: 12px;
@@ -116,8 +125,8 @@
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
-                    padding: 1px 20px;
-                    font-size: 18px;
+                    padding-right: 20px;
+                    font-size: 16px;
                     background: url("../../../images/droparrow.png") 96% / 22% no-repeat;
                 }
             }
@@ -139,14 +148,12 @@
 .containr-overview{
     padding: 20px;
     width: 100%;
-    min-height: 400px;
 }
 .c-overview{
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 24px;
     width: 100%;
-    min-height: 400px;
     padding: 20px 40px;
 
     table{
@@ -177,7 +184,9 @@
     border-radius: 7.5px;
     border: solid 1px black;
 }
-
+.input-location{
+    border-bottom: 1px solid rgb(196, 196, 196) !important;
+}
 .input-location,
 .input-location:active,
 .input-location:hover{

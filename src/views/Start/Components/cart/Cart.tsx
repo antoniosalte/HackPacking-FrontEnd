@@ -11,14 +11,16 @@ import Subtotal from "./Subtotal";
 const Cart: React.FC<{
   cart: CartInterface;
   checkout: Checkout | null;
-}> = ({ cart: { lines }, checkout }) => {
+}> = ({ cart, checkout }) => {
+  const { lines } = cart;
   return (
     <>
       {!checkout ? (
         <TypedProductVariantsQuery
           variables={{ ids: lines.map(line => line.variantId) }}
         >
-          {({ data }) => (
+          {({ data }) => {
+            return(
             <>
             <table>
               <tr>
@@ -30,7 +32,7 @@ const Cart: React.FC<{
                 <th style={{ textAlign: "end" }}>Total</th>
               </tr>
               {
-                lines.length > 0 ?
+                lines.length > 0 && data.productVariants ?
                 data.productVariants.edges.map(({ node }) =>(
                   <Line
                     key={node.id}
@@ -39,6 +41,7 @@ const Cart: React.FC<{
                       lines.find(({ variantId }) => variantId === node.id) ?
                       lines.find(({ variantId }) => variantId === node.id).quantity : 0
                     }
+                    cart={cart}
                   />)
                 ) :
                 null
@@ -53,7 +56,7 @@ const Cart: React.FC<{
               }
               <Subtotal checkout={checkout} variants={data} lines={lines} />
             </>
-          )}
+          )}}
         </TypedProductVariantsQuery>
       ) : (
         <>
@@ -67,12 +70,11 @@ const Cart: React.FC<{
                 <th style={{ textAlign: "end" }}>Total</th>
               </tr>
               {checkout.lines.map(({ variant, quantity, id }) => (
-            <Line key={id} {...variant} quantity={quantity} />
+            <Line key={id} {...variant} quantity={quantity} cart={cart}/>
           ))}
           </table>
           
-          <Subtotal checkout={checkout} lines={lines} />
-
+           <Subtotal checkout={checkout} lines={lines} />
           <div
           style={{display:"flex",
           alignItems:"center",

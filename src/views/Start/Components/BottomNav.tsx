@@ -48,7 +48,11 @@ const BottomNav = ( props ) => {
                 items.map( item => {
                     return (
                         <div
-                            onClick={ () => props.goTo(item.id)}
+                            onClick={ () => {
+                                props.goTo(item.id)
+                                props.cart.clearErrors()
+
+                            }}
                             className="container-bottomnav__item"
                         >
                             <div>
@@ -62,7 +66,11 @@ const BottomNav = ( props ) => {
                     )
                 })
             }
-            <div onClick={ () => props.goTo(7)}
+            <div onClick={ () => {
+                                props.goTo(7)
+                                props.cart.clearErrors()
+
+                            }}
             className="container-bottomnav__item-o">
                 <div>
                     <img src={Overview} alt="trip"/>

@@ -9,7 +9,7 @@ const canDisplay = (data: ProductsList) =>
   maybe(() => !!data.products);
 
 const Step5 = ({cart}) => (
-    <div className="container">
+    <div style={{padding: "0 20px"}}>
         <TypedStep5Query alwaysRender displayLoader={false} errorPolicy="all">
             {({ data, loading }) => {
                 if (canDisplay(data)) {

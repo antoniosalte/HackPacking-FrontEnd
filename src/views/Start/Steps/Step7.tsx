@@ -120,7 +120,6 @@ const Step7 = props => {
                       await update({ checkout });
                     }
                     setErrors(errors);
-                    console.log( "ONcomplete",checkout, errors )
                   }}
                 >
                   {(createCheckout, { loading: mutationLoading }) => (
@@ -259,14 +258,18 @@ const Step7 = props => {
                                       });
                                     } else {
                                       const shippingMethods =
-                                        checkout.availableShippingMethods || [];
-                                      updateCheckoutShippingOptions({
-                                        variables: {
-                                          checkoutId: checkout.id,
-                                          shippingMethodId:
-                                            shippingMethods[1].id
+                                        checkout.availableShippingMethods || null;
+                                        if(shippingMethods && shippingMethods[1]){
+                                          updateCheckoutShippingOptions({
+                                            variables: {
+                                              checkoutId: checkout.id,
+                                              shippingMethodId:
+                                                shippingMethods[1].id
+                                            }
+                                          });
+                                        }else{
+                                          console.log("Invalid Shipping option", checkout)
                                         }
-                                      });
                                     }
                                   }}
                                 />
@@ -349,7 +352,6 @@ class Step7Container extends React.Component {
         city: data.city,
         postalCode: data.postalCode
       }
-      console.log(dataShippingAdress, this.props.user)
       this.props.onClick(dataShippingAdress);
     } else {
       this.setLogin(true);

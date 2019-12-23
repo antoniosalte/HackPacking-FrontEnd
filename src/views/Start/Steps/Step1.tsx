@@ -11,6 +11,7 @@ import LOGO from "../../../images/logo.jpg";
 import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
 import { quiqkTrip } from "./static";
+import moment from "moment";
 const cities = ["Lima, Peru", "Cuzco, Peru", "Arequipa, Peru"];
 
 class Step1 extends React.Component {
@@ -23,12 +24,28 @@ class Step1 extends React.Component {
   }
   quickSetup() {
     this.props.cart.clear();
-    //Modificar la formula del quick setup
-    for (let index = 0; index < quiqkTrip.length; index++) {
-      const element = quiqkTrip[index];
-      this.props.cart.add(element.variantId, element.quantity);
+    const { arrival, departure } = this.props.data.step1;
+    const dateArrival = moment(arrival,'D/M/YYYY');
+    const dateDeparture  = moment(departure ,'D/M/YYYY');
+    const diffDays = dateDeparture .diff(dateArrival, 'days');
+    //formula del quick setup
+    if(diffDays>=1){
+
+      if( diffDays <= 3){
+      this.props.cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
+      this.props.cart.add(quiqkTrip[1].variantId, 1);//JEANS
+      }
+      else{
+        const jeans= Math.ceil( diffDays/5 )
+        const polos= Math.ceil( diffDays/2 )
+        this.props.cart.add(quiqkTrip[0].variantId, polos); //T-shirt
+        this.props.cart.add(quiqkTrip[1].variantId, jeans);//JEANS
+      }
+      this.props.cart.add(quiqkTrip[2].variantId, diffDays);//Underwear
+      this.props.goTo(7);
+    }else{
+      alert("Invalid dates")
     }
-    this.props.goTo(7);
   }
   handleRequestOptions(text) {
     const { step1 } = this.props.data;

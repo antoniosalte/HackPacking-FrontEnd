@@ -1,29 +1,14 @@
 export const quiqkTrip = [
     {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6Mjgz",
-        quantity: 3,
-    },
-    {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6MzE2",
+        variantId:"UHJvZHVjdFZhcmlhbnQ6MzU3",
         quantity: 1,
     },
     {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6MzIw",
-        quantity: 2,
-    }
-]
-
-export const quiqkTrip2 = [
-    {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6Mjgz",
-        quantity: 6,
+        variantId:"UHJvZHVjdFZhcmlhbnQ6MzQx",
+        quantity: 1,
     },
     {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6MzE2",
-        quantity: 2,
-    },
-    {
-        variantId:"UHJvZHVjdFZhcmlhbnQ6MzIw",
-        quantity: 4,
+        variantId:"UHJvZHVjdFZhcmlhbnQ6MzUz",
+        quantity: 1,
     }
 ]

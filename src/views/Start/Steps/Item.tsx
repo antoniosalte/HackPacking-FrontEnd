@@ -13,50 +13,74 @@ class ItemSteps extends React.Component {
         this.state={
             countItem: 0,
             variant: null,
+            stockQuantity:100,
         }
         this.onAdd = this.onAdd.bind( this );
         this.onRemove = this.onRemove.bind( this );
         this.setVariant = this.setVariant.bind(this);
+        this.onChangeInput = this.onChangeInput.bind(this);
     }
     componentDidMount(){
         this.setState({
-            countItem: this.props.countItem,
+            countItem: Number(this.props.countItem),
             variant: this.props.variant,
         })
+    }
+    componentWillReceiveProps( newProps ){
+        if( this.props !== newProps){
+            this.setState({
+                countItem: Number(this.props.countItem),
+            })
+        }
+    }
+    onChangeInput( e ){
+        const { value } = e.target;
+        let { countItem,variant } =this.state;
+        if( Number(value) != countItem ){
+            this.props.onChangeInput(variant,Number(value),Number(countItem))
+            this.setState({
+                countItem:Number(value),
+            })
+        }
+        
     }
     onRemove(){
         let { countItem, variant } =this.state;
         if ( countItem > 0 ) {
             countItem -= 1;
+            this.setState({
+                countItem,
+            })
             this.props.onRemove(variant)
         }
-        this.setState({
-            countItem,
-        })
+        
     }
     onAdd(){
-        let { countItem,variant } =this.state;
-        if ( countItem < 100 ) {
+        let { countItem,variant,stockQuantity } =this.state;
+        if ( countItem < stockQuantity ) {
             countItem += 1;
+            this.setState({
+                countItem,
+            })
             this.props.onAdd(variant)
         }
-        this.setState({
-            countItem,
-        })
+        
     }
     setVariant( e){
         const { variant } = this.state;
         const newvariant = e.target.value
+        this.props.cart.remove( variant )
         this.setState({
             variant: newvariant,
             countItem: 0,
         })
-        this.props.cart.remove( variant )
     }
     render() {
         const item = this.props.item.node
-        const { countItem, variant: variantId } = this.state;
+        const { variant: variantId } = this.state;
         const {variants} = item;
+        const { loading } = this.props.cart;
+        const { countItem,stockQuantity } = this.props;
         return (
             <div className="container-wears__item">
                 <img src={ item.images[0] ? item.images[0].url : ImageDefault } alt="image"/>
@@ -72,18 +96,28 @@ class ItemSteps extends React.Component {
                         <div>
                             <span className="count-item">
                                 <span
-                                    onClick={ this.onRemove }
+                                    onClick={ !loading?this.onRemove : () =>{}}
                                     className="plus-i"
-                                    style={{ fontSize: 50}}
+                                    style={
+                                        loading?{
+                                            color:"#84bd005c",
+                                            fontSize: 50
+                                        }:{fontSize: 50}
+                                    }
                                 >-</span>
                                 <div>{ countItem }</div>
-                                <span onClick={ this.onAdd }
+                                <span onClick={ !loading?this.onAdd : () =>{}}
+                                style={
+                                    loading?{
+                                        color:"#84bd005c"
+                                    }:{}
+                                }
                                 className="plus-i">+</span>
                             </span>
                             <div className="verticalline" />
                             <span className="talla-item">
                                 <select name="select"
-                                onChange={ this.setVariant}
+                                onChange={ !loading? this.setVariant : () =>{}}
                                 >
                                     {
                                         variants.map( (variant,index) =>{
@@ -93,7 +127,7 @@ class ItemSteps extends React.Component {
                                                 value={ variant.id }
                                                 selected={ variant.id == variantId }
                                                 >
-                                                    {variant.name.split("/").pop()}
+                                                    {variant.name}
                                                 </option> 
                                             )
                                         } )

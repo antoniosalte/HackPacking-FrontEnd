@@ -10,10 +10,12 @@ class Wrapper extends React.Component {
     this.onRemove = this.onRemove.bind(this);
   }
   onAdd(cart, variant) {
-    cart.add(variant);
+    cart.add(variant) 
+    cart.clearErrors()
   }
   onRemove(cart, variant) {
     cart.subtract(variant);
+    cart.clearErrors()
   }
   render() {
     const { data, title, subTitle, meta, cart } = this.props;
@@ -53,12 +55,19 @@ class Wrapper extends React.Component {
                           line ? line.variantId : item.node.variants[0].id
                         }
                         countItem={line ? line.quantity : 0}
+                        stockQuantity={
+                          line ? 100 : item.node.variants[0].stockQuantity
+                        }
                       />
                     );
                   }
                 })
               : null}
           </div>
+          {cart.errors ? cart.errors.map(err => (
+              <p style={{ color: "red", fontSize: 12 }}>{err.message}</p>
+            )):null
+          }
         </React.Fragment>
       </MetaWrapper>
     );
