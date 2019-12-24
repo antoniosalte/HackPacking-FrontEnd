@@ -298,7 +298,7 @@ class Step7Container extends React.Component {
         streetAddress1: data.streetAddress1,
         city: data.city,
         postalCode: data.postalCode,
-        phone: "+51987654321"
+        phone: data.phone,
       }
       this.props.onClick(dataShippingAdress);
     } else {
