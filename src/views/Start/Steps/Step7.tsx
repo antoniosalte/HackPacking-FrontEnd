@@ -18,48 +18,7 @@ import { TypedUpdateCheckoutShippingOptionsMutation } from "../../../checkout/vi
 import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
 import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
-
-const convertDate = date => {
-  const [day, month, year] = date.split("-");
-  return month + "-" + day + "-" + year;
-};
-
-const getTotal = items => {
-  let total = 0;
-  for (let index = 0; index < items.length; index++) {
-    const item = items[index];
-    const price = item.price.amount;
-    const count = item.details.countItem;
-    total += price * count;
-  }
-  return total;
-};
-
-const deleteCount = (it, step, props) => {
-  let { items } = props.data[step];
-  for (let index = 0; index < items.length; index++) {
-    const item = items[index];
-    if (item.id === it.id && item.details.countItem > 0) {
-      item.details.countItem -= 1;
-    }
-  }
-  props.setData({ [step]: { items } });
-};
-const addCount = (it, step, props) => {
-  let { items } = props.data[step];
-  for (let index = 0; index < items.length; index++) {
-    const item = items[index];
-    if (item.id === it.id) {
-      item.details.countItem += 1;
-    }
-  }
-  props.setData({ [step]: { items } });
-};
-const deleteItem = (id, step, props) => {
-  let { items } = props.data[step];
-  let newItems = items.filter(i => i.id !== id);
-  props.setData({ [step]: { items: newItems } });
-};
+import moment from "moment";
 
 function proceedToBilling(data, update, token) {
   const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
@@ -96,11 +55,7 @@ const completeCheckout = (
 const Step7 = props => {
   const { data: user } = useUserDetails();
   const {
-    cardData,
-    dummyStatus,
-    checkout,
     clear: clearCheckout,
-    step
   } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
@@ -210,23 +165,15 @@ const Step7 = props => {
                                         arrival,
                                         departure
                                       } = props.data.step1;
-                                      const arrivalNew = convertDate(arrival);
-                                      const departureNew = convertDate(
-                                        departure
-                                      );
                                       createCheckout({
                                         variables: {
                                           checkoutInput: {
                                             email: data.email,
                                             lines: data.items,
                                             destination: destination,
-                                            arrival: new Date(arrivalNew)
-                                              .toISOString()
-                                              .split("T")[0],
-                                            departure: new Date(departureNew)
-                                              .toISOString()
-                                              .split("T")[0],
-                                            comment: "",
+                                            arrival: moment(arrival, "DD-MM-YYYY").toISOString().split("T")[0],
+                                            departure: moment(departure, "DD-MM-YYYY").toISOString().split("T")[0],
+                                            comment: "No comments",
                                             shippingAddress: {
                                               firstName: data.firstName,
                                               lastName: data.lastName,
@@ -350,7 +297,8 @@ class Step7Container extends React.Component {
         lastName: data.lastName,
         streetAddress1: data.streetAddress1,
         city: data.city,
-        postalCode: data.postalCode
+        postalCode: data.postalCode,
+        phone: "+51987654321"
       }
       this.props.onClick(dataShippingAdress);
     } else {
@@ -358,7 +306,7 @@ class Step7Container extends React.Component {
     }
   }
   render() {
-    const { checkout } = this.props;
+    const { checkout,cart } = this.props;
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal, showLogin } = this.state;

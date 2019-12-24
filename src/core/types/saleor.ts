@@ -50,7 +50,6 @@ export interface getCheckout_checkout_billingAddress {
   postalCode: string;
   country: getCheckout_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface getCheckout_checkout_shippingAddress_country {
@@ -68,7 +67,6 @@ export interface getCheckout_checkout_shippingAddress {
   postalCode: string;
   country: getCheckout_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface getCheckout_checkout_availableShippingMethods_price {
@@ -228,7 +226,6 @@ export interface updateCheckoutLine_checkoutLinesUpdate_checkout_billingAddress 
   postalCode: string;
   country: updateCheckoutLine_checkoutLinesUpdate_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutLine_checkoutLinesUpdate_checkout_shippingAddress_country {
@@ -246,7 +243,6 @@ export interface updateCheckoutLine_checkoutLinesUpdate_checkout_shippingAddress
   postalCode: string;
   country: updateCheckoutLine_checkoutLinesUpdate_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutLine_checkoutLinesUpdate_checkout_availableShippingMethods_price {
@@ -424,7 +420,6 @@ export interface updateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
   postalCode: string;
   country: updateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_shippingAddress_country {
@@ -442,7 +437,6 @@ export interface updateCheckoutBillingAddress_checkoutBillingAddressUpdate_check
   postalCode: string;
   country: updateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutBillingAddress_checkoutBillingAddressUpdate_checkout_availableShippingMethods_price {
@@ -696,7 +690,6 @@ export interface updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_bill
   postalCode: string;
   country: updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_shippingAddress_country {
@@ -714,7 +707,6 @@ export interface updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_ship
   postalCode: string;
   country: updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutShippingAddress_checkoutEmailUpdate_checkout_availableShippingMethods_price {
@@ -891,7 +883,6 @@ export interface updateCheckoutShippingOptions_checkoutShippingMethodUpdate_chec
   postalCode: string;
   country: updateCheckoutShippingOptions_checkoutShippingMethodUpdate_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutShippingOptions_checkoutShippingMethodUpdate_checkout_shippingAddress_country {
@@ -909,7 +900,6 @@ export interface updateCheckoutShippingOptions_checkoutShippingMethodUpdate_chec
   postalCode: string;
   country: updateCheckoutShippingOptions_checkoutShippingMethodUpdate_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
 }
 
 export interface updateCheckoutShippingOptions_checkoutShippingMethodUpdate_checkout_availableShippingMethods_price {
@@ -1108,8 +1098,6 @@ export interface createCheckout_checkoutCreate_checkout_billingAddress {
   postalCode: string;
   country: createCheckout_checkoutCreate_checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
-  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate_checkout_shippingAddress_country {
@@ -1127,8 +1115,6 @@ export interface createCheckout_checkoutCreate_checkout_shippingAddress {
   postalCode: string;
   country: createCheckout_checkoutCreate_checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
-  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate_checkout_availableShippingMethods_price {
@@ -1226,7 +1212,6 @@ export interface createCheckout_checkoutCreate_checkout {
   shippingMethod: createCheckout_checkoutCreate_checkout_shippingMethod | null;
   shippingPrice: createCheckout_checkoutCreate_checkout_shippingPrice | null;
   lines: (createCheckout_checkoutCreate_checkout_lines | null)[] | null;
-  comment?: string | null;
 }
 
 export interface createCheckout_checkoutCreate {
@@ -1977,7 +1962,7 @@ export interface Checkout_billingAddress {
   postalCode: string;
   country: Checkout_billingAddress_country;
   countryArea: string;
-  phone: string | null;
+  phone?: string | null;
 }
 
 export interface Checkout_shippingAddress_country {
@@ -1995,7 +1980,7 @@ export interface Checkout_shippingAddress {
   postalCode: string;
   country: Checkout_shippingAddress_country;
   countryArea: string;
-  phone: string | null;
+  phone?: string | null;
 }
 
 export interface Checkout_availableShippingMethods_price {
@@ -2091,7 +2076,7 @@ export interface Checkout {
   shippingMethod: Checkout_shippingMethod | null;
   shippingPrice: Checkout_shippingPrice | null;
   lines: (Checkout_lines | null)[] | null;
-  comment?: string | null; 
+  comment?: string | null;
 }
 
 /* tslint:disable */

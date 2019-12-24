@@ -325,7 +325,6 @@ export interface AddressInput {
   country?: CountryCode | null;
   countryArea?: string | null;
   phone?: string | null;
-  comment?: string | null;
 }
 
 export interface AttributeInput {
