@@ -114,26 +114,31 @@ class ItemSteps extends React.Component {
                                 }
                                 className="plus-i">+</span>
                             </span>
-                            <div className="verticalline" />
-                            <span className="talla-item">
-                                <select name="select"
-                                onChange={ !loading? this.setVariant : () =>{}}
-                                >
-                                    {
-                                        variants.map( (variant,index) =>{
-                                            return(
-                                                <option
-                                                key={ `sizes-${index}`}
-                                                value={ variant.id }
-                                                selected={ variant.id == variantId }
-                                                >
-                                                    {variant.name}
-                                                </option> 
-                                            )
-                                        } )
-                                    }
-                                </select>
-                            </span>
+                            {
+                                variants.length > 1 ?
+                                <>
+                                    <div className="verticalline" />
+                                    <span className="talla-item">
+                                        <select name="select"
+                                        onChange={ !loading? this.setVariant : () =>{}}
+                                        >
+                                            {
+                                                variants.map( (variant,index) =>{
+                                                    return(
+                                                        <option
+                                                        key={ `sizes-${index}`}
+                                                        value={ variant.id }
+                                                        selected={ variant.id == variantId }
+                                                        >
+                                                            {variant.name}
+                                                        </option> 
+                                                    )
+                                                } )
+                                            }
+                                        </select>
+                                    </span>
+                                </>: null
+                            }
                         </div>
                         <span className="price-item">$ { item.price.amount }</span>
                     </div>

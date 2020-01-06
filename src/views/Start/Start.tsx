@@ -8,8 +8,8 @@ import Step5 from "./Steps/Step5";
 import Step6 from "./Steps/Step6";
 import Step7 from "./Steps/Step7";
 import { CartContext } from "../../components/CartProvider/context";
-
 import BottomNav from "./Components/BottomNav";
+import QueryString from "query-string"
 
 const getCurrentDate = ( deap = false) => {
     const value = new Date();
@@ -27,13 +27,25 @@ const getCurrentDate = ( deap = false) => {
     }
     return `${dt}-${month}-${year}`;
 }
+function toStepByQuery( step ){
+    switch( step ){
+        case "trip-information" : return 1;
+        case "upperwear" : return 2;
+        case "lowerwear" : return 3;
+        case "underwear" : return 4;
+        case "socks" : return 5;
+        case "accesories" : return 6;
+        case "overview" : return 7;
+    }
+    return 1;
+}
 class Start extends React.Component {
     constructor( props ){
         super( props );
         this.state = {
             data:{
                 step1:{
-                    destination: "Lima, Perú",
+                    destination: "Perú, Lima",
                     arrival: getCurrentDate(),
                     departure: getCurrentDate(true),
                 },
@@ -50,6 +62,15 @@ class Start extends React.Component {
         this.setData = this.setData.bind( this );
         this.openSidebar= this.openSidebar.bind( this);
         this.toCheckout = this.toCheckout.bind( this);
+    }
+    componentDidMount(){
+        //this.props.history.push("/start?step=trip-information")
+        const parsed = QueryString.parse(this.props.location.search);
+        if ( parsed && parsed.step ){
+            this.setState({
+                step: toStepByQuery( parsed.step )
+            })   
+        }
     }
     openSidebar(){ 
         this.setState(prevState => ({
@@ -96,7 +117,8 @@ class Start extends React.Component {
             /> 
             )
     }
-    goTo( step ){
+    goTo( step, url = "trip-information" ){
+        this.props.history.push(`/start?step=${url}`)
         if( step === 7){
             this.setState({
                 open:false,
@@ -117,7 +139,7 @@ class Start extends React.Component {
                         this.renderStep(cart)
                     }
                     <div className="start-page-steps">
-                        <BottomNav goTo={ (step) => this.goTo(step) } step={ step } cart={cart} />
+                        <BottomNav goTo={ (step, url) => this.goTo(step, url) } step={ step } cart={cart} />
                     </div>
                     <div className={ open ? "start-page-sidebar open-s" : "start-page-sidebar close-s" } >
                         <div

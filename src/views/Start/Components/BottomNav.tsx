@@ -12,31 +12,37 @@ const items = [
     {
         id:1,
         title: "Trip Information",
+        url: "trip-information",
         image: Trip,
     },
     {
         id:2,
         title: "Upperwear",
+        url: "upperwear",
         image: Upper,
     },
     {
         id:3,
         title: "Lowewear",
+        url: "lowewear",
         image: Lower,
     },
     {
         id:4,
         title: "Underwear",
+        url: "underwear",
         image: Under,
     },
     {
         id:5,
         title: "Socks",
+        url: "socks",
         image: Socks,
     },
     {
         id:6,
         title: "Accesories",
+        url: "accesories",
         image: Accesories,
     },
 ]
@@ -49,7 +55,7 @@ const BottomNav = ( props ) => {
                     return (
                         <div
                             onClick={ () => {
-                                props.goTo(item.id)
+                                props.goTo(item.id, item.url)
                                 props.cart.clearErrors()
 
                             }}
@@ -67,7 +73,7 @@ const BottomNav = ( props ) => {
                 })
             }
             <div onClick={ () => {
-                                props.goTo(7)
+                                props.goTo(7, "overview")
                                 props.cart.clearErrors()
 
                             }}

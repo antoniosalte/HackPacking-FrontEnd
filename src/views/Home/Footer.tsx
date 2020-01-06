@@ -37,7 +37,7 @@ const Footer = props => {
                 <p>Product</p>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>
-                <Link to="/start">Shopping cart</Link>
+                <Link to="/start?step=overview">Shopping cart</Link>
                 <Link to="/account">Status of your order</Link>
                 <Link to="/faq">Support</Link>
               </div>
