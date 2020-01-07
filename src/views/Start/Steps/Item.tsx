@@ -14,11 +14,14 @@ class ItemSteps extends React.Component {
             countItem: 0,
             variant: null,
             stockQuantity:100,
+            totalitem: null,
         }
         this.onAdd = this.onAdd.bind( this );
         this.onRemove = this.onRemove.bind( this );
         this.setVariant = this.setVariant.bind(this);
         this.onChangeInput = this.onChangeInput.bind(this);
+        this.changeTotalItems = this.changeTotalItems.bind(this);
+        this.onSetCount = this.onSetCount.bind( this );
     }
     componentDidMount(){
         this.setState({
@@ -44,12 +47,17 @@ class ItemSteps extends React.Component {
         }
         
     }
+    onSetCount(){
+        let { totalitem, variant } =this.state;
+        this.props.onSet(variant, totalitem)
+    }
     onRemove(){
         let { countItem, variant } =this.state;
         if ( countItem > 0 ) {
             countItem -= 1;
             this.setState({
                 countItem,
+                totalitem: null
             })
             this.props.onRemove(variant)
         }
@@ -61,6 +69,7 @@ class ItemSteps extends React.Component {
             countItem += 1;
             this.setState({
                 countItem,
+                totalitem: null,
             })
             this.props.onAdd(variant)
         }
@@ -75,14 +84,30 @@ class ItemSteps extends React.Component {
             countItem: 0,
         })
     }
+    changeTotalItems( e ){
+        this.setState({
+            totalitem: Number(e.target.value)
+        })
+    }
     render() {
         const item = this.props.item.node
-        const { variant: variantId } = this.state;
+        const { variant: variantId , totalitem } = this.state;
         const {variants} = item;
         const { loading } = this.props.cart;
         const { countItem,stockQuantity } = this.props;
+        const tItems = totalitem ? totalitem : countItem
         return (
-            <div className="container-wears__item">
+            <div className="container-wears__item"
+            style={
+                totalitem ?
+                {
+                    height: 330
+                } :
+                {
+                    height: 310
+                }
+            }
+            >
                 <img src={ item.images[0] ? item.images[0].url : ImageDefault } alt="image"/>
                 <div className="details-item">
                     <div className="title-colors">
@@ -105,7 +130,11 @@ class ItemSteps extends React.Component {
                                         }:{fontSize: 50}
                                     }
                                 >-</span>
-                                <div>{ countItem }</div>
+                                <input 
+                                    type="number"
+                                    value={ tItems }
+                                    onChange={ this.changeTotalItems }
+                                />
                                 <span onClick={ !loading?this.onAdd : () =>{}}
                                 style={
                                     loading?{
@@ -141,6 +170,21 @@ class ItemSteps extends React.Component {
                             }
                         </div>
                         <span className="price-item">$ { item.price.amount }</span>
+                    </div>
+                    <div
+                    style={
+                        totalitem ?
+                        {
+                            display: "flex"
+                        } :
+                        {
+                            display: "none"
+                        }
+                    }
+                    className="button-confirm-item"
+                    onClick={ this.onSetCount }
+                    >
+                            add
                     </div>
                 </div>
             </div>

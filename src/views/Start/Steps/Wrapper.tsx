@@ -9,13 +9,18 @@ class Wrapper extends React.Component {
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
   }
-  onAdd(cart, variant) {
-    cart.add(variant) 
-    cart.clearErrors()
+  async onAdd(cart, variant, count = 1) {
+    await cart.clearErrors()
+    await cart.add(variant, count) 
   }
-  onRemove(cart, variant) {
-    cart.subtract(variant);
-    cart.clearErrors()
+  async onRemove(cart, variant, count = 1) {
+    await cart.clearErrors()
+    await cart.subtract(variant, count);
+  }
+  async onSet(cart, variant, count = 1) {
+    await cart.clearErrors()
+    await cart.remove(variant);
+    await cart.add(variant, count)
   }
   render() {
     const { data, title, subTitle, meta, cart } = this.props;
@@ -49,6 +54,7 @@ class Wrapper extends React.Component {
                         item={item}
                         key={`item-step2-${index}`}
                         onAdd={variant => this.onAdd(cart, variant)}
+                        onSet={(variant,c) => this.onSet(cart, variant, c)}
                         onRemove={variant => this.onRemove(cart, variant)}
                         cart={cart}
                         variant={

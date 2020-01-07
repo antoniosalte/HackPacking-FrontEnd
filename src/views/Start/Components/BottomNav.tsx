@@ -23,8 +23,8 @@ const items = [
     },
     {
         id:3,
-        title: "Lowewear",
-        url: "lowewear",
+        title: "Lowerwear",
+        url: "lowerwear",
         image: Lower,
     },
     {
