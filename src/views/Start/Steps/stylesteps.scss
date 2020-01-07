@@ -220,3 +220,19 @@ ul.react-autocomplete-input > li{
 ul.react-autocomplete-input > li.active{
     background-color: #84BD00;
 }
+.input-gender{
+    border: solid 3px black;
+    background-color: #84BD00;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.input-gender-female{
+    border: solid 3px black;
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}

@@ -6,8 +6,13 @@ import Item from "./Item";
 class Wrapper extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      male: true,
+      maleString: "Men"
+    }
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
+    this.onChangeGender = this.onChangeGender.bind( this );
   }
   async onAdd(cart, variant, count = 1) {
     await cart.clearErrors()
@@ -22,8 +27,17 @@ class Wrapper extends React.Component {
     await cart.remove(variant);
     await cart.add(variant, count)
   }
+  onChangeGender( e ){
+    let { male } = this.state;
+    this.setState({
+      male: !male,
+      maleString: !male ? "Men" : "Women"
+    })
+  }
   render() {
     const { data, title, subTitle, meta, cart } = this.props;
+    const { male, maleString } = this.state;
+    const edges = data.products.edges.filter( x => x.node.collections[0].name == maleString );
     return (
       <MetaWrapper
         meta={{
@@ -33,11 +47,27 @@ class Wrapper extends React.Component {
       >
         <React.Fragment>
           <br />
-          <p className="title-steps">{title}</p>
+          <div style={{display:"flex", justifyContent: "space-between"}}>
+            <p className="title-steps">{title}</p>
+            <div style={{display: "flex", fontSize: 14}}>
+              <span style={{marginRight: 20}}>Filters</span>
+              <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
+                <span style={{display: "flex",marginBottom: 10}}>
+                  <div className={ male ? "input-gender" :  "input-gender-female " }  onClick={ this.onChangeGender } />
+                  &nbsp;&nbsp;&nbsp;Male 
+                </span>
+                <span style={{display: "flex"}}>
+                <div className={ !male ? "input-gender" :  "input-gender-female " } onClick={ this.onChangeGender } />
+                &nbsp;&nbsp;&nbsp;Female 
+                </span>
+              </div>
+              
+            </div>
+          </div>
           <p className="sub-title-steps">{subTitle}</p>
           <div className="container-wears">
-            {data.products.edges && data.products.edges.length > 0
-              ? data.products.edges.map((item, index) => {
+            {edges && edges.length > 0
+              ? edges.map((item, index) => {
                   if (item.node.variants && item.node.variants.length > 0) {
                     let line = null;
                     for (let index = 0; index < cart.lines.length; index++) {

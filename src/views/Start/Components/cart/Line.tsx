@@ -10,11 +10,30 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = (props) => {
   quantity,
   cart
 } = props;
+const { loading } = cart;
   return(
   <tr key={id}>
       <td style={{ textAlign: "start" }}>{product.name}</td>
-      <td style={{ textAlign: "center"}}>
-        {quantity}
+      <td style={{display: "flex", justifyContent: "center"}}>
+        <div style={{display: "flex"}}>
+          <div
+            className="btn-add-count-quantity"
+            style={
+              loading?{
+                  backgroundColor:"#84bd005c"
+              }:{}
+          }
+            onClick={ () =>  !loading ? props.removeToItem( id ) : null }>-</div>
+          <span style={{margin: "0 10px"}}> {quantity} </span>
+          <div className="btn-minus-count-quantity"
+          style={
+            loading?{
+                backgroundColor:"#84bd005c"
+            }:{}
+        }
+          onClick={ () => !loading ? props.addToItem( id ) : null }>+</div>
+        </div>
+        
       </td>
       <td style={{ textAlign: "center" }}>{ "-" }</td>
       <td style={{ textAlign: "center" }}>

@@ -8,6 +8,14 @@ import { Checkout } from "../../../../checkout/types/Checkout"
 import Line from "./Line";
 import Subtotal from "./Subtotal";
 
+const removeToItem = async ( cart ,id)=>{
+  await cart.clearErrors()
+    await cart.subtract(id) 
+}
+const addToItem= async (cart, id )=>{
+  await cart.clearErrors()
+    await cart.add(id) 
+}
 const Cart: React.FC<{
   cart: CartInterface;
   checkout: Checkout | null;
@@ -42,6 +50,8 @@ const Cart: React.FC<{
                       lines.find(({ variantId }) => variantId === node.id).quantity : 0
                     }
                     cart={cart}
+                    removeToItem={ ( id )=> removeToItem( cart, id ) }
+                    addToItem={ ( id )=> addToItem( cart, id ) }
                   />)
                 ) :
                 null
@@ -70,7 +80,10 @@ const Cart: React.FC<{
                 <th style={{ textAlign: "end" }}>Total</th>
               </tr>
               {checkout.lines.map(({ variant, quantity, id }) => (
-            <Line key={id} {...variant} quantity={quantity} cart={cart}/>
+            <Line key={id} {...variant} quantity={quantity} cart={cart}
+                    removeToItem={ ( id )=> removeToItem( cart, id ) }
+                    addToItem={ ( id )=> addToItem( cart, id ) }
+            />
           ))}
           </table>
           

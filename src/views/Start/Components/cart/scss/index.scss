@@ -48,3 +48,25 @@
     border-top: 1px solid $gray;
   }
 }
+
+.btn-add-count-quantity{
+  background-color: #84BD00;
+  color: black;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+}
+.btn-minus-count-quantity{
+  background-color: #84BD00;
+  color: black;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+
+}
