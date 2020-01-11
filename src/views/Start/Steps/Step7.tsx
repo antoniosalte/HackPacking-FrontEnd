@@ -54,9 +54,7 @@ const completeCheckout = (
 };
 const Step7 = props => {
   const { data: user } = useUserDetails();
-  const {
-    clear: clearCheckout,
-  } = React.useContext(CheckoutContext);
+  const { clear: clearCheckout } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
   const [errors, setErrors] = React.useState([]);
@@ -112,7 +110,7 @@ const Step7 = props => {
                                   createCheckout={createCheckout}
                                   errors={errors}
                                   onPayment={async () => {
-                                    const { token } = checkout;
+                                    const token = checkout.token.id;
                                     if (checkout && token) {
                                       const {
                                         billingAddress,
@@ -171,8 +169,18 @@ const Step7 = props => {
                                             email: data.email,
                                             lines: data.items,
                                             destination: destination,
-                                            arrival: moment(arrival, "DD-MM-YYYY").toISOString().split("T")[0],
-                                            departure: moment(departure, "DD-MM-YYYY").toISOString().split("T")[0],
+                                            arrival: moment(
+                                              arrival,
+                                              "DD-MM-YYYY"
+                                            )
+                                              .toISOString()
+                                              .split("T")[0],
+                                            departure: moment(
+                                              departure,
+                                              "DD-MM-YYYY"
+                                            )
+                                              .toISOString()
+                                              .split("T")[0],
                                             comment: "No comments",
                                             shippingAddress: {
                                               firstName: data.firstName,
@@ -205,18 +213,25 @@ const Step7 = props => {
                                       });
                                     } else {
                                       const shippingMethods =
-                                        checkout.availableShippingMethods || null;
-                                        if(shippingMethods && shippingMethods[1]){
-                                          updateCheckoutShippingOptions({
-                                            variables: {
-                                              checkoutId: checkout.id,
-                                              shippingMethodId:
-                                                shippingMethods[1].id
-                                            }
-                                          });
-                                        }else{
-                                          console.log("Invalid Shipping option", checkout)
-                                        }
+                                        checkout.availableShippingMethods ||
+                                        null;
+                                      if (
+                                        shippingMethods &&
+                                        shippingMethods[1]
+                                      ) {
+                                        updateCheckoutShippingOptions({
+                                          variables: {
+                                            checkoutId: checkout.id,
+                                            shippingMethodId:
+                                              shippingMethods[1].id
+                                          }
+                                        });
+                                      } else {
+                                        console.log(
+                                          "Invalid Shipping option",
+                                          checkout
+                                        );
+                                      }
                                     }
                                   }}
                                 />
@@ -298,15 +313,15 @@ class Step7Container extends React.Component {
         streetAddress1: data.streetAddress1,
         city: data.city,
         postalCode: data.postalCode,
-        phone: data.phone,
-      }
+        phone: data.phone
+      };
       this.props.onClick(dataShippingAdress);
     } else {
       this.setLogin(true);
     }
   }
   render() {
-    const { checkout,cart } = this.props;
+    const { checkout, cart } = this.props;
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal, showLogin } = this.state;
@@ -319,6 +334,7 @@ class Step7Container extends React.Component {
           currency="USD"
           description="Travel luggage free from anywhere in the World"
           onToken={token => {
+            checkout.token = token;
             this.props.onPayment();
             // window.location.href = "/order-history/";
           }}
