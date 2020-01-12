@@ -35,20 +35,22 @@ const Page: React.FC<{
   order ? (
     <>
       {!guest && (
-        <Link className="order-details__link" to={orderHistoryUrl}>
-          Go back to Order History
+        <Link className="order-details__link" to="/account">
+          Go back to Profile
         </Link>
       )}
       <h3>Your order nr: {order.number}</h3>
       <p className="order-details__status">
         {order.paymentStatusDisplay} / {order.statusDisplay}
       </p>
-      <CartTable
-        lines={extractOrderLines(order.lines)}
-        totalCost={order.total.gross.localized}
-        deliveryCost={order.shippingPrice.gross.localized}
-        subtotal={order.subtotal.gross.localized}
-      />
+      <div className="container-table-oreder">
+        <CartTable
+          lines={extractOrderLines(order.lines)}
+          totalCost={order.total.gross.localized}
+          deliveryCost={order.shippingPrice.gross.localized}
+          subtotal={order.subtotal.gross.localized}
+        />
+      </div>
       <div className="order-details__summary">
         <div>
           <h4>Shipping Address</h4>

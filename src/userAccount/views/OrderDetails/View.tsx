@@ -24,6 +24,7 @@ const View: React.FC<RouteComponentProps<{ token?: string }>> = ({
   return (
     <div className="order-details container">
       <Page guest={guest} order={order} />
+      <br /><br/>
     </div>
   );
 };
