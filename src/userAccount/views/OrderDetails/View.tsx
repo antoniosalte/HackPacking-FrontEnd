@@ -22,9 +22,11 @@ const View: React.FC<RouteComponentProps<{ token?: string }>> = ({
   }
 
   return (
-    <div className="order-details container">
+    <div className="order-details">
+      <div className="container">
       <Page guest={guest} order={order} />
       <br /><br/>
+      </div>
     </div>
   );
 };
