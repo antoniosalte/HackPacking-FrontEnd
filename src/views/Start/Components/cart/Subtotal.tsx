@@ -9,7 +9,6 @@ import { maybe } from "../../../../core/utils";
 import { VariantList } from "../../../../views/Product/types/VariantList";
 
 const gettotal = ( variants, lines ) => {
-  console.log( "VARIANTS", variants, lines)
   let total = 0;
   if ( lines.length > 0 ){
     for (let index = 0; index < variants.productVariants.edges.length; index++) {

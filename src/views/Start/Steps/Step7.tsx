@@ -546,7 +546,7 @@ class Step7Container extends React.Component {
               return (
                 <div className="cnt-btn-checkout">
                   {
-                    ( checkout && !(checkout.lines.length > 0) ) || ( !checkout && !(cart.lines.length > 0) ) ?
+                    ( checkout && (checkout.lines.length > 0) ) || ( !checkout && (cart.lines.length > 0) ) ?
                   <button
                     id="openculqi"
                     onClick={() => this.setCulqi(openCulqi, setAmount)}
