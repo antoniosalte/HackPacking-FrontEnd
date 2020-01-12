@@ -499,10 +499,6 @@ class Step7Container extends React.Component {
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal } = this.state;
-    console.log( "CHECKOUT",checkout)
-    console.log( "CARt",cart)
-    console.log( "user",this.props.user)
-
     return (
       <div className="container">
         <CulqiProvider
@@ -549,13 +545,16 @@ class Step7Container extends React.Component {
             {({ openCulqi, setAmount, amount }) => {
               return (
                 <div className="cnt-btn-checkout">
+                  {
+                    ( checkout && !(checkout.lines.length > 0) ) || ( !checkout && !(cart.lines.length > 0) ) ?
                   <button
                     id="openculqi"
                     onClick={() => this.setCulqi(openCulqi, setAmount)}
                     disabled={ ( checkout && !(checkout.lines.length > 0) ) || ( !checkout && !(cart.lines.length > 0) ) }
                   > 
                     {this.getStepText( checkout )}
-                  </button>
+                  </button> : null 
+                  }
                 </div>
               );
             }}
