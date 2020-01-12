@@ -8,7 +8,6 @@ class Wrapper extends React.Component {
     super(props);
     this.state={
       male: true,
-      maleString: "Men"
     }
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
@@ -31,13 +30,43 @@ class Wrapper extends React.Component {
     let { male } = this.state;
     this.setState({
       male: !male,
-      maleString: !male ? "Men" : "Women"
     })
+  }
+  filterProduct( x ){
+    const { male } = this.state;
+    if ( x.node.collections.length < 1 ){
+      return null; // this product dont have collections
+    }
+    if ( male ){
+      if ( x.node.collections.length == 1  &&
+        x.node.collections[0].name == "Men"){
+        return x;// this product have only one collection
+      }
+      if ( x.node.collections.length == 2  &&
+        (x.node.collections[0].name == "Men" ||
+        x.node.collections[1].name == "Men")
+        ){
+        return x;// this product have 2 collection
+      }
+    } else {
+      if ( x.node.collections.length == 1  &&
+        x.node.collections[0].name == "Women"){
+        return x;// this product have only one collection
+      }
+      if ( x.node.collections.length == 2  &&
+        (x.node.collections[0].name == "Women" ||
+        x.node.collections[1].name == "Women")
+        ){
+        return x;// this product have 2 collection
+      }
+    }
+    return null;
   }
   render() {
     const { data, title, subTitle, meta, cart } = this.props;
-    const { male, maleString } = this.state;
-    const edges = data.products.edges.filter( x => x.node.collections[0].name == maleString );
+    const { male } = this.state;
+    const edges = data.products.edges.filter( x => this.filterProduct(x) );
+    console.log(data.products.edges)
     return (
       <MetaWrapper
         meta={{
