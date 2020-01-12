@@ -12,6 +12,8 @@ class ItemSteps extends React.Component {
         super(props);
         this.state={
             countItem: 0,
+            countItemString: "",
+            isSelected: false,
             variant: null,
             stockQuantity:100,
             totalitem: null,
@@ -19,9 +21,10 @@ class ItemSteps extends React.Component {
         this.onAdd = this.onAdd.bind( this );
         this.onRemove = this.onRemove.bind( this );
         this.setVariant = this.setVariant.bind(this);
-        this.onChangeInput = this.onChangeInput.bind(this);
         this.changeTotalItems = this.changeTotalItems.bind(this);
-        this.onSetCount = this.onSetCount.bind( this );
+        this.onSaveTotalItems = this.onSaveTotalItems.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.onFocus = this.onFocus.bind(this);
     }
     componentDidMount(){
         this.setState({
@@ -36,20 +39,24 @@ class ItemSteps extends React.Component {
             })
         }
     }
-    onChangeInput( e ){
-        const { value } = e.target;
-        let { countItem,variant } =this.state;
-        if( Number(value) != countItem ){
-            this.props.onChangeInput(variant,Number(value),Number(countItem))
-            this.setState({
-                countItem:Number(value),
-            })
-        }
-        
+    onBlur(){
+        this.setState({
+            isSelected: false,
+            countItemString: "",
+        })
     }
-    onSetCount(){
-        let { totalitem, variant } =this.state;
-        this.props.onSet(variant, totalitem)
+    onFocus(){
+        this.setState({
+            isSelected: true,
+        })
+    }
+    getItemCount(){
+        const { countItem } = this.props;
+        const { isSelected, countItemString } = this.state;
+        if ( isSelected ){
+            return countItemString;
+        }
+        return  countItem;
     }
     onRemove(){
         let { countItem, variant } =this.state;
@@ -85,29 +92,26 @@ class ItemSteps extends React.Component {
         })
     }
     changeTotalItems( e ){
-        this.setState({
-            totalitem: Number(e.target.value)
-        })
+        if ( e.target.value.match(/^$|^[0-9]+$/) ){
+            this.setState({
+                countItemString: e.target.value
+            })
+        }
+    }
+    onSaveTotalItems( e ){
+        if ( e.key == "Enter" &&
+        this.state.countItemString.length > 0 &&
+        Number(this.state.countItemString) !== this.props.countItem ){
+            this.props.onSet(this.state.variant, Number(this.state.countItemString))
+        }
     }
     render() {
         const item = this.props.item.node
-        const { variant: variantId , totalitem } = this.state;
+        const { variant: variantId  } = this.state;
         const {variants} = item;
         const { loading } = this.props.cart;
-        const { countItem,stockQuantity } = this.props;
-        const tItems = totalitem ? totalitem : countItem
         return (
-            <div className="container-wears__item"
-            style={
-                totalitem ?
-                {
-                    height: 330
-                } :
-                {
-                    height: 310
-                }
-            }
-            >
+            <div className="container-wears__item">
                 <img src={ item.images[0] ? item.images[0].url : ImageDefault } alt="image"/>
                 <div className="details-item">
                     <div className="title-colors">
@@ -131,9 +135,11 @@ class ItemSteps extends React.Component {
                                     }
                                 >-</span>
                                 <input 
-                                    type="number"
-                                    value={ tItems }
+                                    value={ this.getItemCount() }
                                     onChange={ this.changeTotalItems }
+                                    onKeyDown={ this.onSaveTotalItems }
+                                    onFocus={this.onFocus}
+                                    onBlur={this.onBlur}
                                 />
                                 <span onClick={ !loading?this.onAdd : () =>{}}
                                 style={
@@ -170,21 +176,6 @@ class ItemSteps extends React.Component {
                             }
                         </div>
                         <span className="price-item">$ { item.price.amount }</span>
-                    </div>
-                    <div
-                    style={
-                        totalitem ?
-                        {
-                            display: "flex"
-                        } :
-                        {
-                            display: "none"
-                        }
-                    }
-                    className="button-confirm-item"
-                    onClick={ this.onSetCount }
-                    >
-                            add
                     </div>
                 </div>
             </div>

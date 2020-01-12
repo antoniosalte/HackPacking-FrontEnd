@@ -35,7 +35,7 @@ const { loading } = cart;
         </div>
         
       </td>
-      <td style={{ textAlign: "center" }}>{ "-" }</td>
+      <td style={{ textAlign: "center" }}>{ props.stockQuantity ? props.stockQuantity : "-" }</td>
       <td style={{ textAlign: "center" }}>
         <div
           className="color-point"

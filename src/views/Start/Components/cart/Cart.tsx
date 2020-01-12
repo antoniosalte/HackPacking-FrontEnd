@@ -27,14 +27,16 @@ const Cart: React.FC<{
         <TypedProductVariantsQuery
           variables={{ ids: lines.map(line => line.variantId) }}
         >
-          {({ data }) => {
+          {(response) => 
+          {
+            const { data } = response;
             return(
             <>
             <table>
               <tr>
                 <th style={{ textAlign: "start" }}>Clothes</th>
                 <th style={{ textAlign: "center" }}>Quantity</th>
-                <th style={{ textAlign: "center" }}>Type</th>
+                <th style={{ textAlign: "center" }}>Stock</th>
                 <th style={{ textAlign: "center" }}>Color</th>
                 <th style={{ textAlign: "center" }}>Size</th>
                 <th style={{ textAlign: "end" }}>Total</th>
@@ -58,13 +60,13 @@ const Cart: React.FC<{
               }
               </table>
               {
-                lines.length < 1 ?
+                lines.length > 0 ?
+                <Subtotal checkout={checkout} variants={data} lines={lines} /> :
                 <center>
                   <br /><br /><br />
                   <p>You haven't added items yet</p>
-                </center> : null
+                </center>
               }
-              <Subtotal checkout={checkout} variants={data} lines={lines} />
             </>
           )}}
         </TypedProductVariantsQuery>
@@ -74,7 +76,7 @@ const Cart: React.FC<{
               <tr>
                 <th style={{ textAlign: "start" }}>Clothes</th>
                 <th style={{ textAlign: "center" }}>Quantity</th>
-                <th style={{ textAlign: "center" }}>Type</th>
+                <th style={{ textAlign: "center" }}>Stock</th>
                 <th style={{ textAlign: "center" }}>Color</th>
                 <th style={{ textAlign: "center" }}>Size</th>
                 <th style={{ textAlign: "end" }}>Total</th>
@@ -87,7 +89,10 @@ const Cart: React.FC<{
           ))}
           </table>
           
-           <Subtotal checkout={checkout} lines={lines} />
+
+          {
+            lines.length > 0 ? 
+           <> <Subtotal checkout={checkout} lines={lines} />
           <div
           style={{display:"flex",
           alignItems:"center",
@@ -105,7 +110,13 @@ const Cart: React.FC<{
             }}>Total Price:&nbsp;
             $ { ( checkout.subtotalPrice.gross.amount +  checkout.shippingPrice.gross.amount ).toFixed(2)  }
             </p>
-          </div>
+          </div> </>: 
+          <center>
+            <br /><br /><br />
+            <p>You haven't added items yet</p>
+          </center>
+          }
+           
         </> 
       )}
     </>

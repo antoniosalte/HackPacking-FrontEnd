@@ -81,6 +81,12 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 }))}
                 autoComplete="Country"
               />
+              <TextField
+                type="comment"
+                name="comment"
+                autoComplete="comment"
+                placeholder="Comment"
+              />
           </fieldset>
           <div className="btn-login">
             <button type="submit" disabled={loading} >

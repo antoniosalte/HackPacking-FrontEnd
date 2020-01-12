@@ -1,7 +1,5 @@
 import * as React from "react";
 import "../styles/styles.scss";
-import TextInput from "react-autocomplete-input";
-import "react-autocomplete-input/dist/bundle.css";
 
 import { MetaWrapper } from "../../../components";
 import Image from "../../../images/hp-start-banner.svg";
@@ -17,10 +15,8 @@ const cities = ["Perú, Lima", "Perú, Cuzco", "Perú, Arequipa"];
 class Step1 extends React.Component {
   constructor(props) {
     super(props);
-    this.handleRequestOptions = this.handleRequestOptions.bind(this);
+    this.onChangeDestination = this.onChangeDestination.bind(this);
     this.quickSetup = this.quickSetup.bind(this);
-    this.destinationRef = React.createRef();
-    this.depRef = React.createRef();
   }
   quickSetup() {
     this.props.cart.clear();
@@ -47,9 +43,9 @@ class Step1 extends React.Component {
       alert("Invalid dates")
     }
   }
-  handleRequestOptions(text) {
+  onChangeDestination( e ){
     const { step1 } = this.props.data;
-    step1.destination = text;
+    step1.destination = e.target.value;
     this.props.setData({ step1 });
   }
   changeData(type, value) {
@@ -67,7 +63,6 @@ class Step1 extends React.Component {
     this.props.setData({ step1 });
   }
   render() {
-    const { step1 } = this.props.data;
     return (
       <MetaWrapper
         meta={{
@@ -97,27 +92,21 @@ class Step1 extends React.Component {
             <div className="container-step1__item i-left">
               <div
                 className="item-div"
-                style={{
-                  cursor: "pointer"
-                }}
-                onClick={() => this.destinationRef.current.refInput.focus()}
               >
                 <img src={IconLocation} alt="img" />
                 <p>
                   Destination:
-                  <TextInput
-                    ref={this.destinationRef}
-                    onRequestOptions={this.handleRequestOptions}
-                    Component="input"
-                    maxOptions={6}
-                    trigger=""
-                    offsetY={20}
-                    options={cities}
-                    requestOnlyIfNoOptions={false}
-                    onChange={this.handleRequestOptions}
-                    value={step1.destination}
-                    className="input-location"
-                  />
+                  <select className="input-location"
+                  style={{border:"0px solid transparent",backgroundColor:"white"}}
+                  onChange={ this.onChangeDestination }
+                  id="select-destination"
+                  >
+                    {
+                      cities.map( c => (
+                      <option value={c}>{c}</option> 
+                      ))
+                    }
+                  </select>
                 </p>
               </div>
             </div>

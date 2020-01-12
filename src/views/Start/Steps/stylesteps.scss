@@ -190,6 +190,11 @@
         padding: 12px 32px;
         font-size: 18px;
         font-weight: 500;
+        cursor: pointer;
+    }
+    button:disabled{
+        background: #00000081;
+        cursor: not-allowed;
     }
 }
 .color-point{
@@ -235,4 +240,61 @@ ul.react-autocomplete-input > li.active{
     height: 20px;
     border-radius: 10px;
     cursor: pointer;
+}
+.container-card-checkout{
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+
+    .checkout-card-1{
+        background-color: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+        width: 240px;
+        padding: 20px;
+        p{
+            font-size: 14px;
+        }
+    }
+}
+.item-shipping-method{
+    display: flex;
+    padding: 10px;
+    border: solid 0.5px;
+    width: 100%;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+.item-shipping-method-s{
+    display: flex;
+    padding: 10px;
+    border: solid 0.5px #84BD00;
+    width: 100%;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+    background-color: #84BD00;
+    color: white;
+}
+.btn-add-shipping-method{
+    padding: 0px 20px;
+    width: 220px;
+    background: #84BD00;
+    border-radius: 17px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    height: 36px;
+    align-items: center;
+    margin-top: 30px;
+}
+.btn-add-shipping-method:disabled{
+    cursor: not-allowed;
+    background: rgba(132, 189, 0, 0.45);;
+    color: white;
 }
