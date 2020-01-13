@@ -120,7 +120,7 @@ class ItemSteps extends React.Component {
                         </span>
                     </div>
                     <p className="description-item"
-                    dangerouslySetInnerHTML={createMarkup( item.description )} />
+                    dangerouslySetInnerHTML={createMarkup( JSON.parse(item.descriptionJson).blocks[0].text )} />
                     <div className="details-wear-item">
                         <div>
                             <span className="count-item">

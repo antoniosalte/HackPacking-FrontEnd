@@ -45,7 +45,7 @@ class Start extends React.Component {
         this.state = {
             data:{
                 step1:{
-                    destination: "Perú, Lima",
+                    destination: "Lima, Peru",
                     arrival: getCurrentDate(),
                     departure: getCurrentDate(true),
                 },

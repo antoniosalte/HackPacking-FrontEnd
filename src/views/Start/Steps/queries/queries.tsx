@@ -19,7 +19,7 @@ query {
           id
           name
         }
-        description,
+        descriptionJson,
         variants{
 	        id
           stockQuantity
@@ -56,7 +56,7 @@ query {
           id
           name
         }
-        description,
+        descriptionJson,
         variants{
 	        id
           stockQuantity
@@ -93,7 +93,7 @@ query {
           id
           name
         }
-        description,
+        descriptionJson,
         variants{
 	  id
           stockQuantity
@@ -130,7 +130,7 @@ query {
           id
           name
         }
-        description,
+        descriptionJson,
         variants{
 	  id
           stockQuantity
@@ -167,7 +167,7 @@ query {
           id
           name
         }
-        description,
+        descriptionJson,
         variants{
 	  id
           stockQuantity

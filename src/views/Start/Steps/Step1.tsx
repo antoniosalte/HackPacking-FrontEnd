@@ -10,7 +10,7 @@ import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
 import { quiqkTrip } from "./static";
 import moment from "moment";
-const cities = ["Perú, Lima", "Perú, Cuzco", "Perú, Arequipa"];
+const cities = ["Lima, Peru", "Cuzco, Peru", "Arequipa, Peru"];
 
 class Step1 extends React.Component {
   constructor(props) {

@@ -85,7 +85,7 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 type="comment"
                 name="comment"
                 autoComplete="comment"
-                placeholder="Comment"
+                placeholder="Comments"
               />
           </fieldset>
           <div className="btn-login">
