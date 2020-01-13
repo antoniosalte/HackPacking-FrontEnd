@@ -6,66 +6,72 @@ import Item from "./Item";
 class Wrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      male: true,
-    }
+    this.state = {
+      male: true
+    };
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
-    this.onChangeGender = this.onChangeGender.bind( this );
+    this.onChangeGender = this.onChangeGender.bind(this);
   }
   async onAdd(cart, variant, count = 1) {
-    await cart.clearErrors()
-    await cart.add(variant, count) 
+    await cart.clearErrors();
+    await cart.add(variant, count);
   }
   async onRemove(cart, variant, count = 1) {
-    await cart.clearErrors()
+    await cart.clearErrors();
     await cart.subtract(variant, count);
   }
   async onSet(cart, variant, count = 1) {
-    await cart.clearErrors()
+    await cart.clearErrors();
     await cart.remove(variant);
-    await cart.add(variant, count)
+    await cart.add(variant, count);
   }
-  onChangeGender( e ){
-    let { male } = this.state;
+  onChangeGender(e) {
+    let { male } = this.state;
     this.setState({
-      male: !male,
-    })
+      male: !male
+    });
   }
-  filterProduct( x ){
-    const { male } = this.state;
-    if ( x.node.collections.length < 1 ){
+  filterProduct(x) {
+    const { male } = this.state;
+    if (x.node.collections.length < 1) {
       return null; // this product dont have collections
     }
-    if ( male ){
-      if ( x.node.collections.length == 1  &&
-        x.node.collections[0].name == "Men"){
-        return x;// this product have only one collection
+    if (male) {
+      if (
+        x.node.collections.length == 1 &&
+        x.node.collections[0].name == "Men"
+      ) {
+        return x; // this product have only one collection
       }
-      if ( x.node.collections.length == 2  &&
+      if (
+        x.node.collections.length == 2 &&
         (x.node.collections[0].name == "Men" ||
-        x.node.collections[1].name == "Men")
-        ){
-        return x;// this product have 2 collection
+          x.node.collections[1].name == "Men")
+      ) {
+        return x; // this product have 2 collection
       }
     } else {
-      if ( x.node.collections.length == 1  &&
-        x.node.collections[0].name == "Women"){
-        return x;// this product have only one collection
+      if (
+        x.node.collections.length == 1 &&
+        x.node.collections[0].name == "Women"
+      ) {
+        return x; // this product have only one collection
       }
-      if ( x.node.collections.length == 2  &&
+      if (
+        x.node.collections.length == 2 &&
         (x.node.collections[0].name == "Women" ||
-        x.node.collections[1].name == "Women")
-        ){
-        return x;// this product have 2 collection
+          x.node.collections[1].name == "Women")
+      ) {
+        return x; // this product have 2 collection
       }
     }
     return null;
   }
   render() {
     const { data, title, subTitle, meta, cart } = this.props;
-    const { male } = this.state;
-    const edges = data.products.edges.filter( x => this.filterProduct(x) );
+    const { male } = this.state;
+    const edges = data.products.edges.filter(x => this.filterProduct(x));
     return (
       <MetaWrapper
         meta={{
@@ -75,21 +81,32 @@ class Wrapper extends React.Component {
       >
         <React.Fragment>
           <br />
-          <div style={{display:"flex", justifyContent: "space-between"}}>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <p className="title-steps">{title}</p>
-            <div style={{display: "flex", fontSize: 14}}>
-              <span style={{marginRight: 20}}>Filters</span>
-              <div style={{display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-                <span style={{display: "flex",marginBottom: 10}}>
-                  <div className={ male ? "input-gender" :  "input-gender-female " }  onClick={ this.onChangeGender } />
-                  &nbsp;&nbsp;&nbsp;Male 
+            <div style={{ display: "flex", fontSize: 14 }}>
+              <span style={{ marginRight: 20 }}>Filters</span>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start"
+                }}
+              >
+                <span style={{ display: "flex", marginBottom: 10 }}>
+                  <div
+                    className={male ? "input-gender" : "input-gender-female "}
+                    onClick={this.onChangeGender}
+                  />
+                  &nbsp;&nbsp;&nbsp;Male
                 </span>
-                <span style={{display: "flex"}}>
-                <div className={ !male ? "input-gender" :  "input-gender-female " } onClick={ this.onChangeGender } />
-                &nbsp;&nbsp;&nbsp;Female 
+                <span style={{ display: "flex" }}>
+                  <div
+                    className={!male ? "input-gender" : "input-gender-female "}
+                    onClick={this.onChangeGender}
+                  />
+                  &nbsp;&nbsp;&nbsp;Female
                 </span>
               </div>
-              
             </div>
           </div>
           <p className="sub-title-steps">{subTitle}</p>
@@ -112,7 +129,7 @@ class Wrapper extends React.Component {
                         item={item}
                         key={`item-step2-${index}`}
                         onAdd={variant => this.onAdd(cart, variant)}
-                        onSet={(variant,c) => this.onSet(cart, variant, c)}
+                        onSet={(variant, c) => this.onSet(cart, variant, c)}
                         onRemove={variant => this.onRemove(cart, variant)}
                         cart={cart}
                         variant={
@@ -128,10 +145,11 @@ class Wrapper extends React.Component {
                 })
               : null}
           </div>
-          {cart.errors ? cart.errors.map(err => (
-              <p style={{ color: "red", fontSize: 12 }}>{err.message}</p>
-            )):null
-          }
+          {cart.errors
+            ? cart.errors.map(err => (
+                <p style={{ color: "red", fontSize: 12 }}>{err.message}</p>
+              ))
+            : null}
         </React.Fragment>
       </MetaWrapper>
     );
