@@ -5,7 +5,33 @@ import { LineI } from "../../../../components/CartTable/ProductRow";
 const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
   const { id, product, pricing, name, quantity, cart } = props;
   const { loading } = cart;
-  var color = name.split("/")[0].toLowerCase();
+  const colors = [
+    "white",
+    "blue",
+    "orange",
+    "black",
+    "cyan",
+    "gray",
+    "red",
+    "brown",
+    "green",
+    "yellow",
+    "pink",
+    "purple"
+  ];
+  var color = "white";
+
+  const split = name.split("/");
+  split.forEach(element => {
+    var re = / /gi;
+    element = element.replace(re, "").toLowerCase();
+    colors.forEach(element_color => {
+      if (element_color === element) {
+        color = element;
+      }
+    });
+  });
+
   return (
     <tr key={id}>
       <td style={{ textAlign: "start" }}>{product.name}</td>
