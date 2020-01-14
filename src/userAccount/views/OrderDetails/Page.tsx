@@ -39,7 +39,7 @@ const Page: React.FC<{
           Go back to Profile
         </Link>
       )}
-      <h3>Your order nr: {order.number}</h3>
+      <h3>Your order number: {order.number}</h3>
       <p className="order-details__status">
         {order.paymentStatusDisplay} / {order.statusDisplay}
       </p>
