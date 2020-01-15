@@ -298,3 +298,55 @@ ul.react-autocomplete-input > li.active{
     background: rgba(132, 189, 0, 0.45);;
     color: white;
 }
+
+.btn-Shippinglast{
+    color: white;
+    background-color: #84BD00;
+    border-radius: 21px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 159px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.btn-Shippinglast-gris{
+    color: white;
+    background-color: #c4c4c4;
+    border-radius: 21px;
+    padding: 6px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 159px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.item-selected-shipping-last{
+    border: 1px solid rgb(132, 189, 0);
+    width: 280px;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    background-color: rgba(132, 189, 0,0.1);
+    margin: 10px 0;
+}
+.item-selected-shipping-last-gris{
+    border: 1px solid black;
+    width: 280px;
+    padding: 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+.container-items-shipping{
+    height: 240px;
+    overflow-y: scroll;
+}

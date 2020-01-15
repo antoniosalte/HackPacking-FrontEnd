@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 import { TypedQuery } from "../../../../core/queries";
 import { TypedMutation } from "../../../../core/mutations";
-import { ProductsList, Checkout } from "../types/ProductsList";
+import { ProductsList, Checkout, Shipping } from "../types/ProductsList";
 
 // STEP Upperwer
 
@@ -236,3 +236,18 @@ export const Step7Query = gql`
   }
 `;
 export const TypedStep7Query = TypedMutation<Checkout, {}>(Step7Query);
+
+// shipping
+export const ShippingAddressQuery = gql`
+query {
+  user(id:"VXNlcjo0Mw=="){
+    addresses{
+      id,
+      firstName,
+      phone
+    }
+  }
+}
+`;
+
+export const TypedShippingAddressQuery = TypedQuery<Shipping, {}>(ShippingAddressQuery);

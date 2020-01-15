@@ -5,3 +5,6 @@ export interface ProductsList {
 export interface Checkout {
     checkout: Checkout | null;
 }
+export interface Shipping {
+    addresses?: ShippingList |null;
+}
