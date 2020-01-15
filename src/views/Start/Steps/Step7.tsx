@@ -493,7 +493,7 @@ class Step7Container extends React.Component {
     return(
       <div>
         {
-          this.props.user && !this.state.addNewShipping?
+          this.props.user && !this.state.addNewShipping && this.props.user.addresses.length > 0 ?
           <div>
             <div className="container-items-shipping">
               {
@@ -528,9 +528,7 @@ class Step7Container extends React.Component {
                 &#43; Add New Shipping Address
               </div>
             </div>
-            {
-              this.props.user.addresses.length > 0 ?
-              <div 
+           <div 
             className={ lastShipping ? "btn-Shippinglast" : "btn-Shippinglast-gris"}
             onClick={
               lastShipping ?
@@ -541,8 +539,7 @@ class Step7Container extends React.Component {
             }
             >
               Continue to Shipping
-            </div> : null
-            }
+            </div>
           </div>
           : <ShippingAdressForm
           hide={() => this.setDisplayNewModal(false)}
