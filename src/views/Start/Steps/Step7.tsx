@@ -6,7 +6,10 @@ import { AlertManager, useAlert } from "react-alert";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
-import { useUserDetails } from "@sdk/react";
+import {
+  useUserDetails,
+  useUpdateCheckoutShippingAddress,
+} from "@sdk/react";
 import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
@@ -19,6 +22,8 @@ import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Paymen
 import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
 import moment from "moment";
+import EditIcon from "../../../images/edit.svg";
+import { TypedUpdateCheckoutShippingAddressMutation } from "@temp/checkout/views/Shipping/queries";
 
 function proceedToBilling(data, update, token) {
   const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
@@ -52,14 +57,16 @@ const completeCheckout = (
     });
   }
 };
-const ComponentCheckout = ( { checkout }) => {
+const ComponentCheckout = ( { checkout, onEditShipping, onEditShippingMethod }) => {
   const { shippingAddress: sA, 
     shippingMethod: sM,
     billingAddress: bA,
     email }= checkout;
+    console.log("SMETHOD", sM)
   return(
     <div className="container-card-checkout">
-      <div className="checkout-card-1">
+      <div className="checkout-card-1" style={{position: "relative"}}>
+        <img src={EditIcon} onClick={ onEditShipping } style={{width: 16, right: 20,position: "absolute", cursor: "pointer"}}/>
         <p style={{fontSize: 16, fontWeight: 500}}>Shipping Address</p>
         <p>{sA.firstName}&nbsp;{sA.lastName}</p>
         <p>{sA.streetAddress1}</p>
@@ -70,18 +77,20 @@ const ComponentCheckout = ( { checkout }) => {
       </div>
       {
         sM ?
-          <div className="checkout-card-1">
+          <div className="checkout-card-1" style={{position: "relative"}}>
+            <img src={EditIcon} onClick={ onEditShippingMethod } style={{width: 16, right: 20,position: "absolute", cursor: "pointer"}}/>
             <p style={{fontSize: 16, fontWeight: 500}}>Shipping Method</p>
             <p>{ sM.name }</p>
+            <p>{ sM.price.localized }</p>
           </div> : null
       }
       {
         bA ?
         <div className="checkout-card-1">
             <p style={{fontSize: 16, fontWeight: 500}}>Billing Address</p>
-            <p>{bA.firstName}&nbsp;{sA.lastName}</p>
+            <p>{bA.firstName}&nbsp;{bA.lastName}</p>
             <p>{bA.streetAddress1}</p>
-            <p>{bA.city}, {sA.postalCode}</p>
+            <p>{bA.city}, {bA.postalCode}</p>
             <p>{bA.country.country}</p>
             <p>{email}</p>  
           </div> : null
@@ -91,6 +100,7 @@ const ComponentCheckout = ( { checkout }) => {
 }
 const Step7 = props => {
   const { data: user } = useUserDetails();
+  const updateShippingAddress = useUpdateCheckoutShippingAddress();
   const { clear: clearCheckout } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
@@ -188,7 +198,7 @@ const Step7 = props => {
                                         }
                                       });
                                     } else {
-                                      alert(
+                                      console.log(
                                         "Payment cannot be created, invalid token"
                                       );
                                     }
@@ -250,7 +260,30 @@ const Step7 = props => {
                                           }
                                         });
                                       } else {
-                                        alert("Checkout already exist!")
+                                        if( checkout && user&& data ){
+                                          
+                                          await updateShippingAddress[0]( {
+                                            checkoutId: checkout.id,
+                                            email: user.email,
+                                            shippingAddress: {
+                                              firstName: data.firstName,
+                                              lastName: data.lastName,
+                                              streetAddress1:data.streetAddress1,
+                                              phone: data.phone,
+                                              city: data.city,
+                                              postalCode: data.postalCode,
+                                              country: maybe(
+                                                () => "PE",
+                                                "PE"
+                                              ) as CountryCode
+                                            }
+                                          })
+                                          await update({
+                                            shippingAsBilling: true
+                                          })
+                                          window.location.reload();
+                                        }
+                                        console.log("Checkout already exist!")
                                       }
                                   }}
                                   onCreateCheckoutWithLastShipping={
@@ -323,7 +356,29 @@ const Step7 = props => {
                                           })
                                         }
                                       } else {
-                                        alert("Checkout already exist!")
+                                        if( checkout && user && id ){
+                                          const shippingAddressLast = user.addresses.filter( a => a.id == id)[ 0 ]
+                                          await updateShippingAddress[0]( {
+                                            checkoutId: checkout.id,
+                                            email: user.email,
+                                            shippingAddress: {
+                                              firstName: shippingAddressLast.firstName,
+                                              lastName: shippingAddressLast.lastName,
+                                              streetAddress1:shippingAddressLast.streetAddress1,
+                                              phone: shippingAddressLast.phone,
+                                              city: shippingAddressLast.city,
+                                              postalCode: shippingAddressLast.postalCode,
+                                              country: maybe(
+                                                () => "PE",
+                                                "PE"
+                                              ) as CountryCode
+                                            }
+                                          })
+                                          await update({
+                                            shippingAsBilling: true
+                                          })
+                                          window.location.reload();
+                                        }
                                       }
                                     }
                                   }
@@ -618,14 +673,14 @@ class Step7Container extends React.Component {
             </p>
             <br />
             <div style={{width: "100%",height: 286,overflowY: "scroll"}}>{
-               checkout.availableShippingMethods.map(method =>(
+               checkout && checkout.availableShippingMethods ? checkout.availableShippingMethods.map(method =>(
                 <div className={ this.state.shippingmethodSelected == method.id ?"item-shipping-method-s ": "item-shipping-method"}
                 onClick={ () => this.selectShippingMethod(method.id)}
                 >
                   <span>{method.name}</span>
                   <span>$ {method.price.amount}</span>
                 </div>
-              ))
+              )) : null
             
             }</div>
             <div>
@@ -646,6 +701,7 @@ class Step7Container extends React.Component {
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal } = this.state;
+    console.log( checkout, cart, user)
     return (
       <div className="container">
         <CulqiProvider
@@ -686,7 +742,16 @@ class Step7Container extends React.Component {
           </div>
           {
             checkout && checkout.lines.length > 0 ?
-            <ComponentCheckout checkout={ checkout } /> : null
+            <ComponentCheckout checkout={ checkout }
+            onEditShipping={ () => {
+              this.setDisplayNewModal(true);
+              this.setContentModal("shippingaddress");
+            }}
+            onEditShippingMethod={ () => {
+              this.setDisplayNewModal(true);
+              this.setContentModal("shippingmethod");
+            }}
+            /> : null
           }
           <Culqi>
             {({ openCulqi, setAmount, amount }) => {
