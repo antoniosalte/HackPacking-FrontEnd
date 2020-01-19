@@ -30,7 +30,7 @@ class Wrapper extends React.Component {
     let { male } = this.state;
     this.setState({
       male: !male
-    });
+    }, ()=> this.forceUpdate() );
   }
   filterProduct(x) {
     const { male } = this.state;
