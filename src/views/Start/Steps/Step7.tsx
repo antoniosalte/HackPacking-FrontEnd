@@ -6,10 +6,7 @@ import { AlertManager, useAlert } from "react-alert";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
-import {
-  useUserDetails,
-  useUpdateCheckoutShippingAddress,
-} from "@sdk/react";
+import { useUserDetails, useUpdateCheckoutShippingAddress } from "@sdk/react";
 import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
@@ -57,47 +54,77 @@ const completeCheckout = (
     });
   }
 };
-const ComponentCheckout = ( { checkout, onEditShipping, onEditShippingMethod }) => {
-  const { shippingAddress: sA, 
+const ComponentCheckout = ({
+  checkout,
+  onEditShipping,
+  onEditShippingMethod
+}) => {
+  const {
+    shippingAddress: sA,
     shippingMethod: sM,
     billingAddress: bA,
-    email }= checkout;
-    console.log("SMETHOD", sM)
-  return(
+    email
+  } = checkout;
+  console.log("SMETHOD", sM);
+  return (
     <div className="container-card-checkout">
-      <div className="checkout-card-1" style={{position: "relative"}}>
-        <img src={EditIcon} onClick={ onEditShipping } style={{width: 16, right: 20,position: "absolute", cursor: "pointer"}}/>
-        <p style={{fontSize: 16, fontWeight: 500}}>Shipping Address</p>
-        <p>{sA.firstName}&nbsp;{sA.lastName}</p>
+      <div className="checkout-card-1" style={{ position: "relative" }}>
+        <img
+          src={EditIcon}
+          onClick={onEditShipping}
+          style={{
+            width: 16,
+            right: 20,
+            position: "absolute",
+            cursor: "pointer"
+          }}
+        />
+        <p style={{ fontSize: 16, fontWeight: 500 }}>Shipping Address</p>
+        <p>
+          {sA.firstName}&nbsp;{sA.lastName}
+        </p>
         <p>{sA.streetAddress1}</p>
-        <p>{sA.city}, {sA.postalCode}</p>
+        <p>
+          {sA.city}, {sA.postalCode}
+        </p>
         <p>{sA.country.country}</p>
         <p>{sA.phone}</p>
-        <p>{email}</p>   
+        <p>{email}</p>
       </div>
-      {
-        sM ?
-          <div className="checkout-card-1" style={{position: "relative"}}>
-            <img src={EditIcon} onClick={ onEditShippingMethod } style={{width: 16, right: 20,position: "absolute", cursor: "pointer"}}/>
-            <p style={{fontSize: 16, fontWeight: 500}}>Shipping Method</p>
-            <p>{ sM.name }</p>
-            <p>{ sM.price.localized }</p>
-          </div> : null
-      }
-      {
-        bA ?
+      {sM ? (
+        <div className="checkout-card-1" style={{ position: "relative" }}>
+          <img
+            src={EditIcon}
+            onClick={onEditShippingMethod}
+            style={{
+              width: 16,
+              right: 20,
+              position: "absolute",
+              cursor: "pointer"
+            }}
+          />
+          <p style={{ fontSize: 16, fontWeight: 500 }}>Shipping Method</p>
+          <p>{sM.name}</p>
+          <p>{sM.price.localized}</p>
+        </div>
+      ) : null}
+      {bA ? (
         <div className="checkout-card-1">
-            <p style={{fontSize: 16, fontWeight: 500}}>Billing Address</p>
-            <p>{bA.firstName}&nbsp;{bA.lastName}</p>
-            <p>{bA.streetAddress1}</p>
-            <p>{bA.city}, {bA.postalCode}</p>
-            <p>{bA.country.country}</p>
-            <p>{email}</p>  
-          </div> : null
-      }
+          <p style={{ fontSize: 16, fontWeight: 500 }}>Billing Address</p>
+          <p>
+            {bA.firstName}&nbsp;{bA.lastName}
+          </p>
+          <p>{bA.streetAddress1}</p>
+          <p>
+            {bA.city}, {bA.postalCode}
+          </p>
+          <p>{bA.country.country}</p>
+          <p>{email}</p>
+        </div>
+      ) : null}
     </div>
-  )
-}
+  );
+};
 const Step7 = props => {
   const { data: user } = useUserDetails();
   const updateShippingAddress = useUpdateCheckoutShippingAddress();
@@ -203,14 +230,100 @@ const Step7 = props => {
                                       );
                                     }
                                   }}
-                                  onCreateCheckout={
-                                    async (data) => {
-                                      if (user && !checkout) {
-                                        const {
-                                          destination,
-                                          arrival,
-                                          departure
-                                        } = props.data.step1;
+                                  onCreateCheckout={async data => {
+                                    if (user && !checkout) {
+                                      const {
+                                        destination,
+                                        arrival,
+                                        departure
+                                      } = props.data.step1;
+                                      await createCheckout({
+                                        variables: {
+                                          checkoutInput: {
+                                            email: user.email,
+                                            lines: cart.lines,
+                                            destination: destination,
+                                            arrival: moment(
+                                              arrival,
+                                              "DD-MM-YYYY"
+                                            )
+                                              .toISOString()
+                                              .split("T")[0],
+                                            departure: moment(
+                                              departure,
+                                              "DD-MM-YYYY"
+                                            )
+                                              .toISOString()
+                                              .split("T")[0],
+                                            comment: data.comment,
+                                            shippingAddress: {
+                                              firstName: data.firstName,
+                                              lastName: data.lastName,
+                                              streetAddress1:
+                                                data.streetAddress1,
+                                              phone: data.phone,
+                                              city: data.city,
+                                              postalCode: data.postalCode,
+                                              country: maybe(
+                                                () => "PE",
+                                                "PE"
+                                              ) as CountryCode
+                                            },
+                                            billingAddress: {
+                                              firstName: data.firstName,
+                                              lastName: data.lastName,
+                                              streetAddress1:
+                                                data.streetAddress1,
+                                              city: data.city,
+                                              phone: data.phone,
+                                              postalCode: data.postalCode,
+                                              country: maybe(
+                                                () => "PE",
+                                                "PE"
+                                              ) as CountryCode
+                                            }
+                                          }
+                                        }
+                                      });
+                                    } else {
+                                      if (checkout && user && data) {
+                                        await updateShippingAddress[0]({
+                                          checkoutId: checkout.id,
+                                          email: user.email,
+                                          shippingAddress: {
+                                            firstName: data.firstName,
+                                            lastName: data.lastName,
+                                            streetAddress1: data.streetAddress1,
+                                            phone: data.phone,
+                                            city: data.city,
+                                            postalCode: data.postalCode,
+                                            country: maybe(
+                                              () => "PE",
+                                              "PE"
+                                            ) as CountryCode
+                                          }
+                                        });
+                                        await update({
+                                          shippingAsBilling: true
+                                        });
+                                        window.location.reload();
+                                      }
+                                      console.log("Checkout already exist!");
+                                    }
+                                  }}
+                                  onCreateCheckoutWithLastShipping={async id => {
+                                    if (user && !checkout) {
+                                      const {
+                                        destination,
+                                        arrival,
+                                        departure
+                                      } = props.data.step1;
+                                      const shippingAddressLast = user.addresses.filter(
+                                        a => a.id == id
+                                      )[0];
+                                      if (
+                                        shippingAddressLast.isDefaultShippingAddress
+                                      ) {
                                         await createCheckout({
                                           variables: {
                                             checkoutInput: {
@@ -229,28 +342,42 @@ const Step7 = props => {
                                               )
                                                 .toISOString()
                                                 .split("T")[0],
-                                              comment: data.comment,
+                                              comment: ""
+                                            }
+                                          }
+                                        });
+                                      } else {
+                                        await createCheckout({
+                                          variables: {
+                                            checkoutInput: {
+                                              email: user.email,
+                                              lines: cart.lines,
+                                              destination: destination,
+                                              arrival: moment(
+                                                arrival,
+                                                "DD-MM-YYYY"
+                                              )
+                                                .toISOString()
+                                                .split("T")[0],
+                                              departure: moment(
+                                                departure,
+                                                "DD-MM-YYYY"
+                                              )
+                                                .toISOString()
+                                                .split("T")[0],
+                                              comment: "",
                                               shippingAddress: {
-                                                firstName: data.firstName,
-                                                lastName: data.lastName,
+                                                firstName:
+                                                  shippingAddressLast.firstName,
+                                                lastName:
+                                                  shippingAddressLast.lastName,
                                                 streetAddress1:
-                                                  data.streetAddress1,
-                                                phone: data.phone,
-                                                city: data.city,
-                                                postalCode: data.postalCode,
-                                                country: maybe(
-                                                  () => "PE",
-                                                  "PE"
-                                                ) as CountryCode
-                                              },
-                                              billingAddress: {
-                                                firstName: data.firstName,
-                                                lastName: data.lastName,
-                                                streetAddress1:
-                                                  data.streetAddress1,
-                                                city: data.city,
-                                                phone: data.phone,
-                                                postalCode: data.postalCode,
+                                                  shippingAddressLast.streetAddress1,
+                                                phone:
+                                                  shippingAddressLast.phone,
+                                                city: shippingAddressLast.city,
+                                                postalCode:
+                                                  shippingAddressLast.postalCode,
                                                 country: maybe(
                                                   () => "PE",
                                                   "PE"
@@ -259,153 +386,60 @@ const Step7 = props => {
                                             }
                                           }
                                         });
-                                      } else {
-                                        if( checkout && user&& data ){
-                                          
-                                          await updateShippingAddress[0]( {
-                                            checkoutId: checkout.id,
-                                            email: user.email,
-                                            shippingAddress: {
-                                              firstName: data.firstName,
-                                              lastName: data.lastName,
-                                              streetAddress1:data.streetAddress1,
-                                              phone: data.phone,
-                                              city: data.city,
-                                              postalCode: data.postalCode,
-                                              country: maybe(
-                                                () => "PE",
-                                                "PE"
-                                              ) as CountryCode
-                                            }
-                                          })
-                                          await update({
-                                            shippingAsBilling: true
-                                          })
-                                          window.location.reload();
-                                        }
-                                        console.log("Checkout already exist!")
                                       }
+                                    } else {
+                                      if (checkout && user && id) {
+                                        const shippingAddressLast = user.addresses.filter(
+                                          a => a.id == id
+                                        )[0];
+                                        await updateShippingAddress[0]({
+                                          checkoutId: checkout.id,
+                                          email: user.email,
+                                          shippingAddress: {
+                                            firstName:
+                                              shippingAddressLast.firstName,
+                                            lastName:
+                                              shippingAddressLast.lastName,
+                                            streetAddress1:
+                                              shippingAddressLast.streetAddress1,
+                                            phone: shippingAddressLast.phone,
+                                            city: shippingAddressLast.city,
+                                            postalCode:
+                                              shippingAddressLast.postalCode,
+                                            country: maybe(
+                                              () => "PE",
+                                              "PE"
+                                            ) as CountryCode
+                                          }
+                                        });
+                                        await update({
+                                          shippingAsBilling: true
+                                        });
+                                        window.location.reload();
+                                      }
+                                    }
                                   }}
-                                  onCreateCheckoutWithLastShipping={
-                                    async( id ) => {
-                                      if (user && !checkout) {
-                                        const {
-                                          destination,
-                                          arrival,
-                                          departure
-                                        } = props.data.step1;
-                                        const shippingAddressLast = user.addresses.filter( a => a.id == id)[ 0 ]
-                                        if (shippingAddressLast.isDefaultShippingAddress ){
-                                          await createCheckout({
-                                            variables: {
-                                              checkoutInput: {
-                                                email: user.email,
-                                                lines: cart.lines,
-                                                destination: destination,
-                                                arrival: moment(
-                                                  arrival,
-                                                  "DD-MM-YYYY"
-                                                )
-                                                  .toISOString()
-                                                  .split("T")[0],
-                                                departure: moment(
-                                                  departure,
-                                                  "DD-MM-YYYY"
-                                                )
-                                                  .toISOString()
-                                                  .split("T")[0],
-                                                comment: ""
-                                              }
-                                            }
-                                          })
+                                  onUpdateShipping={async id => {
+                                    const shippingMethods =
+                                      checkout.availableShippingMethods || null;
+                                    if (
+                                      shippingMethods &&
+                                      id &&
+                                      checkout.lines.length > 0
+                                    ) {
+                                      await updateCheckoutShippingOptions({
+                                        variables: {
+                                          checkoutId: checkout.id,
+                                          shippingMethodId: id
                                         }
-                                        else{
-                                          await createCheckout({
-                                            variables: {
-                                              checkoutInput: {
-                                                email: user.email,
-                                                lines: cart.lines,
-                                                destination: destination,
-                                                arrival: moment(
-                                                  arrival,
-                                                  "DD-MM-YYYY"
-                                                )
-                                                  .toISOString()
-                                                  .split("T")[0],
-                                                departure: moment(
-                                                  departure,
-                                                  "DD-MM-YYYY"
-                                                )
-                                                  .toISOString()
-                                                  .split("T")[0],
-                                                comment: "",
-                                                shippingAddress: {
-                                                  firstName: shippingAddressLast.firstName,
-                                                  lastName: shippingAddressLast.lastName,
-                                                  streetAddress1:shippingAddressLast.streetAddress1,
-                                                  phone: shippingAddressLast.phone,
-                                                  city: shippingAddressLast.city,
-                                                  postalCode: shippingAddressLast.postalCode,
-                                                  country: maybe(
-                                                    () => "PE",
-                                                    "PE"
-                                                  ) as CountryCode
-                                                }
-                                              }
-                                            }
-                                          })
-                                        }
-                                      } else {
-                                        if( checkout && user && id ){
-                                          const shippingAddressLast = user.addresses.filter( a => a.id == id)[ 0 ]
-                                          await updateShippingAddress[0]( {
-                                            checkoutId: checkout.id,
-                                            email: user.email,
-                                            shippingAddress: {
-                                              firstName: shippingAddressLast.firstName,
-                                              lastName: shippingAddressLast.lastName,
-                                              streetAddress1:shippingAddressLast.streetAddress1,
-                                              phone: shippingAddressLast.phone,
-                                              city: shippingAddressLast.city,
-                                              postalCode: shippingAddressLast.postalCode,
-                                              country: maybe(
-                                                () => "PE",
-                                                "PE"
-                                              ) as CountryCode
-                                            }
-                                          })
-                                          await update({
-                                            shippingAsBilling: true
-                                          })
-                                          window.location.reload();
-                                        }
-                                      }
+                                      });
+                                    } else {
+                                      console.log(
+                                        "Invalid Shipping option",
+                                        checkout
+                                      );
                                     }
-                                  }
-                                  onUpdateShipping={
-                                    async ( id )=>{
-                                        const shippingMethods =
-                                          checkout.availableShippingMethods ||
-                                          null;
-                                        if (
-                                          shippingMethods &&
-                                          id &&
-                                          checkout.lines.length > 0
-                                        ) {
-                                          await updateCheckoutShippingOptions({
-                                            variables: {
-                                              checkoutId: checkout.id,
-                                              shippingMethodId:id,
-                                            }
-                                          });
-                                        } else {
-                                          console.log(
-                                            "Invalid Shipping option",
-                                            checkout
-                                          );
-                                        }
-                                    }
-                                  }
+                                  }}
                                 />
                               )}
                             </TypedCompleteCheckoutMutation>
@@ -431,7 +465,7 @@ class Step7Container extends React.Component {
       displayNewModal: false,
       showLogin: false,
       contentModal: "login",
-      shippingmethodSelected:null,
+      shippingmethodSelected: null,
       addNewShipping: false,
       lastShipping: null,
       culqi: () => {},
@@ -442,7 +476,7 @@ class Step7Container extends React.Component {
     this.setCulqi = this.setCulqi.bind(this);
     this.setContentModal = this.setContentModal.bind(this);
     this.selectShippingMethod = this.selectShippingMethod.bind(this);
-    this.addShippingMethod =this.addShippingMethod.bind(this);
+    this.addShippingMethod = this.addShippingMethod.bind(this);
     this.onNewShipping = this.onNewShipping.bind(this);
     this.onAddLastShipping = this.onAddLastShipping.bind(this);
   }
@@ -469,25 +503,29 @@ class Step7Container extends React.Component {
       if (!this.props.user) {
         this.setContentModal("login");
         this.setDisplayNewModal(true);
-      }else {
-        if ( !checkout ){
+      } else {
+        if (!checkout) {
           this.setContentModal("shippingaddress");
           this.setDisplayNewModal(true);
-        } else if ( checkout&& !checkout.shippingMethod&& checkout.availableShippingMethods.length > 0 ){
+        } else if (
+          checkout &&
+          !checkout.shippingMethod &&
+          checkout.availableShippingMethods.length > 0
+        ) {
           this.setContentModal("shippingmethod");
           this.setDisplayNewModal(true);
         }
       }
     }
   }
-  onNewShipping( newShipping = true ){
+  onNewShipping(newShipping = true) {
     this.setState({
-      addNewShipping: newShipping,
+      addNewShipping: newShipping
     });
   }
-  onAddLastShipping(id){
+  onAddLastShipping(id) {
     this.setState({
-      lastShipping: id,
+      lastShipping: id
     });
   }
   setContentModal(state) {
@@ -500,16 +538,16 @@ class Step7Container extends React.Component {
       displayNewModal: modal
     });
   }
-  selectShippingMethod(id){
+  selectShippingMethod(id) {
     this.setState({
-      shippingmethodSelected: id,
-    })
+      shippingmethodSelected: id
+    });
   }
-  addShippingMethod(){
-    const { shippingmethodSelected } = this.state;
-    if (shippingmethodSelected){
-      this.setDisplayNewModal(false)
-      this.props.onUpdateShipping(shippingmethodSelected)
+  addShippingMethod() {
+    const { shippingmethodSelected } = this.state;
+    if (shippingmethodSelected) {
+      this.setDisplayNewModal(false);
+      this.props.onUpdateShipping(shippingmethodSelected);
     }
   }
   onSubmit(data) {
@@ -522,110 +560,129 @@ class Step7Container extends React.Component {
         city: data.city,
         postalCode: data.postalCode,
         phone: data.phone,
-        comment: data.comment || "",
+        comment: data.comment || ""
       };
       this.props.onCreateCheckout(dataShippingAdress);
     } else {
       this.shippingaddress("login");
     }
   }
-  getStepText( checkout ){
-    if ( checkout ){
-      if ( !checkout.shippingAddress ){
+  getStepText(checkout) {
+    if (checkout) {
+      if (!checkout.shippingAddress) {
         return "Add Shipping Address";
       }
-      if ( !checkout.shippingMethod ){
+      if (!checkout.shippingMethod) {
         return "Add Shipping Method";
       }
-      return "Checkout"
-    }
-    else {
+      return "Checkout";
+    } else {
       return "Add Shipping Address";
     }
   }
-  renderContentShipping(){
-    const { lastShipping } = this.state;
-    return(
+  renderContentShipping() {
+    const { lastShipping } = this.state;
+    return (
       <div>
-        {
-          this.props.user && !this.state.addNewShipping && this.props.user.addresses.length > 0 ?
+        {this.props.user &&
+        !this.state.addNewShipping &&
+        this.props.user.addresses.length > 0 ? (
           <div>
             <div className="container-items-shipping">
-              {
-                this.props.user.addresses.map( a => (
-                  <div 
-                  className={ this.state.lastShipping == a.id ? "item-selected-shipping-last" : "item-selected-shipping-last-gris"}
-                onClick={ ()=>this.onAddLastShipping(a.id)}
+              {this.props.user.addresses.map(a => (
+                <div
+                  className={
+                    this.state.lastShipping == a.id
+                      ? "item-selected-shipping-last"
+                      : "item-selected-shipping-last-gris"
+                  }
+                  onClick={() => this.onAddLastShipping(a.id)}
                 >
-                    <p style={{margin: 0}}>{a.firstName}&nbsp;{a.lastName}</p>
-                    <p style={{margin: 0}}>{a.streetAddress1}</p>
-                    <p style={{margin: 0}}>{a.city}, {a.postalCode}</p>
-                    <p style={{margin: 0}}>{a.country.country}</p>
-                    <p style={{margin: 0}}>{a.phone}</p>
-                    <p style={{margin: 0, fontSize:12,
-                    color: "#628a06",
-                    fontWeight: 500,
-                    }}>{ this.state.lastShipping == a.id ? "Deliver to this address" : null }</p>
-                  </div>
-                ))
-              }
+                  <p style={{ margin: 0 }}>
+                    {a.firstName}&nbsp;{a.lastName}
+                  </p>
+                  <p style={{ margin: 0 }}>{a.streetAddress1}</p>
+                  <p style={{ margin: 0 }}>
+                    {a.city}, {a.postalCode}
+                  </p>
+                  <p style={{ margin: 0 }}>{a.country.country}</p>
+                  <p style={{ margin: 0 }}>{a.phone}</p>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: 12,
+                      color: "#628a06",
+                      fontWeight: 500
+                    }}
+                  >
+                    {this.state.lastShipping == a.id
+                      ? "Deliver to this address"
+                      : null}
+                  </p>
+                </div>
+              ))}
               <div
-              style={{
-                border: "solid 1px",
-                width: 280,
-                padding: 11,
-                borderRadius: 8,
-                fontSize: 12,
-                cursor: "pointer",
-                marginTop: 20,
-            }}
-              onClick={ this.onNewShipping }>
+                style={{
+                  border: "solid 1px",
+                  width: 280,
+                  padding: 11,
+                  borderRadius: 8,
+                  fontSize: 12,
+                  cursor: "pointer",
+                  marginTop: 20
+                }}
+                onClick={this.onNewShipping}
+              >
                 &#43; Add New Shipping Address
               </div>
             </div>
-           <div 
-            className={ lastShipping ? "btn-Shippinglast" : "btn-Shippinglast-gris"}
-            onClick={
-              lastShipping ?
-              ()=> {
-                this.props.onCreateCheckoutWithLastShipping(lastShipping);
-                this.setDisplayNewModal(false);
-              }: ()=>{}
-            }
+            <div
+              className={
+                lastShipping ? "btn-Shippinglast" : "btn-Shippinglast-gris"
+              }
+              onClick={
+                lastShipping
+                  ? () => {
+                      this.props.onCreateCheckoutWithLastShipping(lastShipping);
+                      this.setDisplayNewModal(false);
+                    }
+                  : () => {}
+              }
             >
               Continue to Shipping
             </div>
           </div>
-          : <ShippingAdressForm
-          hide={() => this.setDisplayNewModal(false)}
-          buttonText="Add Shipping Address"
-          onSubmit={data => this.onSubmit(data)}
-        >
-          <div>
-            <p
-              style={{
-                fontWeight: 500,
-                fontSize: 18,
-                padding: "0 20px"
-              }}
-            >
-              <span onClick={ ()=>this.onNewShipping( false )}>&#8592;</span>
-              Shipping Address
-            </p>
-            <br />
-            <br />
-          </div>
-        </ShippingAdressForm>
-        }
+        ) : (
+          <ShippingAdressForm
+            hide={() => this.setDisplayNewModal(false)}
+            buttonText="Add Shipping Address"
+            onSubmit={data => this.onSubmit(data)}
+          >
+            <div>
+              <p
+                style={{
+                  fontWeight: 500,
+                  fontSize: 18,
+                  padding: "0 20px"
+                }}
+              >
+                <span onClick={() => this.onNewShipping(false)}>&#8592;</span>
+                Shipping Address
+              </p>
+              <br />
+              <br />
+            </div>
+          </ShippingAdressForm>
+        )}
       </div>
-
-    )
+    );
   }
-  renderContentModal(){
+  renderContentModal() {
     const { contentModal, addNewShipping } = this.state;
-    const { checkout } = this.props;
-    switch( contentModal ){
-      case "login": return (
+    const { checkout } = this.props;
+    switch (contentModal) {
+      case "login":
+        return (
           <div
             style={{
               display: "flex",
@@ -650,11 +707,12 @@ class Step7Container extends React.Component {
               }}
             />
           </div>
-      )
-      case "shippingaddress": 
-      return this.renderContentShipping();
-      case "shippingmethod": return (
-        <div
+        );
+      case "shippingaddress":
+        return this.renderContentShipping();
+      case "shippingmethod":
+        return (
+          <div
             style={{
               display: "flex",
               flexDirection: "column",
@@ -672,28 +730,35 @@ class Step7Container extends React.Component {
               Shipping Method
             </p>
             <br />
-            <div style={{width: "100%",height: 286,overflowY: "scroll"}}>{
-               checkout && checkout.availableShippingMethods ? checkout.availableShippingMethods.map(method =>(
-                <div className={ this.state.shippingmethodSelected == method.id ?"item-shipping-method-s ": "item-shipping-method"}
-                onClick={ () => this.selectShippingMethod(method.id)}
-                >
-                  <span>{method.name}</span>
-                  <span>$ {method.price.amount}</span>
-                </div>
-              )) : null
-            
-            }</div>
+            <div style={{ width: "100%", height: 286, overflowY: "scroll" }}>
+              {checkout && checkout.availableShippingMethods
+                ? checkout.availableShippingMethods.map(method => (
+                    <div
+                      className={
+                        this.state.shippingmethodSelected == method.id
+                          ? "item-shipping-method-s "
+                          : "item-shipping-method"
+                      }
+                      onClick={() => this.selectShippingMethod(method.id)}
+                    >
+                      <span>{method.name}</span>
+                      <span>$ {method.price.amount}</span>
+                    </div>
+                  ))
+                : null}
+            </div>
             <div>
-              <button className="btn-add-shipping-method"
-              onClick={ this.addShippingMethod }
-              disabled={ !this.state.shippingmethodSelected }
+              <button
+                className="btn-add-shipping-method"
+                onClick={this.addShippingMethod}
+                disabled={!this.state.shippingmethodSelected}
               >
                 Add Shipping Method
               </button>
               <br />
             </div>
           </div>
-      )
+        );
     }
   }
   render() {
@@ -701,11 +766,11 @@ class Step7Container extends React.Component {
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal } = this.state;
-    console.log( checkout, cart, user)
+    console.log(checkout, cart, user);
     return (
       <div className="container">
         <CulqiProvider
-          publicKey="pk_test_6cZH0KR8piY52AOG"
+          publicKey="pk_live_ssu1ZoKqgU7HQQqV"
           amount={(total + shippingPrice) * 100}
           title="HackPacking"
           currency="USD"
@@ -740,43 +805,48 @@ class Step7Container extends React.Component {
               <p style={{ color: "red", fontSize: 12 }}>{err.message}</p>
             ))}
           </div>
-          {
-            checkout && checkout.lines.length > 0 ?
-            <ComponentCheckout checkout={ checkout }
-            onEditShipping={ () => {
-              this.setDisplayNewModal(true);
-              this.setContentModal("shippingaddress");
-            }}
-            onEditShippingMethod={ () => {
-              this.setDisplayNewModal(true);
-              this.setContentModal("shippingmethod");
-            }}
-            /> : null
-          }
+          {checkout && checkout.lines.length > 0 ? (
+            <ComponentCheckout
+              checkout={checkout}
+              onEditShipping={() => {
+                this.setDisplayNewModal(true);
+                this.setContentModal("shippingaddress");
+              }}
+              onEditShippingMethod={() => {
+                this.setDisplayNewModal(true);
+                this.setContentModal("shippingmethod");
+              }}
+            />
+          ) : null}
           <Culqi>
             {({ openCulqi, setAmount, amount }) => {
               return (
                 <div className="cnt-btn-checkout">
-                  {
-                    ( checkout && (checkout.lines.length > 0) ) || ( !checkout && (cart.lines.length > 0) ) ?
-                  <button
-                    id="openculqi"
-                    onClick={() => this.setCulqi(openCulqi, setAmount)}
-                    disabled={ ( checkout && !(checkout.lines.length > 0) ) || ( !checkout && !(cart.lines.length > 0) ) }
-                  > 
-                    {this.getStepText( checkout )}
-                  </button> : null 
-                  }
+                  {(checkout && checkout.lines.length > 0) ||
+                  (!checkout && cart.lines.length > 0) ? (
+                    <button
+                      id="openculqi"
+                      onClick={() => this.setCulqi(openCulqi, setAmount)}
+                      disabled={
+                        (checkout && !(checkout.lines.length > 0)) ||
+                        (!checkout && !(cart.lines.length > 0))
+                      }
+                    >
+                      {this.getStepText(checkout)}
+                    </button>
+                  ) : null}
                 </div>
               );
             }}
           </Culqi>
           <br />
           <br />
-          {
-            ( checkout && !(checkout.lines.length > 0) ) || ( !checkout && !(cart.lines.length > 0) ) ?
-            <center><a href="/start?step=upperwear">Start Packing</a></center>:null
-          }
+          {(checkout && !(checkout.lines.length > 0)) ||
+          (!checkout && !(cart.lines.length > 0)) ? (
+            <center>
+              <a href="/start?step=upperwear">Start Packing</a>
+            </center>
+          ) : null}
           <br />
           <br />
           <br />
@@ -797,9 +867,7 @@ class Step7Container extends React.Component {
                 marginTop: 30
               }}
             >
-              {
-                this.renderContentModal()
-              }
+              {this.renderContentModal()}
             </div>
           </div>
         </Modal>
