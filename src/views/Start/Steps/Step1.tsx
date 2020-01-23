@@ -103,7 +103,7 @@ class Step1 extends React.Component {
                   >
                     {
                       cities.map( c => (
-                      <option value={c}>{c}</option> 
+                      <option value={c} selected={ this.props.data.step1.destination == c }>{c}</option> 
                       ))
                     }
                   </select>
@@ -119,6 +119,7 @@ class Step1 extends React.Component {
                     id="arrivalp"
                     onSelect={value => this.changeData("arrival", value)}
                     arrival
+                    startD={ this.props.data.step1.arrival }
                   />
                 </p>
               </div>
@@ -131,6 +132,7 @@ class Step1 extends React.Component {
                   <Picker
                     id="departurep"
                     onSelect={value => this.changeData("departure", value)}
+                    startD={ this.props.data.step1.departure }
                   />
                 </p>
               </div>

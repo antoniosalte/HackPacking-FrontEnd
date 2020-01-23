@@ -15,7 +15,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = ({
           <span>{product.name}</span>
       </div>
       <div>
-          <span>{pricing.price.gross.localized}</span>
+          <span>${ (Number( pricing.price.gross.amount) * Number(quantity)).toFixed(2)}</span>
       </div>
   </div>
   );

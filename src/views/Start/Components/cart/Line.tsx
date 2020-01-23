@@ -31,7 +31,6 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       }
     });
   });
-
   return (
     <tr key={id}>
       <td style={{ textAlign: "start" }}>{product.name}</td>
@@ -79,7 +78,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
         />
       </td>
       <td style={{ textAlign: "center" }}>{name ? `(${name})` : null}</td>
-      <td style={{ textAlign: "end" }}>{pricing.price.gross.localized}</td>
+      <td style={{ textAlign: "end" }}>$ { (Number( pricing.price.gross.amount ) * Number(quantity)).toFixed(2) }</td>
       <td>
         <div
           onClick={() => cart.remove(id)}
