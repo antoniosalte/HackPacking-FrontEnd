@@ -8,18 +8,12 @@ import { ShopContext } from "../../../../components/ShopProvider/context";
 import { maybe } from "../../../../core/utils";
 import { VariantList } from "../../../../views/Product/types/VariantList";
 
-const gettotal = ( variants, lines ) => {
-  let total = 0;
-  if ( lines.length > 0 ){
-    for (let index = 0; index < variants.productVariants.edges.length; index++) {
-      const element = variants.productVariants.edges[index].node;
-      const { price } = element.pricing;
-      const { amount } = price.gross;
-      total += amount;
-    }
-  }
-  return "$ "+total;
+const total = (variants, lines, locale) => {
+  if ( lines.length === variants.productVariants.edges.length ) {
+    return getTotal(variants, lines, locale)
+  } return "0.00"
 }
+
 const Subtotal: React.FC<{
   checkout: Checkout | null;
   lines: CartLineInterface[];
@@ -45,8 +39,8 @@ const Subtotal: React.FC<{
             style={{
             margin: "5px 0",
             }}>Sub Total:&nbsp; { checkout ?
-            <Money money={checkout.subtotalPrice.gross} />:
-            gettotal(variants, lines)
+              <Money money={checkout.subtotalPrice.gross} />:
+              total(variants, lines, locale)
             }</p>
           </div>
         </>
