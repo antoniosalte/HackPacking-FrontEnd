@@ -13,7 +13,7 @@ import Icon1 from "../../../../images/hp-order-step1.svg";
 import Icon2 from "../../../../images/hp-order-step2.svg";
 import Icon3 from "../../../../images/hp-order-step3.svg";
 
-
+//Aca
 export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
   const theme = React.useContext(ThemeContext);
   return (
@@ -28,7 +28,15 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
             <>
               {orders &&
                 orders.slice( 0,1 ).map(order => {
-                  const date = new Date(order.node.created);
+                  var date = new Date(order.node.created).toUTCString();
+                  date = date.split(' ').slice(0, 4).join(' ');
+                  let shippedVia = order.node.shippingMethod.name;
+                  var status = order.node.status;
+                  let classNameLeft =  status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot left" : "left";
+                  let classNameRight = status == "FULFILLED" ? "activedot right" : "right";
+                  let classNameStep1 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  let classNameStep2 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  let classNameStep3 = status == "FULFILLED" ? "activedot" : "";
                   return (
                     <S.Row
                       key={order.node.number}
@@ -45,26 +53,26 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                       <S.DivOrder>
                         <S.DivORow>
                           <p>Shipped Via</p>
-                          <span>UPS</span>
+                          <span>{shippedVia}</span>
                         </S.DivORow>
                         <S.DivORow>
                           <p>Status</p>
                           <span>{order.node.statusDisplay}</span>
                         </S.DivORow>
                         <S.DivORow>
-                          <p>Expected</p>
-                          <span>Thursday, November 7</span>
+                          <p>Order Date</p>
+                          <span>{date}</span>
                         </S.DivORow>
                       </S.DivOrder>
                       <S.ContainerProgress>
                         <S.LineP>
-                          <div className="activedot left"/>
+                          <div className={classNameLeft}/>
                         </S.LineP>
                         <S.LineP>
-                          <div className="right"/>
+                        <div className={classNameRight}/>
                         </S.LineP>
-                        <S.ItemProgress className="activedot">
-                          <div className="activedot">
+                        <S.ItemProgress>
+                          <div className={classNameStep1}>
                             <img
                               src={ Icon1 }
                               alt="asad"
@@ -73,7 +81,7 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                           <p>Order Placed</p>
                         </S.ItemProgress>
                         <S.ItemProgress>
-                          <div className="activedot">
+                        <div className={classNameStep2}>
                           <img
                               src={ Icon2 }
                               alt="asad"
@@ -82,7 +90,7 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                           <p>In Transit</p>
                         </S.ItemProgress>
                         <S.ItemProgress>
-                          <div>
+                        <div className={classNameStep3}>
                           <img
                               src={ Icon3 }
                               alt="asad"
