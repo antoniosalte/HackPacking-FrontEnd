@@ -91,12 +91,14 @@
             .description-item{
                 font-size: 10px;
                 font-weight: 300;
-                margin-top: -5px;
-                height: 30px;
-                white-space: nowrap;
+                margin-top: 4px;
+                margin-bottom: 4px;
+                white-space: initial;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 width: 250px;
+                height: 28px;
+                line-height: 14px;
             }
         }
         .details-wear-item{
