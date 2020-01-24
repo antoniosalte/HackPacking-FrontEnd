@@ -16,6 +16,10 @@ export const ordersByUser = gql`
             number
             statusDisplay
             created
+            status
+            shippingMethod {
+              name
+            }
             total {
               gross {
                 amount
