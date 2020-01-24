@@ -30,7 +30,7 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                 orders.slice( 0,1 ).map(order => {
                   var date = new Date(order.node.created).toUTCString();
                   date = date.split(' ').slice(0, 4).join(' ');
-                  let shippedVia = order.node.shippingMethod.name;
+                  let shippedVia = order.node.shippingMethod ? order.node.shippingMethod.name : "No Shipping Method";
                   var status = order.node.status;
                   let classNameLeft =  status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot left" : "left";
                   let classNameRight = status == "FULFILLED" ? "activedot right" : "right";
