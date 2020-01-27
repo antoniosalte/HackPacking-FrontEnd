@@ -1,5 +1,51 @@
 import gql from "graphql-tag";
 
+export const priceFragment = gql`
+  fragment Price on TaxedMoney {
+    gross {
+      amount
+      currency
+      localized
+    }
+    net {
+      amount
+      currency
+      localized
+    }
+  }
+`;
+
+export const productVariantFragment = gql`
+  ${priceFragment}
+  fragment ProductVariantFields on ProductVariant {
+    id
+    sku
+    name
+    stockQuantity
+    isAvailable
+    pricing {
+      onSale
+      priceUndiscounted {
+        ...Price
+      }
+      price {
+        ...Price
+      }
+    }
+    attributes {
+      attribute {
+        id
+        name
+      }
+      value {
+        id
+        name
+        value: name
+      }
+    }
+  }
+`;
+
 export const checkoutPriceFragment = gql`
   fragment Price on TaxedMoney {
     gross {
@@ -38,6 +84,7 @@ export const checkoutAddressFragment = gql`
 
 export const checkoutProductVariantFragment = gql`
   ${checkoutPriceFragment}
+  ${productVariantFragment}
   fragment ProductVariant on ProductVariant {
     id
     name
@@ -53,12 +100,16 @@ export const checkoutProductVariantFragment = gql`
     product {
       id
       name
+      sku
       thumbnail {
         url
         alt
       }
       thumbnail2x: thumbnail(size: 510) {
         url
+      }
+      variants {
+        ...ProductVariantFields
       }
     }
   }

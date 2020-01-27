@@ -766,7 +766,6 @@ class Step7Container extends React.Component {
     const total = checkout ? checkout.totalPrice.gross.amount : 0;
     const shippingPrice = 0;
     const { displayNewModal } = this.state;
-    console.log(checkout, cart, user);
     return (
       <div className="container">
         <CulqiProvider

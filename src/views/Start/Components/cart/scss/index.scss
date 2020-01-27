@@ -70,3 +70,20 @@
   justify-content: center;
 
 }
+
+.overview-talla-item{
+  font-size: 12px;
+  font-weight: 600;
+
+  select{
+    width: 100px;
+    border: none;
+    background-color: white;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 20px;
+    font-size: 16px;
+    background: url("../../../../../images/droparrow.png") 96% / 22% no-repeat;
+  }
+}

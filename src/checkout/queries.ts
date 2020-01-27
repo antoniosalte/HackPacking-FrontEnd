@@ -9,6 +9,52 @@ import {
 import { getCheckout, getCheckoutVariables } from "./types/getCheckout";
 import { getUserCheckout } from "./types/getUserCheckout";
 
+export const priceFragment = gql`
+  fragment Price on TaxedMoney {
+    gross {
+      amount
+      currency
+      localized
+    }
+    net {
+      amount
+      currency
+      localized
+    }
+  }
+`;
+
+export const productVariantFragment = gql`
+  ${priceFragment}
+  fragment ProductVariantFields on ProductVariant {
+    id
+    sku
+    name
+    stockQuantity
+    isAvailable
+    pricing {
+      onSale
+      priceUndiscounted {
+        ...Price
+      }
+      price {
+        ...Price
+      }
+    }
+    attributes {
+      attribute {
+        id
+        name
+      }
+      value {
+        id
+        name
+        value: name
+      }
+    }
+  }
+`;
+
 export const checkoutAddressFragment = gql`
   fragment Address on Address {
     id
@@ -44,6 +90,7 @@ const checkoutPriceFragment = gql`
 
 export const checkoutProductVariantFragment = gql`
   ${checkoutPriceFragment}
+  ${productVariantFragment}
   fragment ProductVariant on ProductVariant {
     id
     name
@@ -65,6 +112,9 @@ export const checkoutProductVariantFragment = gql`
       }
       thumbnail2x: thumbnail(size: 510) {
         url
+      }
+      variants {
+        ...ProductVariantFields
       }
     }
   }

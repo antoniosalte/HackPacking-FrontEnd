@@ -8,7 +8,7 @@ import { ProductsList } from "./types/ProductsList";
 const canDisplay = (data: ProductsList) =>
   maybe(() => !!data.products);
 
-const Step6 = ({cart}) => (
+const Step6 = ({cart, male}) => (
     <div style={{padding: "0 20px"}}>
         <TypedStep6Query alwaysRender displayLoader={false} errorPolicy="all">
             {({ data, loading }) => {
@@ -16,6 +16,7 @@ const Step6 = ({cart}) => (
                     return (
                     <WrapperContainer
                         data={data}
+                        male={male}
                         title="Choose your accesories"
                         meta={
                             {

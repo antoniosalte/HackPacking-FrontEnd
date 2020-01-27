@@ -7,7 +7,7 @@ import { ProductsList } from "./types/ProductsList";
 
 const canDisplay = (data: ProductsList) => maybe(() => !!data.products);
 
-const Step2 = ({ cart }) => (
+const Step2 = ({ cart, male }) => (
   <div style={{padding: "0 20px"}}>
     <TypedStep2Query alwaysRender displayLoader={true} errorPolicy="all">
       {({ data, loading }) => {
@@ -15,6 +15,7 @@ const Step2 = ({ cart }) => (
           return (
             <WrapperContainer
               data={data}
+              male={male}
               title="Choose your upperwear"
               meta={{
                 description: "Step 2",

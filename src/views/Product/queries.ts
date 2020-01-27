@@ -146,6 +146,9 @@ export const productVariatnsQuery = gql`
           stockQuantity
           product {
             ...BasicProductFields
+            variants {
+              ...ProductVariantFields
+            }
           }
         }
       }

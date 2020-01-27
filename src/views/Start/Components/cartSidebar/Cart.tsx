@@ -18,7 +18,7 @@ const Cart: React.FC<{
         <TypedProductVariantsQuery
           variables={{ ids: lines.map(line => line.variantId) }}
         >
-          {({ data }) => (
+          {({ data, loading }) => (
             <>
               <div style={{height: 250,overflowY: "scroll"}}>
               {
@@ -35,7 +35,9 @@ const Cart: React.FC<{
                 ) : <p>You haven't added items yet</p>
               }
               </div>
-              <Subtotal checkout={checkout} variants={data} lines={lines} />
+              {!loading && (
+                  <Subtotal checkout={checkout} variants={data} lines={lines} />
+              )}
             </>
           )}
         </TypedProductVariantsQuery>

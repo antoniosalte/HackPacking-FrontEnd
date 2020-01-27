@@ -6,12 +6,8 @@ import Item from "./Item";
 class Wrapper extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      male: true
-    };
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
-    this.onChangeGender = this.onChangeGender.bind(this);
   }
   async onAdd(cart, variant, count = 1) {
     await cart.clearErrors();
@@ -26,14 +22,8 @@ class Wrapper extends React.Component {
     await cart.remove(variant);
     await cart.add(variant, count);
   }
-  onChangeGender(e) {
-    let { male } = this.state;
-    this.setState({
-      male: !male
-    }, ()=> this.forceUpdate() );
-  }
   filterProduct(x) {
-    const { male } = this.state;
+    const { male } = this.props;
     if (x.node.collections.length < 1) {
       return null; // this product dont have collections
     }
@@ -69,8 +59,7 @@ class Wrapper extends React.Component {
     return null;
   }
   render() {
-    const { data, title, subTitle, meta, cart } = this.props;
-    const { male } = this.state;
+    const { data, title, subTitle, meta, cart, male } = this.props;
     const edges = data.products.edges.filter(x => this.filterProduct(x));
     return (
       <MetaWrapper
@@ -81,34 +70,6 @@ class Wrapper extends React.Component {
       >
         <React.Fragment>
           <br />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <p className="title-steps">{title}</p>
-            <div style={{ display: "flex", fontSize: 14 }}>
-              <span style={{ marginRight: 20 }}>Filters</span>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start"
-                }}
-              >
-                <span style={{ display: "flex", marginBottom: 10 }}>
-                  <div
-                    className={male ? "input-gender" : "input-gender-female "}
-                    onClick={this.onChangeGender}
-                  />
-                  &nbsp;&nbsp;&nbsp;Male
-                </span>
-                <span style={{ display: "flex" }}>
-                  <div
-                    className={!male ? "input-gender" : "input-gender-female "}
-                    onClick={this.onChangeGender}
-                  />
-                  &nbsp;&nbsp;&nbsp;Female
-                </span>
-              </div>
-            </div>
-          </div>
           <p className="sub-title-steps">{subTitle}</p>
           <div className="container-wears">
             {edges && edges.length > 0
