@@ -770,7 +770,7 @@ class Step7Container extends React.Component {
     return (
       <div className="container">
         <CulqiProvider
-          publicKey="pk_test_6cZH0KR8piY52AOG"
+          publicKey="pk_live_ssu1ZoKqgU7HQQqV"
           amount={(total + shippingPrice) * 100}
           title="HackPacking"
           currency="USD"
