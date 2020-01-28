@@ -37,7 +37,7 @@ class ItemSteps extends React.Component {
     if (this.props !== newProps) {
       this.setState({
         countItem: Number(this.props.countItem),
-        variant: this.props.variant
+        variant: newProps.variant,
       });
     }
   }

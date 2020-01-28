@@ -9,11 +9,18 @@ export const getTotal = (
   lines: CartLineInterface[],
   locale?: string
 ): string => {
-  const amount = lines.reduce((sum, { variantId, quantity }) => {
-    const { node } = variantList.productVariants.edges.find(
-      ({ node: { id } }) => id === variantId
-    );
-    return sum + node.pricing.price.gross.amount * quantity;
+    const amount = lines.reduce((sum, { variantId, quantity }) => {
+    // const { node } = variantList.productVariants.edges.find(
+    //   ({ node: { id } }) => id === variantId
+    // );
+        const res = variantList.productVariants.edges.find(
+          ({ node: { id } }) => id === variantId
+        );
+        if (res && res.node) {
+            return sum + res.node.pricing.price.gross.amount * quantity;
+        }
+        return 0;
+    // return sum + node.pricing.price.gross.amount * quantity;
   }, 0);
   const {
     currency,

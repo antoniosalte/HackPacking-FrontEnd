@@ -43,6 +43,7 @@ class Start extends React.Component {
     constructor( props ){
         super( props );
         this.state = {
+            male: true,
             data:{
                 step1:{
                     destination: "Lima, Peru",
@@ -112,6 +113,7 @@ class Start extends React.Component {
             { ...this.props }
             goTo={ (step) => this.goTo(step) }
             data={ this.state.data }
+            male={this.state.male}
             setData={ this.setData }
             cart={cart}
             /> 
@@ -128,13 +130,63 @@ class Start extends React.Component {
             step,
         })
     }
+    renderTitle = () => {
+        const { step } = this.state;
+        switch(step) {
+            case 2: return 'Choose your upperwear';
+            case 3: return 'Choose your lowerwear';
+            case 4: return 'Choose your underwear';
+            case 5: return 'Choose your socks';
+            case 6: return 'Choose your accesories';
+        }
+    };
+
+    onChangeGender = () => {
+        const { male } = this.state;
+        this.setState({
+            male: !male,
+        });
+    };
+
     render() {
-        const { data, open, step } = this.state;
+        const { data, open, step, male } = this.state;
         return (
             <div className="start-page">
                 <CartContext.Consumer>
                 {cart => (
                     <>
+                        {(step > 1 && step < 7) && (
+                            <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 20px', marginTop: '20px'}}>
+                                <p className="title-steps">
+                                    {this.renderTitle()}
+                                </p>
+                                <div style={{display: 'flex', fontSize: 14}}>
+                                    <span style={{marginRight: 20}}>Filters</span>
+                                    <div
+                                        style={{
+                                            alignItems: 'flex-start',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                        }}
+                                    >
+                                        <span style={{display: 'flex', marginBottom: 10}}>
+                                          <div
+                                              className={male ? 'input-gender' : 'input-gender-female '}
+                                              onClick={this.onChangeGender}
+                                          />
+                                            &nbsp;&nbsp;&nbsp;Male
+                                        </span>
+                                        <span style={{display: 'flex'}}>
+                                          <div
+                                              className={!male ? 'input-gender' : 'input-gender-female '}
+                                              onClick={this.onChangeGender}
+                                          />
+                                            &nbsp;&nbsp;&nbsp;Female
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     {
                         this.renderStep(cart)
                     }

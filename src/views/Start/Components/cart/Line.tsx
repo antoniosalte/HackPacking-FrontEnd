@@ -3,8 +3,12 @@ import * as React from "react";
 import { LineI } from "../../../../components/CartTable/ProductRow";
 
 const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
-  const { id, product, pricing, name, quantity, cart } = props;
+  const { id, product, pricing, name, quantity, variants, cart } = props;
   const { loading } = cart;
+  let productVariant = [];
+    if (variants) {
+        productVariant = variants.filter(variant => variant.isAvailable);
+    }
   const colors = [
     "white",
     "blue",
@@ -77,7 +81,26 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
           }}
         />
       </td>
-      <td style={{ textAlign: "center" }}>{name ? `(${name})` : null}</td>
+        <td style={{ textAlign: "center" }}>
+          <span className="overview-talla-item">
+            <select
+                name="select"
+                onChange={!loading ? (e) => props.onChangeItem(id, e.target.value, quantity) : () => {}}
+            >
+              {productVariant.map((variant, index) => {
+                  return (
+                      <option
+                          key={`sizes-${index}`}
+                          value={variant.id}
+                          selected={variant.id === id}
+                      >
+                          {variant.name}
+                      </option>
+                  );
+              })}
+            </select>
+          </span>
+        </td>
       <td style={{ textAlign: "end" }}>$ { (Number( pricing.price.gross.amount ) * Number(quantity)).toFixed(2) }</td>
       <td>
         <div
