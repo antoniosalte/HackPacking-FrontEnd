@@ -3,19 +3,6 @@ import DatePicker from "react-datepicker";
 require('react-datepicker/dist/react-datepicker.css')
 import moment from "moment"
 
-
-import { Portal } from 'react-overlays'
-
-const CalendarContainer = ({children}) => {
-  const el = document.getElementById('calendar-portal')
-
-  return (
-    <Portal container={el}>
-      {children}
-    </Portal>
-  )
-}
-
 const Picker = ( props ) => {
     let minDate = new Date();
     if ( !props.arrival ){
