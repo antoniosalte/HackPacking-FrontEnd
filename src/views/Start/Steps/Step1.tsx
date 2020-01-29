@@ -89,7 +89,7 @@ class Step1 extends React.Component {
           </div>
           <p className="start-page__title">Setup your trip information</p>
           <div className="container-step1">
-            <div className="container-step1__item i-left">
+            <div className="container-step1__item i-left grid-area-a">
               <div
                 className="item-div"
               >
@@ -110,7 +110,7 @@ class Step1 extends React.Component {
                 </p>
               </div>
             </div>
-            <div className="container-step1__item">
+            <div className="container-step1__item grid-area-b">
               <div className="item-div">
                 <img src={IconCalendar} alt="img" />
                 <p>
@@ -124,7 +124,7 @@ class Step1 extends React.Component {
                 </p>
               </div>
             </div>
-            <div className="container-step1__item">
+            <div className="container-step1__item grid-area-d">
               <div className="item-div">
                 <img src={IconCalendar} alt="img" />
                 <p>
@@ -137,7 +137,7 @@ class Step1 extends React.Component {
                 </p>
               </div>
             </div>
-            <div className="container-step1__item i-right">
+            <div className="container-step1__item i-right grid-area-e">
               <div
                 className="item-div"
                 onClick={this.quickSetup}
