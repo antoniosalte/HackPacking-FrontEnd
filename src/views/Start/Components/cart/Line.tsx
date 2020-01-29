@@ -35,7 +35,8 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       }
     });
   });
-  return (
+
+    return (
     <tr key={id}>
       <td style={{ textAlign: "start" }}>{product.name}</td>
       <td style={{ display: "flex", justifyContent: "center" }}>
@@ -82,24 +83,28 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
         />
       </td>
         <td style={{ textAlign: "center" }}>
-          <span className="overview-talla-item">
-            <select
-                name="select"
-                onChange={!loading ? (e) => props.onChangeItem(id, e.target.value, quantity) : () => {}}
-            >
-              {productVariant.map((variant, index) => {
-                  return (
-                      <option
-                          key={`sizes-${index}`}
-                          value={variant.id}
-                          selected={variant.id === id}
-                      >
-                          {variant.name}
-                      </option>
-                  );
-              })}
-            </select>
-          </span>
+            {productVariant.length < 2 ? (
+                name ? `(${name})` : null
+            ) : (
+                <span className="overview-talla-item">
+                    <select
+                        name="select"
+                        onChange={!loading ? (e) => props.onChangeItem(id, e.target.value, quantity) : () => {}}
+                    >
+                      {productVariant.map((variant, index) => {
+                          return (
+                              <option
+                                  key={`sizes-${index}`}
+                                  value={variant.id}
+                                  selected={variant.id === id}
+                              >
+                                  {variant.name}
+                              </option>
+                          );
+                      })}
+                    </select>
+                </span>
+            )}
         </td>
       <td style={{ textAlign: "end" }}>$ { (Number( pricing.price.gross.amount ) * Number(quantity)).toFixed(2) }</td>
       <td>
