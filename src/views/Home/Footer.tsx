@@ -35,8 +35,13 @@ const Footer = props => {
             <div className="footer-c2__c1">
               <div className="column-f">
                 <p>Product</p>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
+                {
+                  !props.user ?
+                  <>
+                    <Link to="/login">Login</Link>
+                    <Link to="/register">Register</Link>
+                  </> : <Link to="/account">My account</Link>
+                }
                 <Link to="/start?step=overview">Shopping cart</Link>
                 <Link to="/account">Status of your order</Link>
                 <Link to="/faq">Support</Link>

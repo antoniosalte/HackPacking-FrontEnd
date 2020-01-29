@@ -136,11 +136,7 @@ const MainMenu: React.FC = () => {
             <div className="main-menu__right">
                 <ul>
                   <li>
-                    <Media
-                      query={{ minWidth: mediumScreen }}
-                      render={() =>
-                        <>
-                        {user ?
+                    {user ?
                         (
                           <MenuDropdown
                           head={
@@ -152,7 +148,7 @@ const MainMenu: React.FC = () => {
                               alignItems: "center",
                             }}
                             >
-                              <p className="navbar-item-dk"
+                              <p className="navbar-item-dk nombre-user-navbar"
                                   style={ {
                                     fontWeight: 400,
                                     fontSize: 16,
@@ -194,7 +190,9 @@ const MainMenu: React.FC = () => {
                         />
                         ):
                         (
-                          <button onClick={ () =>setDisplayNewModal(true)}  className="navbar-item"
+                          <button
+                            onClick={ () =>setDisplayNewModal(true)} 
+                            className="navbar-item btn-sign-in"
                             style={ {
                               display: "flex",
                               justifyContent: "space-between",
@@ -211,9 +209,7 @@ const MainMenu: React.FC = () => {
                             >Sign In</p>
                             <img className="user-icon" src={ iconuser } alt="img"/>
                         </button> )
-                      }</>  
-                      }
-                    />
+                    }
                   </li>
                   <li>
                     <Media
@@ -232,7 +228,12 @@ const MainMenu: React.FC = () => {
               title=""
               hide={ () =>setDisplayNewModal(false)}
               show={displayNewModal}>
-                <div>
+                <div className="popup-container">
+                    <div className="btn-closemodal"
+                    onClick={() =>setDisplayNewModal(false)}
+                    >
+                     &#10005;
+                    </div>
                     <div
                       style={{
                         padding: 20,

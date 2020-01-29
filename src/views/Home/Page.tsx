@@ -31,7 +31,8 @@ const cards = [
 
 const Page: React.FC<{
   loading: boolean;
-}> = ({ loading }) => (
+  user: any;
+}> = ({ loading, user }) => (
   <>
     <div className="home-page__hero">
       <div className="container">
@@ -49,7 +50,7 @@ const Page: React.FC<{
             <img src={ homeHero } alt="imghome"/>
           </div>
         </div>
-        <Footer home/>
+        <Footer home user={user}/>
       </div>
       <div className="right-container__hero">
         <p className="right-container__hero__works-text">How it works</p>

@@ -156,7 +156,7 @@ class Start extends React.Component {
                 {cart => (
                     <>
                         {(step > 1 && step < 7) && (
-                            <div style={{display: 'flex', justifyContent: 'space-between', padding: '0 20px', marginTop: '20px'}}>
+                            <div className="title-container-and-filters">
                                 <p className="title-steps">
                                     {this.renderTitle()}
                                 </p>

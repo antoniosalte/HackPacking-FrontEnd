@@ -4,6 +4,7 @@ import "../About/styles.scss";
 import "./styles.scss";
 import IconQ from "../../images/hp-question.svg"
 import { Items } from "./items"
+import { useUserDetails } from "@sdk/react";
 
 const ItemQuestion = ( { item } ) => (
     <div className="item-question">
@@ -16,6 +17,7 @@ const ItemQuestion = ( { item } ) => (
 )
 
 const Faq = () => {
+    const { data: user } = useUserDetails();
     return (
         <div className="container-blog">
             <div className="container-blog-c container">
@@ -27,7 +29,7 @@ const Faq = () => {
                 }
                 <br /><br /><br />
             </div>
-            <Footer />
+            <Footer user={user}/>
         </div>
     )
 }

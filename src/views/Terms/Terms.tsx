@@ -3,8 +3,11 @@ import Footer from "../Home/Footer";
 import "../About/styles.scss";
 import "./styles.scss";
 import Icon from "../../images/hp-terms-icon.svg"
+import { useUserDetails } from "@sdk/react";
 
 const Terms = () => {
+    const { data: user } = useUserDetails();
+
     return (
         <div className="container-blog">
             <div className="container-blog-c container">
@@ -79,7 +82,7 @@ const Terms = () => {
                 
                 <br /><br /><br />
             </div>
-            <Footer />
+            <Footer user={user}/>
         </div>
     )
 }

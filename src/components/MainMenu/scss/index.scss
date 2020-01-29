@@ -323,3 +323,59 @@ header{
     }
   }
 }
+
+.btn-sign-in{
+  @media (max-width: 600px) {
+    margin-top: 10px !important;
+
+    img{
+      display: none;
+    }
+    p{
+      color: white;
+      background-color: black;
+      width: 69px;
+      margin-right: -10px !important;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      border-radius: 16px;
+      font-weight: 500 !important;
+      font-size: 14px !important;
+    }
+  }
+}
+.popup-container{
+
+  .btn-closemodal{
+    display: none;
+  }
+  @media (max-width: 600px) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+
+    .btn-closemodal{
+
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 30px;
+      font-size: 30px;
+    }
+  }
+}
+.main-menu__icon {
+  .nombre-user-navbar{
+    display: block;
+  }
+  @media (max-width: 600px) {
+    margin-top: 10px !important;
+
+    .nombre-user-navbar{
+      display: none;
+    }
+  }
+}

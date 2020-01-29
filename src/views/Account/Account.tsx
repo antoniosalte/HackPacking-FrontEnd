@@ -42,7 +42,7 @@ const Account: React.FC<RouteComponentProps> = ({ history, match }) => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer user/>
     </div>
   );
 };

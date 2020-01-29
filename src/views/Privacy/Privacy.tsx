@@ -3,8 +3,11 @@ import Footer from "../Home/Footer";
 import "../About/styles.scss";
 import "./styles.scss";
 import Icon from "../../images/hp-privacy-icon.svg"
+import { useUserDetails } from "@sdk/react";
 
 const Privacy = () => {
+    const { data: user } = useUserDetails();
+
     return (
         <div className="container-blog">
             <div className="container-blog-c container">
@@ -27,7 +30,7 @@ const Privacy = () => {
                 </div>
                 <br /><br /><br />
             </div>
-            <Footer />
+            <Footer user={user}/>
         </div>
     )
 }

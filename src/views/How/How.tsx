@@ -7,7 +7,7 @@ import how1 from "../../images/hp-how1.png"
 import how2 from "../../images/hp-how2.svg"
 import how3 from "../../images/hp-how3.svg"
 import triangle from "../../images/hp-how-triangle.png"
-
+import { useUserDetails } from "@sdk/react";
 import Item from "../About/Item";
 
 const items = [
@@ -31,6 +31,7 @@ const items = [
     }
 ]
 const How = () => {
+    const { data: user } = useUserDetails();
     return (
         <div className="container-blog">
             <div className="container-blog-c container">
@@ -63,7 +64,7 @@ const How = () => {
                 }
             <br/>
             </div>
-            <Footer />
+            <Footer user={ user }/>
         </div>
     )
 }

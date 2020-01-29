@@ -4,6 +4,7 @@ import "../About/styles.scss";
 import why1 from "../../images/hp-why-1.svg"
 import why2 from "../../images/hp-why-2.svg"
 import Item from "../About/Item";
+import { useUserDetails } from "@sdk/react";
 
 const items = [
     {
@@ -20,6 +21,7 @@ const items = [
     }
 ]
 const Why = () => {
+    const { data: user } = useUserDetails();
     return (
         <div className="container-blog">
             <div className="container-blog-c container">
@@ -46,7 +48,7 @@ const Why = () => {
                 >Want to join our team? Please reach out to contact@hackpaking.life</p>
             </div>
             <br/>
-            <Footer />
+            <Footer user={user}/>
         </div>
     )
 }

@@ -18,6 +18,10 @@ export const Row = styled.div`
     border-radius: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     padding: 30px 20px;
+    
+    @media (max-width: 600px) {
+      height: 340px;
+    }
 }
 
 `;

@@ -6,6 +6,7 @@ import about2 from "../../images/hp-blog-2.svg"
 import about3 from "../../images/hp-blog-3.svg"
 import about4 from "../../images/hp-blog-4.svg"
 import Item from "./Item";
+import { useUserDetails } from "@sdk/react";
 
 const items = [
     {
@@ -34,20 +35,23 @@ const items = [
     }
 ]
 const About = () => {
+    const { data: user } = useUserDetails();
     return (
         <div className="container-blog">
-            <br/>
-            <div className="container-blog-c container">
-                {
-                    items.map( item => {
-                        return (
-                            <Item item={ item }/>
-                        )
-                    })
-                }
+            <div className="container">
+                <p className="container-blog-c__title">About</p>
+                <div className="container-blog-c">
+                    {
+                        items.map( item => {
+                            return (
+                                <Item item={ item }/>
+                            )
+                        })
+                    }
+                </div>
             </div>
             <br/>
-            <Footer />
+            <Footer user={ user }/>
         </div>
     )
 }
