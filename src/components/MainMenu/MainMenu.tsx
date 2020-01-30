@@ -105,7 +105,7 @@ const MainMenu: React.FC = () => {
                             <Link to="/faq" className="navbar-item">
                               <p className="navbar-item-dk" >FAQ</p>
                             </Link>
-                            <a href="https://medium.com/@hackpacking" 
+                            <a href="www.medium.com/hackpacking-stories" 
                             target="_blank"
                             className="navbar-item">
                               <p className="navbar-item-dk" >Blog</p>
