@@ -37,6 +37,8 @@ import { OverlayProvider, UserProvider } from "./components";
 import CartProvider from "./components/CartProvider";
 import ShopProvider from "./components/ShopProvider";
 
+import firebase from "firebase";
+
 import {
   authLink,
   invalidTokenLinkWithTokenHandlerComponent
@@ -52,7 +54,7 @@ const link = ApolloLink.from([
   invalidTokenLink,
   authLink,
   new RetryLink(),
-  new BatchHttpLink({ uri: apiUrl }),
+  new BatchHttpLink({ uri: apiUrl })
 ]);
 
 const cache = new InMemoryCache({
@@ -61,23 +63,37 @@ const cache = new InMemoryCache({
       return "shop";
     }
     return defaultDataIdFromObject(obj);
-  },
+  }
 });
 
 const startApp = async () => {
+  var firebaseConfig = {
+    apiKey: "AIzaSyDKs2d3wLITuW6NwUFbznPlaG7keyZBhEU",
+    authDomain: "hackpacking-297bb.firebaseapp.com",
+    databaseURL: "https://hackpacking-297bb.firebaseio.com",
+    projectId: "hackpacking-297bb",
+    storageBucket: "hackpacking-297bb.appspot.com",
+    messagingSenderId: "375162055721",
+    appId: "1:375162055721:web:1af1045310febe8d824038",
+    measurementId: "G-05R6V4D57K"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
   await persistCache({
     cache,
-    storage: window.localStorage,
+    storage: window.localStorage
   });
 
   const apolloClient = new ApolloClient({
     cache,
-    link,
+    link
   });
 
   const notificationOptions = {
     position: positions.BOTTOM_RIGHT,
-    timeout: 2500,
+    timeout: 2500
   };
 
   const Root = hot(module)(() => {
@@ -93,14 +109,14 @@ const startApp = async () => {
               actionText: "Refresh",
               content:
                 "To update the application to the latest version, please refresh the page!",
-              title: "New version is available!",
+              title: "New version is available!"
             },
             {
               onClose: () => {
                 location.reload();
               },
               timeout: 0,
-              type: "success",
+              type: "success"
             }
           );
         }
@@ -110,14 +126,14 @@ const startApp = async () => {
         if (authenticated) {
           alert.show(
             {
-              title: "You are now logged in",
+              title: "You are now logged in"
             },
             { type: "success" }
           );
         } else {
           alert.show(
             {
-              title: "You are now logged out",
+              title: "You are now logged out"
             },
             { type: "success" }
           );
