@@ -110,9 +110,12 @@ class ItemSteps extends React.Component {
   render() {
     const item = this.props.item.node;
     const { variant: variantId } = this.state;
-    const { variants } = item;
+    var { variants } = item;
     const { loading } = this.props.cart;
     var variantImage = null;
+
+    variants.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
     variants.map((variant, index) => {
       if (variant.id == variantId) {
         if (variant.images.length > 0) {
