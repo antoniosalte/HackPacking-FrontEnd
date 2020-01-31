@@ -20,35 +20,47 @@ class Step1 extends React.Component {
   }
   quickSetup() {
     this.props.cart.clear();
-    const { arrival, departure } = this.props.data.step1;
-    const dateArrival = moment(arrival,'D/M/YYYY');
-    const dateDeparture  = moment(departure ,'D/M/YYYY');
-    const diffDays = dateDeparture .diff(dateArrival, 'days');
+    const { arrival, departure } = this.props.data.step1;
+    const dateArrival = moment(arrival, "D/M/YYYY");
+    const dateDeparture = moment(departure, "D/M/YYYY");
+    const diffDays = dateDeparture.diff(dateArrival, "days");
     //formula del quick setup
-    if(diffDays>=1){
-
-      if( diffDays <= 3){
-      this.props.cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
-      this.props.cart.add(quiqkTrip[1].variantId, 1);//JEANS
-      }
-      else{
-        const jeans= Math.ceil( diffDays/5 )
-        const polos= Math.ceil( diffDays/2 )
+    if (diffDays >= 1) {
+      if (diffDays <= 3) {
+        this.props.cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
+        this.props.cart.add(quiqkTrip[1].variantId, 1); //JEANS
+      } else {
+        const jeans = Math.ceil(diffDays / 5);
+        const polos = Math.ceil(diffDays / 2);
         this.props.cart.add(quiqkTrip[0].variantId, polos); //T-shirt
-        this.props.cart.add(quiqkTrip[1].variantId, jeans);//JEANS
+        this.props.cart.add(quiqkTrip[1].variantId, jeans); //JEANS
       }
-      this.props.cart.add(quiqkTrip[2].variantId, diffDays);//Underwear
+      this.props.cart.add(quiqkTrip[2].variantId, diffDays); //Underwear
       this.props.goTo(7);
-    }else{
-      alert("Invalid dates")
+    } else {
+      alert("Invalid dates");
     }
   }
-  onChangeDestination( e ){
+  onChangeDestination(e) {
     const { step1 } = this.props.data;
     step1.destination = e.target.value;
     this.props.setData({ step1 });
   }
   changeData(type, value) {
+    const { step1 } = this.props.data;
+    const year = value.getFullYear();
+    let month = value.getMonth() + 1;
+    let dt = value.getDate();
+    if (dt < 10) {
+      dt = "0" + dt;
+    }
+    if (month < 10) {
+      month = "0" + month;
+    }
+    step1[type] = `${dt}-${month}-${year}`;
+    this.props.setData({ step1 });
+  }
+  updateDate(type, value) {
     const { step1 } = this.props.data;
     const year = value.getFullYear();
     let month = value.getMonth() + 1;
@@ -90,22 +102,27 @@ class Step1 extends React.Component {
           <p className="start-page__title">Setup your trip information</p>
           <div className="container-step1">
             <div className="container-step1__item i-left grid-area-a">
-              <div
-                className="item-div"
-              >
+              <div className="item-div">
                 <img src={IconLocation} alt="img" />
                 <p>
                   Destination:
-                  <select className="input-location"
-                  style={{border:"0px solid transparent",backgroundColor:"white"}}
-                  onChange={ this.onChangeDestination }
-                  id="select-destination"
+                  <select
+                    className="input-location"
+                    style={{
+                      border: "0px solid transparent",
+                      backgroundColor: "white"
+                    }}
+                    onChange={this.onChangeDestination}
+                    id="select-destination"
                   >
-                    {
-                      cities.map( c => (
-                      <option value={c} selected={ this.props.data.step1.destination == c }>{c}</option> 
-                      ))
-                    }
+                    {cities.map(c => (
+                      <option
+                        value={c}
+                        selected={this.props.data.step1.destination == c}
+                      >
+                        {c}
+                      </option>
+                    ))}
                   </select>
                 </p>
               </div>
@@ -119,7 +136,7 @@ class Step1 extends React.Component {
                     id="arrivalp"
                     onSelect={value => this.changeData("arrival", value)}
                     arrival
-                    startD={ this.props.data.step1.arrival }
+                    startD={this.props.data.step1.arrival}
                   />
                 </p>
               </div>
@@ -132,7 +149,9 @@ class Step1 extends React.Component {
                   <Picker
                     id="departurep"
                     onSelect={value => this.changeData("departure", value)}
-                    startD={ this.props.data.step1.departure }
+                    startD={this.props.data.step1.departure}
+                    arrivalD={this.props.data.step1.arrival}
+                    updateDate={this.updateDate.bind(this)}
                   />
                 </p>
               </div>
