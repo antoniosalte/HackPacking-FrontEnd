@@ -100,7 +100,6 @@ export const checkoutProductVariantFragment = gql`
     product {
       id
       name
-      sku
       thumbnail {
         url
         alt
