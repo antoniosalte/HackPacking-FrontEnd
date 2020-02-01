@@ -6,9 +6,9 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
   const { id, product, pricing, name, quantity, variants, cart } = props;
   const { loading } = cart;
   let productVariant = [];
-    if (variants) {
-        productVariant = variants.filter(variant => variant.isAvailable);
-    }
+  if (variants) {
+    productVariant = variants.filter(variant => variant.isAvailable);
+  }
   const colors = [
     "white",
     "blue",
@@ -35,8 +35,9 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       }
     });
   });
-
-    return (
+  var width = window.innerWidth;
+  var show = width >= 500 ? true : false;
+  return (
     <tr key={id}>
       <td style={{ textAlign: "start" }}>{product.name}</td>
       <td style={{ display: "flex", justifyContent: "center" }}>
@@ -70,43 +71,59 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
           </div>
         </div>
       </td>
-      <td style={{ textAlign: "center" }}>
-        {props.stockQuantity ? props.stockQuantity : "-"}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        <div
-          className="color-point"
-          style={{
-            backgroundColor: color,
-            margin: "0 auto"
-          }}
-        />
-      </td>
+
+      {show ? (
         <td style={{ textAlign: "center" }}>
-            {productVariant.length < 2 ? (
-                name ? `(${name})` : null
-            ) : (
-                <span className="overview-talla-item">
-                    <select
-                        name="select"
-                        onChange={!loading ? (e) => props.onChangeItem(id, e.target.value, quantity) : () => {}}
-                    >
-                      {productVariant.map((variant, index) => {
-                          return (
-                              <option
-                                  key={`sizes-${index}`}
-                                  value={variant.id}
-                                  selected={variant.id === id}
-                              >
-                                  {variant.name}
-                              </option>
-                          );
-                      })}
-                    </select>
-                </span>
-            )}
+          {props.stockQuantity ? props.stockQuantity : "-"}
         </td>
-      <td style={{ textAlign: "end" }}>$ { (Number( pricing.price.gross.amount ) * Number(quantity)).toFixed(2) }</td>
+      ) : null}
+
+      {show ? (
+        <td style={{ textAlign: "center" }}>
+          <div
+            className="color-point"
+            style={{
+              backgroundColor: color,
+              margin: "0 auto"
+            }}
+          />
+        </td>
+      ) : null}
+      {show ? (
+        <td style={{ textAlign: "center" }}>
+          {productVariant.length < 2 ? (
+            name ? (
+              `(${name})`
+            ) : null
+          ) : (
+            <span className="overview-talla-item">
+              <select
+                name="select"
+                onChange={
+                  !loading
+                    ? e => props.onChangeItem(id, e.target.value, quantity)
+                    : () => {}
+                }
+              >
+                {productVariant.map((variant, index) => {
+                  return (
+                    <option
+                      key={`sizes-${index}`}
+                      value={variant.id}
+                      selected={variant.id === id}
+                    >
+                      {variant.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </span>
+          )}
+        </td>
+      ) : null}
+      <td style={{ textAlign: "end" }}>
+        $ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}
+      </td>
       <td>
         <div
           onClick={() => cart.remove(id)}
