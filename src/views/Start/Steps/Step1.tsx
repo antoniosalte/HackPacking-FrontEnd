@@ -46,18 +46,10 @@ class Step1 extends React.Component {
     step1.destination = e.target.value;
     this.props.setData({ step1 });
   }
+  // change dates
   changeData(type, value) {
     const { step1 } = this.props.data;
-    const year = value.getFullYear();
-    let month = value.getMonth() + 1;
-    let dt = value.getDate();
-    if (dt < 10) {
-      dt = "0" + dt;
-    }
-    if (month < 10) {
-      month = "0" + month;
-    }
-    step1[type] = `${dt}-${month}-${year}`;
+    step1[type] = moment(value).format("D/M/YYYY")
     this.props.setData({ step1 });
   }
   updateDate(type, value) {
@@ -135,8 +127,8 @@ class Step1 extends React.Component {
                   <Picker
                     id="arrivalp"
                     onSelect={value => this.changeData("arrival", value)}
-                    arrival
-                    startD={this.props.data.step1.arrival}
+                    value={ this.props.data.step1.arrival }
+                    minDate={ moment() }
                   />
                 </p>
               </div>
@@ -148,10 +140,10 @@ class Step1 extends React.Component {
                   Departure:&nbsp;&nbsp;
                   <Picker
                     id="departurep"
+                    key={ (this.props.data.step1.arrival).toString() }
                     onSelect={value => this.changeData("departure", value)}
-                    startD={this.props.data.step1.departure}
-                    arrivalD={this.props.data.step1.arrival}
-                    updateDate={this.updateDate.bind(this)}
+                    value={ this.props.data.step1.departure }
+                    minDate={ Date(moment(this.props.data.step1.arrival,"D/M/YYYY")) }
                   />
                 </p>
               </div>

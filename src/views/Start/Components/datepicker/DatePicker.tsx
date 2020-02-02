@@ -1,27 +1,16 @@
 import * as React from "react";
 import DatePicker from "react-datepicker";
 require("react-datepicker/dist/react-datepicker.css");
-import moment, { min } from "moment";
-import changeData from "";
+import moment from "moment"
 
-const Picker = props => {
-  let minDate = new Date();
-  if (!props.arrival) {
-    minDate = new Date(moment(props.arrivalD, "D/M/YYYY").format());
-    minDate.setDate(minDate.getDate() + 3);
-  }
-  var [startDate, setStartDate] = React.useState(minDate);
+const onSelectFunction = ( value ) => {
+  console.log("On select", value)
+}
+const Picker = ( { onSelect = onSelectFunction, id, value, minDate } ) => {
 
-  if (!props.arrival) {
-    var arrivalD = moment(props.arrivalD, "D/M/YYYY");
-    var startD = moment(props.startD, "D/M/YYYY");
-    const diffDays = startD.diff(arrivalD, "days");
-    if (diffDays < 3) {
-      //startDate = minDate;
-      props.updateDate("departure", minDate);
-    }
-  }
-
+  const selectedValue = new Date(moment(value,"D/M/YYYY").format())
+  const minDateValue = new Date(moment(minDate).format("DD-MM-YYYY"))
+  console.log("los values: ", selectedValue, minDateValue)
   const CustomInput = ({ value, onClick }) => (
     <div
       style={{
@@ -38,15 +27,13 @@ const Picker = props => {
 
   return (
     <DatePicker
-      id={props.id}
+      id={id}
       dateFormat="dd/MM/yyyy"
-      selected={startDate}
-      onSelect={date => {
-        props.onSelect(date);
-        setStartDate(date);
-      }}
-      minDate={minDate}
+      selected={ selectedValue }
+      onSelect={date => onSelect(date) }
+      minDate={ minDateValue }
       customInput={<CustomInput />}
+
       popperPlacement="top-end"
       popperModifiers={{
         offset: {

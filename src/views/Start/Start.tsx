@@ -10,23 +10,8 @@ import Step7 from "./Steps/Step7";
 import { CartContext } from "../../components/CartProvider/context";
 import BottomNav from "./Components/BottomNav";
 import QueryString from "query-string"
+import moment from "moment"
 
-const getCurrentDate = ( deap = false) => {
-    const value = new Date();
-    if (deap ){
-        value.setDate(value.getDate() + 3);
-    }
-    const year = value.getFullYear();
-    let month = value.getMonth()+1;
-    let dt = value.getDate();
-    if (dt < 10) {
-        dt = '0' + dt;
-    }
-    if (month < 10) {
-        month = '0' + month;
-    }
-    return `${dt}-${month}-${year}`;
-}
 function toStepByQuery( step ){
     switch( step ){
         case "trip-information" : return 1;
@@ -47,8 +32,8 @@ class Start extends React.Component {
             data:{
                 step1:{
                     destination: "Lima, Peru",
-                    arrival: getCurrentDate(),
-                    departure: getCurrentDate(true),
+                    arrival: moment().format("D/M/YYYY"),
+                    departure: moment().add(3, 'days').format("D/M/YYYY"),
                 },
                 step2:{ items:[] },
                 step3:{ items:[] },
