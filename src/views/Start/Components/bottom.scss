@@ -74,11 +74,23 @@
     }
     @media (max-width: 600px) {
 
-        grid-template-columns: 1fr 1fr 1fr;
-
+        width: 260%;
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 2fr;
 
         .bottomnav-item-disabled{
             display: none;
         }
+    }
+}
+.start-page-steps{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    z-index: 2;
+    @media (max-width: 600px) {
+        overflow-x: scroll;
     }
 }

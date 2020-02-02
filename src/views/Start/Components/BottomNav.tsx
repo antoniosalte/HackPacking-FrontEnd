@@ -59,37 +59,6 @@ const items = [
     imageGreen: AccesoriesGreen
   }
 ];
-
-const isDisabledInMobile = ( step, currentStep) =>{
-  switch(currentStep){
-    case 1:
-    case 2: 
-      if ( step == 1 || step == 2 || step == 3){
-        return true;
-      }else{ return false; }
-    case 3:
-      if ( step == 2 || step == 3 || step == 4){
-        return true;
-      }else{ return false; }
-    case 4:
-      if ( step == 3 || step == 4 || step == 5){
-        return true;
-      }else{ return false; }
-    case 5:
-      if ( step == 4 || step == 5 || step == 6){
-        return true;
-      }else{ return false; }
-    case 6:
-    case 7:
-        if ( step == 5 || step == 6 || step == 7){
-          return true;
-        }else{ return false; }
-    default: 
-     return false;
-    
-  }
-}
-
 const BottomNav = props => {
   return (
     <div className="container-bottomnav">
@@ -100,9 +69,7 @@ const BottomNav = props => {
               props.goTo(item.id, item.url);
               props.cart.clearErrors();
             }}
-            className={ isDisabledInMobile(item.id, props.step ) ?
-              "container-bottomnav__item" :
-              "container-bottomnav__item bottomnav-item-disabled" } 
+            className="container-bottomnav__item"
           >
             <div>
               <img
@@ -127,9 +94,7 @@ const BottomNav = props => {
           props.goTo(7, "overview");
           props.cart.clearErrors();
         }}
-        className={ isDisabledInMobile(7, props.step ) ?
-          "container-bottomnav__item-o" :
-          "container-bottomnav__item-o bottomnav-item-disabled" } 
+        className="container-bottomnav__item-o"
       >
         <div>
           <img src={props.step == 7 ? OverviewBlack : Overview} alt="icon" />
