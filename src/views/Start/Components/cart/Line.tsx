@@ -38,9 +38,9 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
   var width = window.innerWidth;
   var show = width >= 500 ? true : false;
   return (
-    <tr key={id}>
-      <td style={{ textAlign: "start" }}>{product.name}</td>
-      <td style={{ display: "flex", justifyContent: "center" }}>
+    <tr key={id}  >
+      <td align="center" style={{ textAlign: "start" }}>{product.name}</td>
+      <td align="center" style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex" }}>
           <div
             className="btn-add-count-quantity"
@@ -73,7 +73,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       </td>
 
       {show ? (
-        <td style={{ textAlign: "center" }}>
+        <td style={{ textAlign: "center" }} align="center">
           {props.stockQuantity ? props.stockQuantity : "-"}
         </td>
       ) : null}
@@ -89,38 +89,36 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
           />
         </td>
       ) : null}
-      {show ? (
-        <td style={{ textAlign: "center" }}>
-          {productVariant.length < 2 ? (
-            name ? (
-              `(${name})`
-            ) : null
-          ) : (
-            <span className="overview-talla-item">
-              <select
-                name="select"
-                onChange={
-                  !loading
-                    ? e => props.onChangeItem(id, e.target.value, quantity)
-                    : () => {}
-                }
-              >
-                {productVariant.map((variant, index) => {
-                  return (
-                    <option
-                      key={`sizes-${index}`}
-                      value={variant.id}
-                      selected={variant.id === id}
-                    >
-                      {variant.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </span>
-          )}
-        </td>
-      ) : null}
+      <td style={{ textAlign: "center" }} align="center">
+        {productVariant.length < 2 ? (
+          name ? (
+            `(${name})`
+          ) : null
+        ) : (
+          <span className="overview-talla-item">
+            <select
+              name="select"
+              onChange={
+                !loading
+                  ? e => props.onChangeItem(id, e.target.value, quantity)
+                  : () => {}
+              }
+            >
+              {productVariant.map((variant, index) => {
+                return (
+                  <option
+                    key={`sizes-${index}`}
+                    value={variant.id}
+                    selected={variant.id === id}
+                  >
+                    {variant.name}
+                  </option>
+                );
+              })}
+            </select>
+          </span>
+        )}
+      </td>
       <td style={{ textAlign: "end" }}>
         $ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}
       </td>

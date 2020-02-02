@@ -98,7 +98,7 @@ const Cart: React.FC<{
               <th style={{ textAlign: "center" }}>Quantity</th>
               {show ? <th style={{ textAlign: "center" }}>Stock</th> : null}
               {show ? <th style={{ textAlign: "center" }}>Color</th> : null}
-              {show ? <th style={{ textAlign: "center" }}>Size</th> : null}
+              <th style={{ textAlign: "center" }}>Size</th>
               <th style={{ textAlign: "end" }}>Total</th>
             </tr>
             {checkout.lines.map(({ variant, quantity, id }) => (

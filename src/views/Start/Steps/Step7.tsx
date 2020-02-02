@@ -857,7 +857,12 @@ class Step7Container extends React.Component {
           hide={() => this.setDisplayNewModal(false)}
           show={displayNewModal}
         >
-          <div>
+          <div className="popup-container">
+            <div className="btn-closemodal"
+            onClick={() =>this.setDisplayNewModal(false)}
+            >
+              &#10005;
+            </div>
             <div
               style={{
                 padding: 20,
@@ -866,6 +871,7 @@ class Step7Container extends React.Component {
                 marginTop: 30
               }}
             >
+
               {this.renderContentModal()}
             </div>
           </div>

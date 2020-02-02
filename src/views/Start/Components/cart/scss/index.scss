@@ -87,3 +87,16 @@
     background: url("../../../../../images/droparrow.png") 100% / 15% no-repeat;
   }
 }
+@media (max-width: 600px) {
+  .overview-talla-item{
+  
+    select{
+      width: 33px;
+      font-size: 14px;
+      background: url("../../../../../images/droparrow.png") 100% / 50% no-repeat;
+    }
+  }
+  td{
+    vertical-align: top !important;
+  }
+}

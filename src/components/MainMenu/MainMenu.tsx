@@ -49,11 +49,11 @@ const MainMenu: React.FC = () => {
             <TypedMainMenuQuery renderOnError displayLoader={false}>
               {() => {
                 const items = [
+                  { id: "start", url: "/start", name: "Start Packing" },
                   { id: "about", url: "/about", name: "About" },
                   { id: "why", url: "/why", name: "Why" },
                   { id: "how", url: "/how", name: "How" },
                   { id: "faq", url: "/faq", name: "FAQ" },
-                  { id: "blog", url: "/blog", name: "Blog" },
                 ]
                 return (
                   <ul>

@@ -107,7 +107,7 @@ const BottomNav = props => {
             <div>
               <img
                 src={props.step == item.id ? item.imageGreen : item.image}
-                alt="trip"
+                alt="icon"
               />
               <p
                 style={
@@ -132,7 +132,7 @@ const BottomNav = props => {
           "container-bottomnav__item-o bottomnav-item-disabled" } 
       >
         <div>
-          <img src={props.step == 7 ? OverviewBlack : Overview} alt="trip" />
+          <img src={props.step == 7 ? OverviewBlack : Overview} alt="icon" />
           <p
             style={props.step == 7 ? { color: "black", fontWeight: 500 } : {}}
           >
