@@ -65,7 +65,6 @@ const ComponentCheckout = ({
     billingAddress: bA,
     email
   } = checkout;
-  console.log("SMETHOD", sM);
   return (
     <div className="container-card-checkout">
       <div className="checkout-card-1" style={{ position: "relative" }}>
@@ -125,6 +124,7 @@ const ComponentCheckout = ({
     </div>
   );
 };
+
 const Step7 = props => {
   const { data: user } = useUserDetails();
   const updateShippingAddress = useUpdateCheckoutShippingAddress();
@@ -138,6 +138,9 @@ const Step7 = props => {
         {({ checkout, update, loading: checkoutLoading }) => (
           <CartContext.Consumer>
             {cart => {
+              if ( checkout && checkout.lines.length == 0){ // if dont have checkout lines
+                clearCheckout()
+              }
               return (
                 <TypedCreateCheckoutMutation
                   onCompleted={async ({
@@ -843,7 +846,14 @@ class Step7Container extends React.Component {
           {(checkout && !(checkout.lines.length > 0)) ||
           (!checkout && !(cart.lines.length > 0)) ? (
             <center>
-              <a href="/start?step=upperwear">Start Packing</a>
+              <a href="/start?step=upperwear"
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "black",
+                color: "white",
+                borderRadius: 20,
+              }}
+              >Start Packing</a>
             </center>
           ) : null}
           <br />

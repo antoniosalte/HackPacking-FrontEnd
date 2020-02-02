@@ -10,7 +10,9 @@ import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
 import { quiqkTrip } from "./static";
 import moment from "moment";
+
 const cities = ["Lima, Peru", "Cuzco, Peru", "Arequipa, Peru"];
+
 
 class Step1 extends React.Component {
   constructor(props) {
@@ -18,25 +20,26 @@ class Step1 extends React.Component {
     this.onChangeDestination = this.onChangeDestination.bind(this);
     this.quickSetup = this.quickSetup.bind(this);
   }
-  quickSetup() {
-    this.props.cart.clear();
-    const { arrival, departure } = this.props.data.step1;
+  quickSetup = async () => {
+    const { cart, data, goTo } = this.props;
+    await cart.clear();
+    const { arrival, departure } = data.step1;
     const dateArrival = moment(arrival, "D/M/YYYY");
     const dateDeparture = moment(departure, "D/M/YYYY");
     const diffDays = dateDeparture.diff(dateArrival, "days");
     //formula del quick setup
     if (diffDays >= 1) {
       if (diffDays <= 3) {
-        this.props.cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
-        this.props.cart.add(quiqkTrip[1].variantId, 1); //JEANS
+        await cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
+        await cart.add(quiqkTrip[1].variantId, 1); //JEANS
       } else {
         const jeans = Math.ceil(diffDays / 5);
         const polos = Math.ceil(diffDays / 2);
-        this.props.cart.add(quiqkTrip[0].variantId, polos); //T-shirt
-        this.props.cart.add(quiqkTrip[1].variantId, jeans); //JEANS
+        await cart.add(quiqkTrip[0].variantId, polos); //T-shirt
+        await cart.add(quiqkTrip[1].variantId, jeans); //JEANS
       }
-      this.props.cart.add(quiqkTrip[2].variantId, diffDays); //Underwear
-      this.props.goTo(7);
+      await cart.add(quiqkTrip[2].variantId, diffDays); //Underwear
+      goTo(7, "overview");
     } else {
       alert("Invalid dates");
     }
@@ -50,20 +53,6 @@ class Step1 extends React.Component {
   changeData(type, value) {
     const { step1 } = this.props.data;
     step1[type] = moment(value).format("D/M/YYYY")
-    this.props.setData({ step1 });
-  }
-  updateDate(type, value) {
-    const { step1 } = this.props.data;
-    const year = value.getFullYear();
-    let month = value.getMonth() + 1;
-    let dt = value.getDate();
-    if (dt < 10) {
-      dt = "0" + dt;
-    }
-    if (month < 10) {
-      month = "0" + month;
-    }
-    step1[type] = `${dt}-${month}-${year}`;
     this.props.setData({ step1 });
   }
   render() {
@@ -107,12 +96,12 @@ class Step1 extends React.Component {
                     onChange={this.onChangeDestination}
                     id="select-destination"
                   >
-                    {cities.map(c => (
+                    {cities.map(city => (
                       <option
-                        value={c}
-                        selected={this.props.data.step1.destination == c}
+                        value={city}
+                        selected={this.props.data.step1.destination == city}
                       >
-                        {c}
+                        {city}
                       </option>
                     ))}
                   </select>
@@ -166,6 +155,9 @@ class Step1 extends React.Component {
           <br />
           <br />
           <br />
+          <br />
+          <br />
+          <br /><br />
           <br />
         </div>
       </MetaWrapper>

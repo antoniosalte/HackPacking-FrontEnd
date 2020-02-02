@@ -212,6 +212,9 @@
         background: #00000081;
         cursor: not-allowed;
     }
+    @media (max-width: 600px) {
+        margin-top: 30px;
+    }
 }
 .color-point{
     width: 15px;

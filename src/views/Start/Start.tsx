@@ -96,7 +96,7 @@ class Start extends React.Component {
         }
         return ( <StepElement
             { ...this.props }
-            goTo={ (step) => this.goTo(step) }
+            goTo={ (step, url = "trip-information") => this.goTo(step, url) }
             data={ this.state.data }
             male={this.state.male}
             setData={ this.setData }
