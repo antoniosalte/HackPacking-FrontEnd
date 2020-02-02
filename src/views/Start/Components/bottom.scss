@@ -72,4 +72,13 @@
             border-right: 2px solid #DFDFDF;
           }
     }
+    @media (max-width: 600px) {
+
+        grid-template-columns: 1fr 1fr 1fr;
+
+
+        .bottomnav-item-disabled{
+            display: none;
+        }
+    }
 }

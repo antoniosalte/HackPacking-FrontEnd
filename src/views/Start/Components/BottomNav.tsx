@@ -60,9 +60,37 @@ const items = [
   }
 ];
 
+const isDisabledInMobile = ( step, currentStep) =>{
+  switch(currentStep){
+    case 1:
+    case 2: 
+      if ( step == 1 || step == 2 || step == 3){
+        return true;
+      }else{ return false; }
+    case 3:
+      if ( step == 2 || step == 3 || step == 4){
+        return true;
+      }else{ return false; }
+    case 4:
+      if ( step == 3 || step == 4 || step == 5){
+        return true;
+      }else{ return false; }
+    case 5:
+      if ( step == 4 || step == 5 || step == 6){
+        return true;
+      }else{ return false; }
+    case 6:
+    case 7:
+        if ( step == 5 || step == 6 || step == 7){
+          return true;
+        }else{ return false; }
+    default: 
+     return false;
+    
+  }
+}
+
 const BottomNav = props => {
-  var width = window.innerWidth;
-  var show = width >= 500 ? true : false;
   return (
     <div className="container-bottomnav">
       {items.map(item => {
@@ -72,24 +100,24 @@ const BottomNav = props => {
               props.goTo(item.id, item.url);
               props.cart.clearErrors();
             }}
-            className="container-bottomnav__item"
+            className={ isDisabledInMobile(item.id, props.step ) ?
+              "container-bottomnav__item" :
+              "container-bottomnav__item bottomnav-item-disabled" } 
           >
             <div>
               <img
                 src={props.step == item.id ? item.imageGreen : item.image}
                 alt="trip"
               />
-              {show ? (
-                <p
-                  style={
-                    props.step == item.id
-                      ? { color: "#84BD00", fontWeight: 500 }
-                      : {}
-                  }
-                >
-                  {item.title}
-                </p>
-              ) : null}
+              <p
+                style={
+                  props.step == item.id
+                    ? { color: "#84BD00", fontWeight: 500 }
+                    : {}
+                }
+              >
+                {item.title}
+              </p>
             </div>
           </div>
         );
@@ -99,17 +127,17 @@ const BottomNav = props => {
           props.goTo(7, "overview");
           props.cart.clearErrors();
         }}
-        className="container-bottomnav__item-o"
+        className={ isDisabledInMobile(7, props.step ) ?
+          "container-bottomnav__item-o" :
+          "container-bottomnav__item-o bottomnav-item-disabled" } 
       >
         <div>
           <img src={props.step == 7 ? OverviewBlack : Overview} alt="trip" />
-          {show ? (
-            <p
-              style={props.step == 7 ? { color: "black", fontWeight: 500 } : {}}
-            >
-              Overview
-            </p>
-          ) : null}
+          <p
+            style={props.step == 7 ? { color: "black", fontWeight: 500 } : {}}
+          >
+            Overview
+          </p>
         </div>
       </div>
     </div>
