@@ -44,6 +44,17 @@ class Step1 extends React.Component {
       alert("Invalid dates");
     }
   }
+  quickSetup() {
+    const { cart, data, goTo } = this.props;
+    const { arrival, departure } = data.step1;
+    const dateArrival = moment(arrival, "D/M/YYYY");
+    const dateDeparture = moment(departure, "D/M/YYYY");
+    const diffDays = dateDeparture.diff(dateArrival, "days");
+    //formula del quick setup
+    if (diffDays >= 1) {
+      
+    } 
+  }
   onChangeDestination(e) {
     const { step1 } = this.props.data;
     step1.destination = e.target.value;
@@ -51,9 +62,17 @@ class Step1 extends React.Component {
   }
   // change dates
   changeData(type, value) {
-    const { step1 } = this.props.data;
-    step1[type] = moment(value).format("D/M/YYYY")
-    this.props.setData({ step1 });
+    let { step1 } = this.props.data;
+    step1[type] = moment(value).format("D/M/YYYY") // set value selected
+    // verify days between arrival and departure
+    const { arrival, departure } = step1;
+    const dateArrival = moment(arrival, "D/M/YYYY");
+    const dateDeparture = moment(departure, "D/M/YYYY");
+    const diffDays = dateDeparture.diff(dateArrival, "days");
+    if (diffDays <= 3) { // minimo 3 dias
+      step1.departure = moment(dateArrival).add(3, 'days').format("D/M/YYYY")
+    } 
+    this.props.setData({ step1 }); // update values
   }
   render() {
     return (
