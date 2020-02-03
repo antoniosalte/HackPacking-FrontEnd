@@ -48,9 +48,7 @@ const Cart: React.FC<{
                     {show ? (
                       <th style={{ textAlign: "center" }}>Color</th>
                     ) : null}
-                    {show ? (
-                      <th style={{ textAlign: "center" }}>Size</th>
-                    ) : null}
+                    <th style={{ textAlign: "center" }}>Size</th>
                     <th style={{ textAlign: "end" }}>Total</th>
                   </tr>
                   {lines.length > 0 && data.productVariants
