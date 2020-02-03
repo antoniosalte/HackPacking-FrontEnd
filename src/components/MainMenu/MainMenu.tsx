@@ -46,16 +46,6 @@ const MainMenu: React.FC = () => {
       return(
         <nav className="main-menu" id="header">
           <div className="main-menu__left">
-            <TypedMainMenuQuery renderOnError displayLoader={false}>
-              {() => {
-                const items = [
-                  { id: "start", url: "/start", name: "Start Packing" },
-                  { id: "about", url: "/about", name: "About" },
-                  { id: "why", url: "/why", name: "Why" },
-                  { id: "how", url: "/how", name: "How" },
-                  { id: "faq", url: "/faq", name: "FAQ" },
-                ]
-                return (
                   <ul>
                     <Media
                       query={{ maxWidth: mediumScreen }}
@@ -66,7 +56,13 @@ const MainMenu: React.FC = () => {
                             overlayContext.show(
                               OverlayType.sideNav,
                               OverlayTheme.left,
-                              { data: items }
+                              { data: [
+                                { id: "start", url: "/start", name: "Start Packing" },
+                                { id: "about", url: "/about", name: "About" },
+                                { id: "why", url: "/why", name: "Why" },
+                                { id: "how", url: "/how", name: "How" },
+                                { id: "faq", url: "/faq", name: "FAQ" },
+                              ] }
                             )
                           }
                         >
@@ -78,8 +74,7 @@ const MainMenu: React.FC = () => {
                             path={hamburgerImg}
                             className={"main-menu__hamburger--hover"}
                           />
-                        </li>
-                      )}
+                        </li>)}
                     />
                     <Media
                       query={{ minWidth: mediumScreen }}
@@ -105,7 +100,7 @@ const MainMenu: React.FC = () => {
                             <Link to="/faq" className="navbar-item">
                               <p className="navbar-item-dk" >FAQ</p>
                             </Link>
-                            <a href="www.medium.com/hackpacking-stories" 
+                            <a href="https://www.medium.com/hackpacking-stories" 
                             target="_blank"
                             className="navbar-item">
                               <p className="navbar-item-dk" >Blog</p>
@@ -115,9 +110,6 @@ const MainMenu: React.FC = () => {
                       }
                     />
                   </ul>
-                );
-              }}
-            </TypedMainMenuQuery>
           </div>
 
           <Media

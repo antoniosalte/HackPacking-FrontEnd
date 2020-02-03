@@ -70,6 +70,9 @@ class NavDropdown extends React.PureComponent<
             ))}
           </ul>
         </li>
+        <li>
+            Start Packing
+        </li>
       </ul>
     );
   }

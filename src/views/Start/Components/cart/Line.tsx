@@ -119,8 +119,8 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
           </span>
         )}
       </td>
-      <td style={{ textAlign: "end" }}>
-        $ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}
+      <td style={{ paddingLeft: 0, paddingRight: 0,textAlign: "end"}}>
+        <span>$ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}</span>
       </td>
       <td>
         <div
