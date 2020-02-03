@@ -14,7 +14,6 @@ const Picker = ( { onSelect = ()=>{}, id, value, minDate } ) => {
         borderBottom: "solid 1px #c4c4c4",
         padding: "0 5px"
       }}
-      className="example-custom-input"
       onClick={onClick}
     >
       {value}

@@ -44,17 +44,6 @@ class Step1 extends React.Component {
       alert("Invalid dates");
     }
   }
-  quickSetup() {
-    const { cart, data, goTo } = this.props;
-    const { arrival, departure } = data.step1;
-    const dateArrival = moment(arrival, "D/M/YYYY");
-    const dateDeparture = moment(departure, "D/M/YYYY");
-    const diffDays = dateDeparture.diff(dateArrival, "days");
-    //formula del quick setup
-    if (diffDays >= 1) {
-      
-    } 
-  }
   onChangeDestination(e) {
     const { step1 } = this.props.data;
     step1.destination = e.target.value;
