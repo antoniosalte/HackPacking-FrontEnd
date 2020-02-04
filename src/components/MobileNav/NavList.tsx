@@ -95,6 +95,14 @@ class NavList extends React.PureComponent<NavListProps, NavListState> {
                 Home
               </Link>
             </li>
+            <li className="side-nav__menu-item">
+
+              <a href="https://www.medium.com/hackpacking-stories" 
+                target="_blank"
+                className="side-nav__menu-item-link">
+                Blog
+              </a>
+            </li>
           </>
         )}
 
