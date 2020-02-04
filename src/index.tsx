@@ -37,7 +37,8 @@ import { OverlayProvider, UserProvider } from "./components";
 import CartProvider from "./components/CartProvider";
 import ShopProvider from "./components/ShopProvider";
 
-import firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/analytics";
 
 import {
   authLink,
