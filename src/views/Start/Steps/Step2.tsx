@@ -19,7 +19,7 @@ const Step2 = ({ cart, male }) => (
               title="Choose your upperwear"
               meta={{
                 description: "Step 2",
-                title: "Upperwear"
+                title: "Upperwear",
               }}
               cart={cart}
             />

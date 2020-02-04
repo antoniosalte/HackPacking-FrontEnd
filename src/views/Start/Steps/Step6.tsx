@@ -1,8 +1,8 @@
 import * as React from "react";
-import { TypedStep6Query } from "./queries/queries";
-import WrapperContainer from "./Wrapper";
 import { Loader } from "../../../components";
 import { maybe } from "../../../core/utils";
+import { TypedStep6Query } from "./queries/queries";
+import WrapperContainer from "./Wrapper";
 import { ProductsList } from "./types/ProductsList";
 
 const canDisplay = (data: ProductsList) =>
@@ -21,7 +21,7 @@ const Step6 = ({cart, male}) => (
                         meta={
                             {
                                 description: "Step 6",
-                                title: "Accesories"
+                                title: "Accesories",
                             }
                         }
                         cart={cart}

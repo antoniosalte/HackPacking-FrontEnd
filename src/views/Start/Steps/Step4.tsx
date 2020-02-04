@@ -1,8 +1,8 @@
 import * as React from "react";
-import { TypedStep4Query } from "./queries/queries";
-import WrapperContainer from "./Wrapper";
 import { Loader } from "../../../components";
 import { maybe } from "../../../core/utils";
+import { TypedStep4Query } from "./queries/queries";
+import WrapperContainer from "./Wrapper";
 import { ProductsList } from "./types/ProductsList";
 
 const canDisplay = (data: ProductsList) => maybe(() => !!data.products);
@@ -20,7 +20,7 @@ const Step4 = ({ cart, male }) => (
               subTitle="You can keep the underwear items you select, no need to return it"
               meta={{
                 description: "Step 4",
-                title: "Underwear"
+                title: "Underwear",
               }}
               cart={cart}
             />

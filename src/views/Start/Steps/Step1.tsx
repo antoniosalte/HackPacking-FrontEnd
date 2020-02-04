@@ -1,15 +1,15 @@
 import * as React from "react";
 import "../styles/styles.scss";
 
+import moment from "moment";
 import { MetaWrapper } from "../../../components";
-import Image from "../../../images/hp-start-banner.svg";
+import IconArrow from "../../../images/hp-arrow-icon.svg";
 import IconLocation from "../../../images/hp-location-icon.svg";
 import IconCalendar from "../../../images/hp-calendar-icon.svg";
+import Image from "../../../images/hp-start-banner.svg";
 import LOGO from "../../../images/logo.jpg";
-import IconArrow from "../../../images/hp-arrow-icon.svg";
 import Picker from "../Components/datepicker/DatePicker";
 import { quiqkTrip } from "./static";
-import moment from "moment";
 
 const cities = ["Lima, Peru", "Cuzco, Peru", "Arequipa, Peru"];
 
@@ -27,18 +27,18 @@ class Step1 extends React.Component {
     const dateArrival = moment(arrival, "D/M/YYYY");
     const dateDeparture = moment(departure, "D/M/YYYY");
     const diffDays = dateDeparture.diff(dateArrival, "days");
-    //formula del quick setup
+    // formula del quick setup
     if (diffDays >= 1) {
       if (diffDays <= 3) {
-        await cart.add(quiqkTrip[0].variantId, diffDays); //T-shirt
-        await cart.add(quiqkTrip[1].variantId, 1); //JEANS
+        await cart.add(quiqkTrip[0].variantId, diffDays); // T-shirt
+        await cart.add(quiqkTrip[1].variantId, 1); // JEANS
       } else {
         const jeans = Math.ceil(diffDays / 5);
         const polos = Math.ceil(diffDays / 2);
-        await cart.add(quiqkTrip[0].variantId, polos); //T-shirt
-        await cart.add(quiqkTrip[1].variantId, jeans); //JEANS
+        await cart.add(quiqkTrip[0].variantId, polos); // T-shirt
+        await cart.add(quiqkTrip[1].variantId, jeans); // JEANS
       }
-      await cart.add(quiqkTrip[2].variantId, diffDays); //Underwear
+      await cart.add(quiqkTrip[2].variantId, diffDays); // Underwear
       goTo(7, "overview");
     } else {
       alert("Invalid dates");
@@ -51,7 +51,7 @@ class Step1 extends React.Component {
   }
   // change dates
   changeData(type, value) {
-    let { step1 } = this.props.data;
+    const { step1 } = this.props.data;
     step1[type] = moment(value).format("D/M/YYYY") // set value selected
     // verify days between arrival and departure
     const { arrival, departure } = step1;
@@ -68,8 +68,8 @@ class Step1 extends React.Component {
       <MetaWrapper
         meta={{
           description: "Start Packing",
+          image: LOGO,
           title: "HackPacking - Start Packing",
-          image: LOGO
         }}
       >
         <div className="container">
@@ -98,8 +98,8 @@ class Step1 extends React.Component {
                   <select
                     className="input-location"
                     style={{
+                      backgroundColor: "white",
                       border: "0px solid transparent",
-                      backgroundColor: "white"
                     }}
                     onChange={this.onChangeDestination}
                     id="select-destination"
@@ -107,7 +107,7 @@ class Step1 extends React.Component {
                     {cities.map(city => (
                       <option
                         value={city}
-                        selected={this.props.data.step1.destination == city}
+                        selected={this.props.data.step1.destination === city}
                       >
                         {city}
                       </option>

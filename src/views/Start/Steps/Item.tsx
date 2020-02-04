@@ -15,9 +15,9 @@ class ItemSteps extends React.Component {
       countItem: 0,
       countItemString: "",
       isSelected: false,
-      variant: null,
       stockQuantity: 100,
-      totalitem: null
+      totalitem: null,
+      variant: null,
     };
     this.onAdd = this.onAdd.bind(this);
     this.onRemove = this.onRemove.bind(this);
@@ -30,26 +30,26 @@ class ItemSteps extends React.Component {
   componentDidMount() {
     this.setState({
       countItem: Number(this.props.countItem),
-      variant: this.props.variant
+      variant: this.props.variant,
     });
   }
   componentWillReceiveProps(newProps) {
     if (this.props !== newProps) {
       this.setState({
-        countItem: Number(this.props.countItem)
-        //variant: newProps.variant,
+        countItem: Number(this.props.countItem),
+        // variant: newProps.variant,
       });
     }
   }
   onBlur() {
     this.setState({
+      countItemString: "",
       isSelected: false,
-      countItemString: ""
     });
   }
   onFocus() {
     this.setState({
-      isSelected: true
+      isSelected: true,
     });
   }
   getItemCount() {
@@ -66,7 +66,7 @@ class ItemSteps extends React.Component {
       countItem -= 1;
       this.setState({
         countItem,
-        totalitem: null
+        totalitem: null,
       });
       this.props.onRemove(variant);
     }
@@ -77,7 +77,7 @@ class ItemSteps extends React.Component {
       countItem += 1;
       this.setState({
         countItem,
-        totalitem: null
+        totalitem: null,
       });
       this.props.onAdd(variant);
     }
@@ -88,19 +88,19 @@ class ItemSteps extends React.Component {
     this.props.cart.remove(variant);
     this.setState({
       variant: newvariant,
-      countItem: 0
+      countItem: 0,
     });
   }
   changeTotalItems(e) {
     if (e.target.value.match(/^$|^[0-9]+$/)) {
       this.setState({
-        countItemString: e.target.value
+        countItemString: e.target.value,
       });
     }
   }
   onSaveTotalItems(e) {
     if (
-      e.key == "Enter" &&
+      e.key === "Enter" &&
       this.state.countItemString.length > 0 &&
       Number(this.state.countItemString) !== this.props.countItem
     ) {
@@ -110,14 +110,14 @@ class ItemSteps extends React.Component {
   render() {
     const item = this.props.item.node;
     const { variant: variantId } = this.state;
-    var { variants } = item;
+    const { variants } = item;
     const { loading } = this.props.cart;
-    var variantImage = null;
+    let variantImage = null;
 
     variants.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
 
     variants.map((variant, index) => {
-      if (variant.id == variantId) {
+      if (variant.id === variantId) {
         if (variant.images.length > 0) {
           variantImage = variant.images[0].url;
         }
@@ -155,7 +155,7 @@ class ItemSteps extends React.Component {
                     loading
                       ? {
                           color: "#84bd005c",
-                          fontSize: 50
+                          fontSize: 50,
                         }
                       : { fontSize: 50 }
                   }
@@ -174,7 +174,7 @@ class ItemSteps extends React.Component {
                   style={
                     loading
                       ? {
-                          color: "#84bd005c"
+                          color: "#84bd005c",
                         }
                       : {}
                   }
@@ -196,7 +196,7 @@ class ItemSteps extends React.Component {
                           <option
                             key={`sizes-${index}`}
                             value={variant.id}
-                            selected={variant.id == variantId}
+                            selected={variant.id === variantId}
                           >
                             {variant.name}
                           </option>

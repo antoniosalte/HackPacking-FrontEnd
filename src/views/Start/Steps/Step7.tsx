@@ -1,25 +1,25 @@
-import * as React from "react";
-import "../styles/styles.scss";
+import { useUpdateCheckoutShippingAddress, useUserDetails } from "@sdk/react";
 import { History } from "history";
-import { CulqiProvider, Culqi } from "react-culqi";
+import moment from "moment";
+import * as React from "react";
 import { AlertManager, useAlert } from "react-alert";
+import { Culqi, CulqiProvider } from "react-culqi";
+import { CountryCode } from "types/globalTypes";
+import { CheckoutContext } from "../../../checkout/context";
+import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
+import { CartContext } from "../../../components/CartProvider/context";
+import LoginForm from "../../../components/LoginForm";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
-import LoginForm from "../../../components/LoginForm";
-import { useUserDetails, useUpdateCheckoutShippingAddress } from "@sdk/react";
-import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
-import { CheckoutContext } from "../../../checkout/context";
-import { CartContext } from "../../../components/CartProvider/context";
-import { CountryCode } from "types/globalTypes";
 import { CartSummary } from "../Components/cart/index";
 
-import { TypedUpdateCheckoutShippingOptionsMutation } from "../../../checkout/views/ShippingOptions/queries";
 import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
 import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
-import moment from "moment";
+import { TypedUpdateCheckoutShippingOptionsMutation } from "../../../checkout/views/ShippingOptions/queries";
 import EditIcon from "../../../images/edit.svg";
+import "../styles/styles.scss";
 
 function proceedToBilling(data, update, token) {
   const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
@@ -40,14 +40,14 @@ const completeCheckout = (
     clearCheckout();
     clearCart();
     history.push({
-      pathname: "/account"
+      pathname: "/account",
     });
   } else {
     data.checkoutComplete.errors.map(error => {
       alert.show(
         { title: error.message },
         {
-          type: "error"
+          type: "error",
         }
       );
     });
@@ -56,13 +56,13 @@ const completeCheckout = (
 const ComponentCheckout = ({
   checkout,
   onEditShipping,
-  onEditShippingMethod
+  onEditShippingMethod,
 }) => {
   const {
     shippingAddress: sA,
     shippingMethod: sM,
     billingAddress: bA,
-    email
+    email,
   } = checkout;
   return (
     <div className="container-card-checkout">
@@ -71,10 +71,10 @@ const ComponentCheckout = ({
           src={EditIcon}
           onClick={onEditShipping}
           style={{
-            width: 16,
-            right: 20,
+            cursor: "pointer",
             position: "absolute",
-            cursor: "pointer"
+            right: 20,
+            width: 16,
           }}
         />
         <p style={{ fontSize: 16, fontWeight: 500 }}>Shipping Address</p>
@@ -95,10 +95,10 @@ const ComponentCheckout = ({
             src={EditIcon}
             onClick={onEditShippingMethod}
             style={{
-              width: 16,
-              right: 20,
+              cursor: "pointer",
               position: "absolute",
-              cursor: "pointer"
+              right: 20,
+              width: 16,
             }}
           />
           <p style={{ fontSize: 16, fontWeight: 500 }}>Shipping Method</p>
@@ -137,13 +137,13 @@ const Step7 = props => {
         {({ checkout, update, loading: checkoutLoading }) => (
           <CartContext.Consumer>
             {cart => {
-              if ( checkout && checkout.lines.length == 0){ // if dont have checkout lines
+              if ( checkout && checkout.lines.length === 0){ // if dont have checkout lines
                 clearCheckout()
               }
               return (
                 <TypedCreateCheckoutMutation
                   onCompleted={async ({
-                    checkoutCreate: { checkout, errors }
+                    checkoutCreate: { checkout, errors },
                   }) => {
                     if (!errors.length) {
                       await update({ checkout });
@@ -191,7 +191,7 @@ const Step7 = props => {
                                       const {
                                         billingAddress,
                                         subtotalPrice,
-                                        shippingPrice
+                                        shippingPrice,
                                       } = checkout;
                                       const total =
                                         subtotalPrice.gross.amount +
@@ -214,22 +214,22 @@ const Step7 = props => {
                                               postalCode:
                                                 billingAddress.postalCode,
                                               streetAddress1:
-                                                billingAddress.streetAddress1
+                                                billingAddress.streetAddress1,
                                             },
                                             gateway: "Culqi",
-                                            token
-                                          }
-                                        }
+                                            token,
+                                          },
+                                        },
                                       });
                                       await completeCheckout({
                                         variables: {
-                                          checkoutId: checkout.id
-                                        }
+                                          checkoutId: checkout.id,
+                                        },
                                       });
                                     } else {
-                                      console.log(
+/*                                       console.log(
                                         "Payment cannot be created, invalid token"
-                                      );
+                                      ); */
                                     }
                                   }}
                                   onCreateCheckout={async data => {
@@ -237,7 +237,7 @@ const Step7 = props => {
                                       const {
                                         destination,
                                         arrival,
-                                        departure
+                                        departure,
                                       } = props.data.step1;
                                       await createCheckout({
                                         variables: {
@@ -269,7 +269,7 @@ const Step7 = props => {
                                               country: maybe(
                                                 () => "PE",
                                                 "PE"
-                                              ) as CountryCode
+                                              ) as CountryCode,
                                             },
                                             billingAddress: {
                                               firstName: data.firstName,
@@ -282,10 +282,10 @@ const Step7 = props => {
                                               country: maybe(
                                                 () => "PE",
                                                 "PE"
-                                              ) as CountryCode
-                                            }
-                                          }
-                                        }
+                                              ) as CountryCode,
+                                            },
+                                          },
+                                        },
                                       });
                                     } else {
                                       if (checkout && user && data) {
@@ -302,15 +302,15 @@ const Step7 = props => {
                                             country: maybe(
                                               () => "PE",
                                               "PE"
-                                            ) as CountryCode
-                                          }
+                                            ) as CountryCode,
+                                          },
                                         });
                                         await update({
-                                          shippingAsBilling: true
+                                          shippingAsBilling: true,
                                         });
                                         window.location.reload();
                                       }
-                                      console.log("Checkout already exist!");
+                                      /* console.log("Checkout already exist!"); */
                                     }
                                   }}
                                   onCreateCheckoutWithLastShipping={async id => {
@@ -318,10 +318,10 @@ const Step7 = props => {
                                       const {
                                         destination,
                                         arrival,
-                                        departure
+                                        departure,
                                       } = props.data.step1;
                                       const shippingAddressLast = user.addresses.filter(
-                                        a => a.id == id
+                                        a => a.id === id
                                       )[0];
                                       if (
                                         shippingAddressLast.isDefaultShippingAddress
@@ -329,93 +329,93 @@ const Step7 = props => {
                                         await createCheckout({
                                           variables: {
                                             checkoutInput: {
-                                              email: user.email,
-                                              lines: cart.lines,
-                                              destination: destination,
                                               arrival: moment(
                                                 arrival,
                                                 "DD-MM-YYYY"
-                                              )
+                                                )
                                                 .toISOString()
                                                 .split("T")[0],
+                                              comment: "",
                                               departure: moment(
                                                 departure,
                                                 "DD-MM-YYYY"
-                                              )
+                                                )
                                                 .toISOString()
                                                 .split("T")[0],
-                                              comment: ""
-                                            }
-                                          }
+                                                destination: destination,
+                                                email: user.email,
+                                                lines: cart.lines,
+                                            },
+                                          },
                                         });
                                       } else {
                                         await createCheckout({
                                           variables: {
                                             checkoutInput: {
-                                              email: user.email,
-                                              lines: cart.lines,
-                                              destination: destination,
                                               arrival: moment(
                                                 arrival,
                                                 "DD-MM-YYYY"
                                               )
                                                 .toISOString()
                                                 .split("T")[0],
+                                              comment: "",
                                               departure: moment(
                                                 departure,
                                                 "DD-MM-YYYY"
                                               )
                                                 .toISOString()
                                                 .split("T")[0],
-                                              comment: "",
+                                              destination: destination,
+                                              email: user.email,
+                                              lines: cart.lines,
                                               shippingAddress: {
+                                                city: shippingAddressLast.city,
+                                                country: maybe(
+                                                  () => "PE",
+                                                  "PE"
+                                                ) as CountryCode,
                                                 firstName:
                                                   shippingAddressLast.firstName,
                                                 lastName:
                                                   shippingAddressLast.lastName,
-                                                streetAddress1:
-                                                  shippingAddressLast.streetAddress1,
                                                 phone:
                                                   shippingAddressLast.phone,
-                                                city: shippingAddressLast.city,
                                                 postalCode:
                                                   shippingAddressLast.postalCode,
-                                                country: maybe(
-                                                  () => "PE",
-                                                  "PE"
-                                                ) as CountryCode
-                                              }
-                                            }
-                                          }
+                                                streetAddress1:
+                                                  shippingAddressLast.streetAddress1,
+                                              },
+                                            },
+                                          },
                                         });
                                       }
                                     } else {
                                       if (checkout && user && id) {
                                         const shippingAddressLast = user.addresses.filter(
-                                          a => a.id == id
+                                          a => a.id === id
                                         )[0];
                                         await updateShippingAddress[0]({
                                           checkoutId: checkout.id,
                                           email: user.email,
                                           shippingAddress: {
+                                            city: shippingAddressLast.city,
+                                            country: maybe(
+                                              () => "PE",
+                                              "PE"
+                                            ) as CountryCode,
                                             firstName:
                                               shippingAddressLast.firstName,
                                             lastName:
                                               shippingAddressLast.lastName,
-                                            streetAddress1:
-                                              shippingAddressLast.streetAddress1,
                                             phone: shippingAddressLast.phone,
-                                            city: shippingAddressLast.city,
                                             postalCode:
                                               shippingAddressLast.postalCode,
-                                            country: maybe(
-                                              () => "PE",
-                                              "PE"
-                                            ) as CountryCode
-                                          }
+                                            streetAddress1:
+                                              shippingAddressLast.streetAddress1,
+                                          },
                                         });
                                         await update({
-                                          shippingAsBilling: true
+                                          shippingAsBilling: true,
                                         });
                                         window.location.reload();
                                       }
@@ -432,14 +432,14 @@ const Step7 = props => {
                                       await updateCheckoutShippingOptions({
                                         variables: {
                                           checkoutId: checkout.id,
-                                          shippingMethodId: id
-                                        }
+                                          shippingMethodId: id,
+                                        },
                                       });
                                     } else {
-                                      console.log(
+/*                                       console.log(
                                         "Invalid Shipping option",
                                         checkout
-                                      );
+                                      ); */
                                     }
                                   }}
                                 />
@@ -464,14 +464,14 @@ class Step7Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayNewModal: false,
-      showLogin: false,
-      contentModal: "login",
-      shippingmethodSelected: null,
       addNewShipping: false,
-      lastShipping: null,
+      contentModal: "login",
       culqi: () => {},
-      setAmount: () => {}
+      displayNewModal: false,
+      lastShipping: null,
+      setAmount: () => {},
+      shippingmethodSelected: null,
+      showLogin: false,
     };
     this.setDisplayNewModal = this.setDisplayNewModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -491,7 +491,7 @@ class Step7Container extends React.Component {
   async setCulqi(culqi, setAmount) {
     this.setState({
       culqi,
-      setAmount
+      setAmount,
     });
     const { checkout } = this.props;
     if (checkout && checkout.shippingAddress && checkout.shippingMethod) {
@@ -522,27 +522,27 @@ class Step7Container extends React.Component {
   }
   onNewShipping(newShipping = true) {
     this.setState({
-      addNewShipping: newShipping
+      addNewShipping: newShipping,
     });
   }
   onAddLastShipping(id) {
     this.setState({
-      lastShipping: id
+      lastShipping: id,
     });
   }
   setContentModal(state) {
     this.setState({
-      contentModal: state
+      contentModal: state,
     });
   }
   setDisplayNewModal(modal) {
     this.setState({
-      displayNewModal: modal
+      displayNewModal: modal,
     });
   }
   selectShippingMethod(id) {
     this.setState({
-      shippingmethodSelected: id
+      shippingmethodSelected: id,
     });
   }
   addShippingMethod() {
@@ -556,13 +556,13 @@ class Step7Container extends React.Component {
     if (this.props.user) {
       this.setDisplayNewModal(false);
       const dataShippingAdress = {
+        city: data.city,
+        comment: data.comment || "",
         firstName: data.firstName,
         lastName: data.lastName,
-        streetAddress1: data.streetAddress1,
-        city: data.city,
-        postalCode: data.postalCode,
         phone: data.phone,
-        comment: data.comment || ""
+        postalCode: data.postalCode,
+        streetAddress1: data.streetAddress1,
       };
       this.props.onCreateCheckout(dataShippingAdress);
     } else {
@@ -594,7 +594,7 @@ class Step7Container extends React.Component {
               {this.props.user.addresses.map(a => (
                 <div
                   className={
-                    this.state.lastShipping == a.id
+                    this.state.lastShipping === a.id
                       ? "item-selected-shipping-last"
                       : "item-selected-shipping-last-gris"
                   }
@@ -611,13 +611,13 @@ class Step7Container extends React.Component {
                   <p style={{ margin: 0 }}>{a.phone}</p>
                   <p
                     style={{
-                      margin: 0,
-                      fontSize: 12,
                       color: "#628a06",
-                      fontWeight: 500
+                      fontSize: 12,
+                      fontWeight: 500,
+                      margin: 0,
                     }}
                   >
-                    {this.state.lastShipping == a.id
+                    {this.state.lastShipping === a.id
                       ? "Deliver to this address"
                       : null}
                   </p>
@@ -626,12 +626,12 @@ class Step7Container extends React.Component {
               <div
                 style={{
                   border: "solid 1px",
-                  width: 280,
-                  padding: 11,
                   borderRadius: 8,
-                  fontSize: 12,
                   cursor: "pointer",
-                  marginTop: 20
+                  fontSize: 12,
+                  marginTop: 20,
+                  padding: 11,
+                  width: 280,
                 }}
                 onClick={this.onNewShipping}
               >
@@ -663,9 +663,9 @@ class Step7Container extends React.Component {
             <div>
               <p
                 style={{
-                  fontWeight: 500,
                   fontSize: 18,
-                  padding: "0 20px"
+                  fontWeight: 500,
+                  padding: "0 20px",
                 }}
               >
                 <span onClick={() => this.onNewShipping(false)}>&#8592;</span>
@@ -687,16 +687,16 @@ class Step7Container extends React.Component {
         return (
           <div
             style={{
+              alignItems: "center",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
             }}
           >
             <button
               style={{
-                fontWeight: 500,
                 fontSize: 18,
-                padding: "0 20px"
+                fontWeight: 500,
+                padding: "0 20px",
               }}
             >
               Sign In
@@ -716,17 +716,17 @@ class Step7Container extends React.Component {
         return (
           <div
             style={{
+              alignItems: "center",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
-              width: "100%"
+              width: "100%",
             }}
           >
             <p
               style={{
-                fontWeight: 500,
                 fontSize: 18,
-                padding: "0 20px"
+                fontWeight: 500,
+                padding: "0 20px",
               }}
             >
               Shipping Method
@@ -737,7 +737,7 @@ class Step7Container extends React.Component {
                 ? checkout.availableShippingMethods.map(method => (
                     <div
                       className={
-                        this.state.shippingmethodSelected == method.id
+                        this.state.shippingmethodSelected === method.id
                           ? "item-shipping-method-s "
                           : "item-shipping-method"
                       }
@@ -788,13 +788,13 @@ class Step7Container extends React.Component {
           options={{
             lang: "en",
             style: {
-              maincolor: "#84BD00",
               buttontext: "#FFFFFF",
-              maintext: "#000000",
               desctext: "#575656",
               logo:
-                "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97"
-            }
+                "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97",
+              maincolor: "#84BD00",
+              maintext: "#000000",
+            },
           }}
         >
           <p style={{ fontSize: 18, fontWeight: "500" }}>Overview</p>
@@ -847,10 +847,10 @@ class Step7Container extends React.Component {
             <center>
               <a href="/start?step=upperwear"
               style={{
-                padding: "10px 20px",
                 backgroundColor: "black",
-                color: "white",
                 borderRadius: 20,
+                color: "white",
+                padding: "10px 20px",
               }}
               >Start Packing</a>
             </center>
@@ -874,10 +874,10 @@ class Step7Container extends React.Component {
             </div>
             <div
               style={{
-                padding: 20,
                 display: "flex",
                 justifyContent: "center",
-                marginTop: 30
+                marginTop: 30,
+                padding: 20,
               }}
             >
 

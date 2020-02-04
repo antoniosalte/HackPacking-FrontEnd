@@ -1,24 +1,25 @@
+import { useUserDetails } from "@sdk/react";
 import * as React from "react";
-import Footer from "../Home/Footer";
-import "../About/styles.scss";
+import Item from "../About/Item";
 import why1 from "../../images/hp-why-1.svg"
 import why2 from "../../images/hp-why-2.svg"
-import Item from "../About/Item";
-import { useUserDetails } from "@sdk/react";
+import Footer from "../Home/Footer";
+
+import "../About/styles.scss";
 
 const items = [
     {
-        image: why1,
-        text: "An outfit is just an outfit",
         description: "Let’s keep it simple, like we already do with transportation, accommodation and food delivery. Now you can get basic clothing deliver to your hotel.",
+        image: why1,
         position: "left",
+        text: "An outfit is just an outfit",
     },
     {
-        image: why2,
-        text: "Save money",
         description: "Nowadays you can get better deals on plane tickets if you travel luggage free. Meet your clothes at your destination and cut some expenses. ",
+        image: why2,
         position: "right",
-    }
+        text: "Save money",
+    },
 ]
 const Why = () => {
     const { data: user } = useUserDetails();
@@ -42,8 +43,8 @@ const Why = () => {
                 <p className="container-blog-c__title"
                     style={{
                         display: "flex",
-                        justifyContent: "center",
                         fontSize: 24,
+                        justifyContent: "center",
                     }}
                 >Want to join our team? Please reach out to contact@hackpaking.life</p>
             </div>

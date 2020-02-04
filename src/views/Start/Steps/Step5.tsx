@@ -1,8 +1,8 @@
 import * as React from "react";
-import { TypedStep5Query } from "./queries/queries";
-import WrapperContainer from "./Wrapper";
 import { Loader } from "../../../components";
 import { maybe } from "../../../core/utils";
+import { TypedStep5Query } from "./queries/queries";
+import WrapperContainer from "./Wrapper";
 import { ProductsList } from "./types/ProductsList";
 
 const canDisplay = (data: ProductsList) =>
@@ -21,7 +21,7 @@ const Step5 = ({cart, male}) => (
                         meta={
                             {
                                 description: "Step 5",
-                                title: "Socks"
+                                title: "Socks",
                             }
                         }
                         cart={cart}

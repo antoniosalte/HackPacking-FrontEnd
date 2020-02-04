@@ -1,9 +1,10 @@
-import * as React from "react";
-import Footer from "../Home/Footer";
-import "../About/styles.scss";
-import "./styles.scss";
-import Icon from "../../images/hp-terms-icon.svg"
 import { useUserDetails } from "@sdk/react";
+import * as React from "react";
+import Icon from "../../images/hp-terms-icon.svg"
+import Footer from "../Home/Footer";
+import "./styles.scss";
+
+import "../About/styles.scss";
 
 const Terms = () => {
     const { data: user } = useUserDetails();

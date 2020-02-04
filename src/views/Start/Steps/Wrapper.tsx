@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MetaWrapper } from "../../../components";
-import "./stylesteps.scss";
 import Item from "./Item";
+import "./stylesteps.scss";
 
 class Wrapper extends React.Component {
   constructor(props) {
@@ -29,29 +29,29 @@ class Wrapper extends React.Component {
     }
     if (male) {
       if (
-        x.node.collections.length == 1 &&
-        x.node.collections[0].name == "Men"
+        x.node.collections.length === 1 &&
+        x.node.collections[0].name === "Men"
       ) {
         return x; // this product have only one collection
       }
       if (
-        x.node.collections.length == 2 &&
-        (x.node.collections[0].name == "Men" ||
-          x.node.collections[1].name == "Men")
+        x.node.collections.length === 2 &&
+        (x.node.collections[0].name === "Men" ||
+          x.node.collections[1].name === "Men")
       ) {
         return x; // this product have 2 collection
       }
     } else {
       if (
-        x.node.collections.length == 1 &&
-        x.node.collections[0].name == "Women"
+        x.node.collections.length === 1 &&
+        x.node.collections[0].name === "Women"
       ) {
         return x; // this product have only one collection
       }
       if (
-        x.node.collections.length == 2 &&
-        (x.node.collections[0].name == "Women" ||
-          x.node.collections[1].name == "Women")
+        x.node.collections.length === 2 &&
+        (x.node.collections[0].name === "Women" ||
+          x.node.collections[1].name === "Women")
       ) {
         return x; // this product have 2 collection
       }
@@ -65,7 +65,7 @@ class Wrapper extends React.Component {
       <MetaWrapper
         meta={{
           description: meta.description,
-          title: "HackPacking - " + meta.title
+          title: "HackPacking - " + meta.title,
         }}
       >
         <React.Fragment>
@@ -76,10 +76,8 @@ class Wrapper extends React.Component {
               ? edges.map((item, index) => {
                   if (item.node.variants && item.node.variants.length > 0) {
                     let line = null;
-                    for (let index = 0; index < cart.lines.length; index++) {
-                      const li = cart.lines[index];
-                      for (let i = 0; i < item.node.variants.length; i++) {
-                        const variant = item.node.variants[i];
+                    for (const li of cart.lines) {
+                      for (const variant of item.node.variants) {
                         if (li.variantId === variant.id) {
                           line = li;
                         }
