@@ -7,14 +7,6 @@ class Sidebr extends React.Component{
     constructor( props ){
         super( props );
     }
-    onDeleteElement( item, step ){
-        let { items } = this.props.data[step];
-        let newItems = items.filter( i => i.id !== item.id)
-        const newstep = {
-            items:newItems
-        }
-        this.props.setData( {[step]:newstep } );
-    }
     render(){
         const { step1 } = this.props.data;
         return (

@@ -23,7 +23,6 @@ import { About } from "../views/About";
 import { Why } from "../views/Why";
 import { How } from "../views/How";
 import { FAQ } from "../views/Faq";
-import { Blog } from "../views/Blog";
 import { Start } from "../views/Start";
 import { Privacy } from "../views/Privacy";
 import { Terms } from "../views/Terms";
@@ -50,7 +49,6 @@ export const aboutUrl = `${baseUrl}about/`;
 export const whyUrl = `${baseUrl}why/`;
 export const howUrl = `${baseUrl}how/`;
 export const faqUrl = `${baseUrl}faq/`;
-export const blogUrl = `${baseUrl}blog/`;
 export const startUrl = `${baseUrl}start/`;
 export const privacyUrl = `${baseUrl}privacy/`;
 export const termsUrl = `${baseUrl}terms/`;
@@ -81,7 +79,6 @@ export const Routes: React.FC = () => (
     <Route path={whyUrl} component={Why} />
     <Route path={howUrl} component={How} />
     <Route path={faqUrl} component={FAQ} />
-    <Route path={blogUrl} component={Blog} />
     <Route path={startUrl} component={Start} />
     <Route path={privacyUrl} component={Privacy} />
     <Route path={termsUrl} component={Terms} />

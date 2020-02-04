@@ -20,7 +20,6 @@ import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/qu
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
 import moment from "moment";
 import EditIcon from "../../../images/edit.svg";
-import { TypedUpdateCheckoutShippingAddressMutation } from "@temp/checkout/views/Shipping/queries";
 
 function proceedToBilling(data, update, token) {
   const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
