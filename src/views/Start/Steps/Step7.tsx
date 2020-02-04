@@ -582,100 +582,121 @@ class Step7Container extends React.Component {
       return "Add Shipping Address";
     }
   }
+
+  ChooseAddressForm(props) {
+    return (
+    <div>
+      <div className="container-items-shipping">
+        {props.user.addresses.map(a => (
+          <div
+            className={
+              props.state.lastShipping == a.id
+                ? "item-selected-shipping-last"
+                : "item-selected-shipping-last-gris"
+            }
+            onClick={() => props.onAddLastShipping(a.id)}
+          >
+            <p style={{ margin: 0 }}>
+              {a.firstName}&nbsp;{a.lastName}
+            </p>
+            <p style={{ margin: 0 }}>{a.streetAddress1}</p>
+            <p style={{ margin: 0 }}>
+              {a.city}, {a.postalCode}
+            </p>
+            <p style={{ margin: 0 }}>{a.country.country}</p>
+            <p style={{ margin: 0 }}>{a.phone}</p>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 12,
+                color: "#628a06",
+                fontWeight: 500
+              }}
+            >
+              {props.state.lastShipping == a.id
+                ? "Deliver to this address"
+                : null}
+            </p>
+          </div>
+        ))}
+        <div
+          style={{
+            border: "solid 1px",
+            width: 280,
+            padding: 11,
+            borderRadius: 8,
+            fontSize: 12,
+            cursor: "pointer",
+            marginTop: 20
+          }}
+          onClick={props.onNewShipping}
+        >
+          &#43; Add New Shipping Address
+        </div>
+      </div>
+      <div
+        className={
+          props.lastShipping ? "btn-Shippinglast" : "btn-Shippinglast-gris"
+        }
+        onClick={
+          props.lastShipping
+            ? () => {
+                props.onCreateCheckoutWithLastShipping(props.lastShipping);
+                props.setDisplayNewModal(false);
+              }
+            : () => {}
+        }
+      >
+        Continue to Shipping
+      </div>
+    </div>
+  )
+      };
+  NewAddressForm(props) {
+    return (
+    <ShippingAdressForm
+      hide={() => props.setDisplayNewModal(false)}
+      buttonText="Add Shipping Address"
+      onSubmit={data => props.onSubmit(data)}
+    >
+      <div>
+        <p
+          style={{
+            fontWeight: 500,
+            fontSize: 18,
+            padding: "0 20px"
+          }}
+        >
+          <span onClick={() => props.onNewShipping(false)}>&#8592;</span>
+          Shipping Address
+        </p>
+        <br />
+        <br />
+      </div>
+    </ShippingAdressForm>
+  )};
+
   renderContentShipping() {
     const { lastShipping } = this.state;
     return (
       <div>
         {this.props.user &&
         !this.state.addNewShipping &&
-        this.props.user.addresses.length > 0 ? (
-          <div>
-            <div className="container-items-shipping">
-              {this.props.user.addresses.map(a => (
-                <div
-                  className={
-                    this.state.lastShipping === a.id
-                      ? "item-selected-shipping-last"
-                      : "item-selected-shipping-last-gris"
-                  }
-                  onClick={() => this.onAddLastShipping(a.id)}
-                >
-                  <p style={{ margin: 0 }}>
-                    {a.firstName}&nbsp;{a.lastName}
-                  </p>
-                  <p style={{ margin: 0 }}>{a.streetAddress1}</p>
-                  <p style={{ margin: 0 }}>
-                    {a.city}, {a.postalCode}
-                  </p>
-                  <p style={{ margin: 0 }}>{a.country.country}</p>
-                  <p style={{ margin: 0 }}>{a.phone}</p>
-                  <p
-                    style={{
-                      color: "#628a06",
-                      fontSize: 12,
-                      fontWeight: 500,
-                      margin: 0,
-                    }}
-                  >
-                    {this.state.lastShipping === a.id
-                      ? "Deliver to this address"
-                      : null}
-                  </p>
-                </div>
-              ))}
-              <div
-                style={{
-                  border: "solid 1px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  fontSize: 12,
-                  marginTop: 20,
-                  padding: 11,
-                  width: 280,
-                }}
-                onClick={this.onNewShipping}
-              >
-                &#43; Add New Shipping Address
-              </div>
-            </div>
-            <div
-              className={
-                lastShipping ? "btn-Shippinglast" : "btn-Shippinglast-gris"
-              }
-              onClick={
-                lastShipping
-                  ? () => {
-                      this.props.onCreateCheckoutWithLastShipping(lastShipping);
-                      this.setDisplayNewModal(false);
-                    }
-                  : () => {}
-              }
-            >
-              Continue to Shipping
-            </div>
-          </div>
-        ) : (
-          <ShippingAdressForm
-            hide={() => this.setDisplayNewModal(false)}
-            buttonText="Add Shipping Address"
-            onSubmit={data => this.onSubmit(data)}
-          >
-            <div>
-              <p
-                style={{
-                  fontSize: 18,
-                  fontWeight: 500,
-                  padding: "0 20px",
-                }}
-              >
-                <span onClick={() => this.onNewShipping(false)}>&#8592;</span>
-                Shipping Address
-              </p>
-              <br />
-              <br />
-            </div>
-          </ShippingAdressForm>
-        )}
+        this.props.user.addresses.length > 0 ? 
+        <this.ChooseAddressForm 
+          user = {this.props.user} 
+          state = {this.state} 
+          lastShipping = {lastShipping} 
+          onCreateCheckoutWithLastShipping = {this.props.onCreateCheckoutWithLastShipping}
+          onAddLastShipping = {this.onAddLastShipping}
+          onNewShipping = {this.onNewShipping}
+          setDisplayNewModal = {this.setDisplayNewModal}
+        /> : 
+        <this.NewAddressForm
+          setDisplayNewModal = {this.setDisplayNewModal}
+          onSubmit = {this.onSubmit}
+          onNewShipping = {this.onNewShipping}
+        />}
       </div>
     );
   }
