@@ -2,8 +2,8 @@ import * as React from "react";
 import { Loader } from "../../../components";
 import { maybe } from "../../../core/utils";
 import { TypedStep5Query } from "./queries/queries";
-import WrapperContainer from "./Wrapper";
 import { ProductsList } from "./types/ProductsList";
+import WrapperContainer from "./Wrapper";
 
 const canDisplay = (data: ProductsList) =>
   maybe(() => !!data.products);
