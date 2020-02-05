@@ -141,7 +141,7 @@ async function _onCreateCheckout(
         checkoutInput: {
           email: user.email,
           lines: cart.lines,
-          destination: destination,
+          destination,
           arrival: moment(arrival, "DD-MM-YYYY")
             .toISOString()
             .split("T")[0],
@@ -218,7 +218,7 @@ async function _onCreateCheckoutWithLastShipping(
             departure: moment(departure, "DD-MM-YYYY")
               .toISOString()
               .split("T")[0],
-            destination: destination,
+            destination,
             email: user.email,
             lines: cart.lines,
           },
@@ -235,7 +235,7 @@ async function _onCreateCheckoutWithLastShipping(
             departure: moment(departure, "DD-MM-YYYY")
               .toISOString()
               .split("T")[0],
-            destination: destination,
+            destination,
             email: user.email,
             lines: cart.lines,
             shippingAddress: {

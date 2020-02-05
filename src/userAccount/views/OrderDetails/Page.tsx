@@ -13,7 +13,7 @@ import {
 import { orderHistoryUrl } from "../../../routes";
 
 const extractOrderLines = (
-  lines: Array<OrderById_order_lines | OrderByToken_orderByToken_lines>
+  lines: (OrderById_order_lines | OrderByToken_orderByToken_lines)[]
 ): LineI[] => {
   return lines
     .map(line => ({

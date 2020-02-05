@@ -23,11 +23,11 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
     "pink",
     "purple",
   ];
-  var color = "white";
+  let color = "white";
 
   const split = name.split("/");
   split.forEach(element => {
-    var re = / /gi;
+    const re = / /gi;
     element = element.replace(re, "").toLowerCase();
     colors.forEach(element_color => {
       if (element_color === element) {
@@ -35,8 +35,8 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       }
     });
   });
-  var width = window.innerWidth;
-  var show = width >= 500 ? true : false;
+  const width = window.innerWidth;
+  const show = width >= 500 ? true : false;
   return (
     <tr key={id}>
       <td align="center" style={{ textAlign: "start" }}>

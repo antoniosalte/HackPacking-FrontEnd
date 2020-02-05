@@ -26,8 +26,8 @@ const Cart: React.FC<{
   checkout: Checkout | null;
 }> = ({ cart, checkout }) => {
   const { lines } = cart;
-  var width = window.innerWidth;
-  var show = width >= 500 ? true : false;
+  const width = window.innerWidth;
+  const show = width >= 500 ? true : false;
   return (
     <>
       {!checkout ? (

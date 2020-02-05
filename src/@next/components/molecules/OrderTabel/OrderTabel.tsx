@@ -13,7 +13,7 @@ import Icon1 from "../../../../images/hp-order-step1.svg";
 import Icon2 from "../../../../images/hp-order-step2.svg";
 import Icon3 from "../../../../images/hp-order-step3.svg";
 
-//Aca
+// Aca
 export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
   const theme = React.useContext(ThemeContext);
   return (
@@ -28,15 +28,15 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
             <>
               {orders &&
                 orders.slice( 0,1 ).map(order => {
-                  var date = new Date(order.node.created).toUTCString();
+                  let date = new Date(order.node.created).toUTCString();
                   date = date.split(' ').slice(0, 4).join(' ');
-                  let shippedVia = order.node.shippingMethod ? order.node.shippingMethod.name : "No Shipping Method";
-                  var status = order.node.status;
-                  let classNameLeft =  status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot left" : "left";
-                  let classNameRight = status == "FULFILLED" ? "activedot right" : "right";
-                  let classNameStep1 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
-                  let classNameStep2 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
-                  let classNameStep3 = status == "FULFILLED" ? "activedot" : "";
+                  const shippedVia = order.node.shippingMethod ? order.node.shippingMethod.name : "No Shipping Method";
+                  const status = order.node.status;
+                  const classNameLeft =  status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot left" : "left";
+                  const classNameRight = status == "FULFILLED" ? "activedot right" : "right";
+                  const classNameStep1 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  const classNameStep2 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  const classNameStep3 = status == "FULFILLED" ? "activedot" : "";
                   return (
                     <S.Row
                       key={order.node.number}

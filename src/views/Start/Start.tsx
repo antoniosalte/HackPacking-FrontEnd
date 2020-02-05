@@ -54,7 +54,7 @@ class Start extends React.Component {
     this.toCheckout = this.toCheckout.bind(this);
   }
   componentDidMount() {
-    //this.props.history.push("/start?step=trip-information")
+    // this.props.history.push("/start?step=trip-information")
     const parsed = QueryString.parse(this.props.location.search);
     if (parsed && parsed.step) {
       this.setState({
