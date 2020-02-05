@@ -13,7 +13,6 @@ import { quiqkTrip } from "./static";
 
 const cities = ["Lima, Peru", "Cuzco, Peru", "Arequipa, Peru"];
 
-
 class Step1 extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +42,7 @@ class Step1 extends React.Component {
     } else {
       alert("Invalid dates");
     }
-  }
+  };
   onChangeDestination(e) {
     const { step1 } = this.props.data;
     step1.destination = e.target.value;
@@ -52,15 +51,18 @@ class Step1 extends React.Component {
   // change dates
   changeData(type, value) {
     const { step1 } = this.props.data;
-    step1[type] = moment(value).format("D/M/YYYY") // set value selected
+    step1[type] = moment(value).format("D/M/YYYY"); // set value selected
     // verify days between arrival and departure
     const { arrival, departure } = step1;
     const dateArrival = moment(arrival, "D/M/YYYY");
     const dateDeparture = moment(departure, "D/M/YYYY");
     const diffDays = dateDeparture.diff(dateArrival, "days");
-    if (diffDays <= 3) { // minimo 3 dias
-      step1.departure = moment(dateArrival).add(3, 'days').format("D/M/YYYY")
-    } 
+    if (diffDays <= 3) {
+      // minimo 3 dias
+      step1.departure = moment(dateArrival)
+        .add(3, "days")
+        .format("D/M/YYYY");
+    }
     this.props.setData({ step1 }); // update values
   }
   render() {
@@ -124,8 +126,8 @@ class Step1 extends React.Component {
                   <Picker
                     id="arrivalp"
                     onSelect={value => this.changeData("arrival", value)}
-                    value={ this.props.data.step1.arrival }
-                    minDate={ moment() }
+                    value={this.props.data.step1.arrival}
+                    minDate={moment()}
                   />
                 </p>
               </div>
@@ -137,10 +139,12 @@ class Step1 extends React.Component {
                   Departure:&nbsp;&nbsp;
                   <Picker
                     id="departurep"
-                    key={ (this.props.data.step1.arrival).toString() }
+                    key={this.props.data.step1.arrival.toString()}
                     onSelect={value => this.changeData("departure", value)}
-                    value={ this.props.data.step1.departure }
-                    minDate={ Date(moment(this.props.data.step1.arrival,"D/M/YYYY")) }
+                    value={this.props.data.step1.departure}
+                    minDate={Date(
+                      moment(this.props.data.step1.arrival, "D/M/YYYY")
+                    )}
                   />
                 </p>
               </div>
@@ -165,7 +169,8 @@ class Step1 extends React.Component {
           <br />
           <br />
           <br />
-          <br /><br />
+          <br />
+          <br />
           <br />
         </div>
       </MetaWrapper>

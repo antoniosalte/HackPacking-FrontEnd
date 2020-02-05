@@ -8,7 +8,7 @@ import { ProductsList } from "./types/ProductsList";
 const canDisplay = (data: ProductsList) => maybe(() => !!data.products);
 
 const Step2 = ({ cart, male }) => (
-  <div style={{padding: "0 20px"}}>
+  <div style={{ padding: "0 20px" }}>
     <TypedStep2Query alwaysRender displayLoader={true} errorPolicy="all">
       {({ data, loading }) => {
         if (canDisplay(data)) {

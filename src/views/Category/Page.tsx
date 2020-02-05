@@ -7,7 +7,7 @@ import {
   Breadcrumbs,
   extractBreadcrumbs,
   ProductsFeatured,
-  ProductsList
+  ProductsList,
 } from "../../components";
 
 import { ProductListHeader } from "../../@next/components/molecules";

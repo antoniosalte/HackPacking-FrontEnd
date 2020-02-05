@@ -126,12 +126,12 @@ const Cart: React.FC<{
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
                 <p
                   style={{
-                    margin: "5px 0"
+                    margin: "5px 0",
                   }}
                 >
                   Shipping Price:&nbsp;
@@ -142,7 +142,7 @@ const Cart: React.FC<{
                 </p>
                 <p
                   style={{
-                    margin: "5px 0"
+                    margin: "5px 0",
                   }}
                 >
                   Total Price:&nbsp; ${" "}
