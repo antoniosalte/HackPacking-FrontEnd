@@ -577,7 +577,7 @@ class Step7Container extends React.Component {
           {props.user.addresses.map(a => (
             <div
               className={
-                props.state.lastShipping == a.id
+                props.state.lastShipping === a.id
                   ? "item-selected-shipping-last"
                   : "item-selected-shipping-last-gris"
               }
@@ -600,7 +600,7 @@ class Step7Container extends React.Component {
                   fontWeight: 500,
                 }}
               >
-                {props.state.lastShipping == a.id
+                {props.state.lastShipping === a.id
                   ? "Deliver to this address"
                   : null}
               </p>

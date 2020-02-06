@@ -32,11 +32,11 @@ export const OrderTabel: React.FC<IProps> = ({ orders, history }: IProps) => {
                   date = date.split(' ').slice(0, 4).join(' ');
                   const shippedVia = order.node.shippingMethod ? order.node.shippingMethod.name : "No Shipping Method";
                   const status = order.node.status;
-                  const classNameLeft =  status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot left" : "left";
-                  const classNameRight = status == "FULFILLED" ? "activedot right" : "right";
-                  const classNameStep1 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
-                  const classNameStep2 = status == "UNFULFILLED" || status == "FULFILLED" || status == "PARTIALLY_FULFILLED" ? "activedot" : "";
-                  const classNameStep3 = status == "FULFILLED" ? "activedot" : "";
+                  const classNameLeft =  status === "UNFULFILLED" || status === "FULFILLED" || status === "PARTIALLY_FULFILLED" ? "activedot left" : "left";
+                  const classNameRight = status === "FULFILLED" ? "activedot right" : "right";
+                  const classNameStep1 = status === "UNFULFILLED" || status === "FULFILLED" || status === "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  const classNameStep2 = status === "UNFULFILLED" || status === "FULFILLED" || status === "PARTIALLY_FULFILLED" ? "activedot" : "";
+                  const classNameStep3 = status === "FULFILLED" ? "activedot" : "";
                   return (
                     <S.Row
                       key={order.node.number}

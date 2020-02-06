@@ -68,7 +68,7 @@ const cache = new InMemoryCache({
 });
 
 const startApp = async () => {
-  let firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyDKs2d3wLITuW6NwUFbznPlaG7keyZBhEU",
     authDomain: "hackpacking-297bb.firebaseapp.com",
     databaseURL: "https://hackpacking-297bb.firebaseio.com",

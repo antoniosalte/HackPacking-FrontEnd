@@ -13,7 +13,7 @@ class Input extends React.Component {
 
   // text in input is "I want @ap"
   handleRequestOptions(part) {
-    console.log(part); // -> "ap", which is part after trigger "@"
+    /* console.log(part) */; // -> "ap", which is part after trigger "@"
     this.setState({ options: [] });
   }
 

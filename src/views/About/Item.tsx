@@ -6,7 +6,7 @@ const Item = props => {
   return (
     <div
       className={
-        position == "left"
+        position === "left"
           ? "item-blog-container blog-left"
           : "item-blog-container blog-right"
       }

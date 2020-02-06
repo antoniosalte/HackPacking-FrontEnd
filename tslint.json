@@ -14,6 +14,13 @@
     "no-submodule-imports": [false],
     "no-var-requires": false,
     "interface-over-type-literal": false,
+    "sort-keys": ["error", "asc", {"caseSensitive": true, "natural": false, "minKeys": 2}],
+    "sort-imports": ["error", {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+    }],
     "variable-name": {
       "options": [
         "ban-keywords",
