@@ -1,6 +1,7 @@
 import { useUserDetails } from "@sdk/react";
 import * as React from "react";
 import Item from "../About/Item";
+import { MetaWrapper } from "../../components";
 import why1 from "../../images/hp-why-1.svg";
 import why2 from "../../images/hp-why-2.svg";
 import Footer from "../Home/Footer";
@@ -13,22 +14,28 @@ const items = [
       "Let’s keep it simple, like we already do with transportation, accommodation and food delivery. Now you can get basic clothing deliver to your hotel.",
     image: why1,
     position: "left",
-    text: "An outfit is just an outfit",
+    text: <h2>"An outfit is just an outfit"</h2>,
   },
   {
     description:
       "Nowadays you can get better deals on plane tickets if you travel luggage free. Meet your clothes at your destination and cut some expenses. ",
     image: why2,
     position: "right",
-    text: "Save money",
+    text: <h2>"Save money"</h2>,
   },
 ];
 const Why = () => {
   const { data: user } = useUserDetails();
   return (
+    <MetaWrapper
+    meta={{
+      description: "You plan and prepare worrying about forgetting something. You hope that the shirt that you need is clean, that your luggage isn´t oversize. Then you have to go hours early to the airport because there is a long queue baggage drop off. You may have to pay for extra weight.",
+      title: "Why we do this | HackPacking",
+    }}
+  >
     <div className="container-blog">
       <div className="container-blog-c container">
-        <p className="container-blog-c__title">Why we do this</p>
+        <h1 className="container-blog-c__title">Why we do this</h1>
         <div className="container-blog-c__whycontainer">
           <p>We think traveling should not be a painful experience</p>
           <span>
@@ -62,6 +69,7 @@ const Why = () => {
       <br />
       <Footer user={user} />
     </div>
+    </MetaWrapper>
   );
 };
 export default Why;

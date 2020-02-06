@@ -19,7 +19,7 @@ const Step4 = ({ cart, male }) => (
               title="Choose your underwear"
               subTitle="You can keep the underwear items you select, no need to return it"
               meta={{
-                description: "Step 4",
+                description: "Select underwear for your order here.",
                 title: "Underwear",
               }}
               cart={cart}
