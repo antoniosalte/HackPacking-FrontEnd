@@ -101,7 +101,6 @@ const Cart: React.FC<{
             </tr>
             {checkout.lines.map(({ variant, quantity, id }) => (
               <>
-                {console.log(variant.product)}
                 <Line
                   key={id}
                   {...variant}

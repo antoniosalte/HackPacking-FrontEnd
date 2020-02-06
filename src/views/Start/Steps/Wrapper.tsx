@@ -61,6 +61,7 @@ class Wrapper extends React.Component {
   render() {
     const { data, title, subTitle, meta, cart, male } = this.props;
     const edges = data.products.edges.filter(x => this.filterProduct(x));
+    console.log('edges', edges);
     return (
       <MetaWrapper
         meta={{
@@ -73,7 +74,7 @@ class Wrapper extends React.Component {
           <p className="sub-title-steps">{subTitle}</p>
           <div className="container-wears">
             {edges && edges.length > 0
-              ? edges.map((item, index) => {
+              ? edges.map((item) => {
                   if (item.node.variants && item.node.variants.length > 0) {
                     let line = null;
                     for (const li of cart.lines) {
@@ -86,7 +87,7 @@ class Wrapper extends React.Component {
                     return (
                       <Item
                         item={item}
-                        key={`item-step2-${index}`}
+                        key={`item-step2-${item.node.id}`}
                         onAdd={variant => this.onAdd(cart, variant)}
                         onSet={(variant, c) => this.onSet(cart, variant, c)}
                         onRemove={variant => this.onRemove(cart, variant)}

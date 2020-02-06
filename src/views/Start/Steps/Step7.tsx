@@ -13,7 +13,7 @@ import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import { maybe } from "../../../core/utils";
 import { CartSummary } from "../Components/cart/index";
-
+import { getCountryCallingCode } from 'libphonenumber-js'
 import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
 import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
@@ -555,16 +555,25 @@ class Step7Container extends React.Component {
   onSubmit(data) {
     if (this.props.user) {
       this.setDisplayNewModal(false);
-      const dataShippingAdress = {
+      let phone = data.phone;
+
+      if (data.country && data.country.code) {
+        const prefix = getCountryCallingCode(data.country.code);
+        if (prefix) {
+          phone = `+${prefix}${data.phone}`;
+        }
+      }
+
+      const dataShippingAddress = {
         city: data.city,
         comment: data.comment || "",
         firstName: data.firstName,
         lastName: data.lastName,
-        phone: data.phone,
+        phone,
         postalCode: data.postalCode,
         streetAddress1: data.streetAddress1,
       };
-      this.props.onCreateCheckout(dataShippingAdress);
+      this.props.onCreateCheckout(dataShippingAddress);
     } else {
       this.shippingaddress("login");
     }
