@@ -560,7 +560,7 @@ class Step7Container extends React.Component {
       if (data.country && data.country.code) {
         const prefix = getCountryCallingCode(data.country.code);
         if (prefix) {
-          phone = `${prefix}${data.phone}`;
+          phone = `+${prefix}${data.phone}`;
         }
       }
 
