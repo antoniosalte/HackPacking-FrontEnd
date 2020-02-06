@@ -26,8 +26,8 @@ const Cart: React.FC<{
   checkout: Checkout | null;
 }> = ({ cart, checkout }) => {
   const { lines } = cart;
-  var width = window.innerWidth;
-  var show = width >= 500 ? true : false;
+  const width = window.innerWidth;
+  const show = width >= 500 ? true : false;
   return (
     <>
       {!checkout ? (
@@ -125,12 +125,12 @@ const Cart: React.FC<{
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
                 <p
                   style={{
-                    margin: "5px 0"
+                    margin: "5px 0",
                   }}
                 >
                   Shipping Price:&nbsp;
@@ -141,7 +141,7 @@ const Cart: React.FC<{
                 </p>
                 <p
                   style={{
-                    margin: "5px 0"
+                    margin: "5px 0",
                   }}
                 >
                   Total Price:&nbsp; ${" "}
