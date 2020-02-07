@@ -6,6 +6,12 @@
   top: 0;
 }
 
+.inline-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .input {
   box-sizing: border-box;
   margin-bottom: $spacer;
