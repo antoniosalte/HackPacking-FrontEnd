@@ -184,14 +184,18 @@ class Form<Values> extends React.Component<
         ) {
           let value = this.state.data[child.props.name].code;
           if (this.state.data[child.props.name] && this.state.data[child.props.name].code) {
-            const prefix = getCountryCallingCode(this.state.data[child.props.name].code);
-            if (prefix) {
-              value = `${value} +${prefix}`;
+            try {
+              const prefix = getCountryCallingCode(this.state.data[child.props.name].code);
+              if (prefix) {
+                value = `${value} +${prefix}`;
+              }
+            } catch (e) {
+              console.log(e);
             }
           }
           defaultValue = {
             label: value,
-            value,
+            value: this.state.data[child.props.name].country,
           };
         } else {
           defaultValue = this.state.data[child.props.name];

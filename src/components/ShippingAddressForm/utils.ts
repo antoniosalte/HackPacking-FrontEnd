@@ -18,4 +18,11 @@ export const getFormData = (
         defaultCountry.country
       ),
     },
+    prefix: {
+        code: maybe(() => geolocalization.country.code, defaultCountry.code),
+        country: maybe(
+            () => geolocalization.country.country,
+            defaultCountry.country
+        ),
+    },
   };
