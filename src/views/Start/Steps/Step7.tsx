@@ -544,9 +544,13 @@ class Step7Container extends React.Component {
       this.setDisplayNewModal(false);
       let phone = data.phone;
       if (data.prefix && data.prefix.code) {
-        const prefix = getCountryCallingCode(data.prefix.code);
-        if (prefix) {
-          phone = `+${prefix}${data.phone}`;
+        try {
+          const prefix = getCountryCallingCode(data.prefix.code);
+          if (prefix) {
+            phone = `+${prefix}${data.phone}`;
+          }
+        } catch (e) {
+          console.log(e);
         }
       }
 
@@ -560,7 +564,6 @@ class Step7Container extends React.Component {
         streetAddress1: data.streetAddress1,
       };
 
-      return;
       this.props.onCreateCheckout(dataShippingAddress);
     } else {
       this.shippingaddress("login");
