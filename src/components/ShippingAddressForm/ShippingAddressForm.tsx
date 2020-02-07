@@ -45,13 +45,25 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 placeholder="Lastname"
                 required
               />
-              <TextField
-                type="phone"
-                name="phone"
-                autoComplete="phone"
-                placeholder="Phone"
-                required
-              />
+
+              <div className='inline-form'>
+                <Select
+                  name="prefix"
+                  options={countries.map(country => ({
+                    label: country.country,
+                    value: country.code,
+                  }))}
+                  autoComplete='off'
+                />
+                <TextField
+                  type="phone"
+                  name="phone"
+                  autoComplete="phone"
+                  placeholder="Phone"
+                  required
+                />
+              </div>
+
               <TextField
                 type="address-line1"
                 name="streetAddress1"

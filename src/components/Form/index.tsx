@@ -1,5 +1,6 @@
 import * as React from "react";
 import NumberFormat from "react-number-format";
+import { getCountryCallingCode } from 'libphonenumber-js';
 
 import { Select, SelectField, TextField } from "..";
 
@@ -176,6 +177,21 @@ class Form<Values> extends React.Component<
           defaultValue = {
             label: this.state.data[child.props.name].country,
             value: this.state.data[child.props.name].code,
+          };
+        } else if (
+            child.props.name === "prefix" &&
+            this.state.data[child.props.name]
+        ) {
+          let value = this.state.data[child.props.name].code;
+          if (this.state.data[child.props.name] && this.state.data[child.props.name].code) {
+            const prefix = getCountryCallingCode(this.state.data[child.props.name].code);
+            if (prefix) {
+              value = `${value} +${prefix}`;
+            }
+          }
+          defaultValue = {
+            label: value,
+            value,
           };
         } else {
           defaultValue = this.state.data[child.props.name];
