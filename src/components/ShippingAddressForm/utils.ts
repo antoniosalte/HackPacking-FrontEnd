@@ -9,7 +9,7 @@ import { CountryCode, Country } from "types/globalTypes";
 export const getFormData = (
   geolocalization: getShop_shop_geolocalization | null,
   defaultCountry: getShop_shop_defaultCountry | null,
-  destination
+  destination,
   data?: FormAddressType
 ) =>
   data || {
