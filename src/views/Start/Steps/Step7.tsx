@@ -6,7 +6,7 @@ import { AlertManager, useAlert } from "react-alert";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
-import { useUserDetails, useUpdateCheckoutShippingAddress } from "@sdk/react";
+import { useUserDetails, useUpdateCheckoutShippingAddress, useUpdateCheckoutBillingAddress } from "@sdk/react";
 import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
@@ -127,6 +127,7 @@ const ComponentCheckout = ({
 const Step7 = props => {
   const { data: user } = useUserDetails();
   const updateShippingAddress = useUpdateCheckoutShippingAddress();
+  const updateBillingAdress = useUpdateCheckoutBillingAddress();
   const { clear: clearCheckout } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
@@ -305,6 +306,25 @@ const Step7 = props => {
                                             ) as CountryCode
                                           }
                                         });
+                                        await updateBillingAdress[0]({
+                                          checkoutId: checkout.id,
+                                          billingAddress: {
+                                            firstName:
+                                              data.firstName,
+                                            lastName:
+                                            data.lastName,
+                                            streetAddress1:
+                                            data.streetAddress1,
+                                            phone: data.phone,
+                                            city: data.city,
+                                            postalCode:
+                                            data.postalCode,
+                                            country: maybe(
+                                              () => "PE",
+                                              "PE"
+                                            ) as CountryCode
+                                          }
+                                        });
                                         await update({
                                           shippingAsBilling: true
                                         });
@@ -384,6 +404,19 @@ const Step7 = props => {
                                                   () => "PE",
                                                   "PE"
                                                 ) as CountryCode
+                                              },
+                                              billingAddress: {
+                                                firstName: shippingAddressLast.firstName,
+                                                lastName: shippingAddressLast.lastName,
+                                                streetAddress1:
+                                                shippingAddressLast.streetAddress1,
+                                                city: shippingAddressLast.city,
+                                                phone: shippingAddressLast.phone,
+                                                postalCode: shippingAddressLast.postalCode,
+                                                country: maybe(
+                                                  () => "PE",
+                                                  "PE"
+                                                ) as CountryCode
                                               }
                                             }
                                           }
@@ -414,6 +447,26 @@ const Step7 = props => {
                                             ) as CountryCode
                                           }
                                         });
+                                        await updateBillingAdress[0]({
+                                          checkoutId: checkout.id,
+                                          billingAddress: {
+                                            firstName:
+                                              shippingAddressLast.firstName,
+                                            lastName:
+                                              shippingAddressLast.lastName,
+                                            streetAddress1:
+                                              shippingAddressLast.streetAddress1,
+                                            phone: shippingAddressLast.phone,
+                                            city: shippingAddressLast.city,
+                                            postalCode:
+                                              shippingAddressLast.postalCode,
+                                            country: maybe(
+                                              () => "PE",
+                                              "PE"
+                                            ) as CountryCode
+                                          }
+                                        });
+
                                         await update({
                                           shippingAsBilling: true
                                         });
