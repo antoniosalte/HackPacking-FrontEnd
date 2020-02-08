@@ -38,9 +38,9 @@ export const SOCIAL_MEDIA = [
 ];
 export const META_DEFAULTS = {
   custom: [],
-  description: "HackPacking",
+  description: "We deliver clean and comfortable clothes and accessories at your trip destination so you don't have to pack or worry about your luggage everytime you fly.",
   image: "https://firebasestorage.googleapis.com/v0/b/tariy-ra.appspot.com/o/HackPackingx512.png?alt=media&token=5a1985b2-86af-4a9a-b597-1c07de378a97",
-  title: "HackPacking",
+  title: "HackPacking – What you need on-destination & on-demand",
   type: "website",
   url: window.location.origin,
 };

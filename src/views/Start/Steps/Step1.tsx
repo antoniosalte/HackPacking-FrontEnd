@@ -70,9 +70,9 @@ class Step1 extends React.Component {
     return (
       <MetaWrapper
         meta={{
-          description: "Start Packing",
+          description: "Start your order here.",
           image: LOGO,
-          title: "HackPacking - Start Packing",
+          title: "Order – Start Packing | HackPacking",
         }}
       >
         <div className="container">

@@ -18,7 +18,7 @@ const Step5 = ({ cart, male }) => (
               male={male}
               title="Choose your socks"
               meta={{
-                description: "Step 5",
+                description: "Select socks for your order here.",
                 title: "Socks",
               }}
               cart={cart}
