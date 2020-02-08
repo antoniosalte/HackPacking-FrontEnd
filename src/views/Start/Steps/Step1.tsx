@@ -66,6 +66,7 @@ class Step1 extends React.Component {
     this.props.setData({ step1 }); // update values
   }
   render() {
+    let min_date = moment().add(3, "days");
     return (
       <MetaWrapper
         meta={{
@@ -127,7 +128,7 @@ class Step1 extends React.Component {
                     id="arrivalp"
                     onSelect={value => this.changeData("arrival", value)}
                     value={this.props.data.step1.arrival}
-                    minDate={moment()}
+                    minDate={min_date.format('YYYY-MM-DD')}
                   />
                 </p>
               </div>
@@ -142,9 +143,7 @@ class Step1 extends React.Component {
                     key={this.props.data.step1.arrival.toString()}
                     onSelect={value => this.changeData("departure", value)}
                     value={this.props.data.step1.departure}
-                    minDate={Date(
-                      moment(this.props.data.step1.arrival, "D/M/YYYY")
-                    )}
+                    minDate={min_date.format('YYYY-MM-DD')}
                   />
                 </p>
               </div>

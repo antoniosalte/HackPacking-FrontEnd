@@ -39,9 +39,9 @@ class Start extends React.Component {
       data: {
         step1: {
           destination: "Lima, Peru",
-          arrival: moment().format("D/M/YYYY"),
+          arrival: moment().add(3, "days").format("D/M/YYYY"),
           departure: moment()
-            .add(3, "days")
+            .add(6, "days")
             .format("D/M/YYYY"),
         },
       },

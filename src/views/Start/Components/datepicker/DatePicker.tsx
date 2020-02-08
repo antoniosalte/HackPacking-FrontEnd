@@ -4,8 +4,8 @@ require("react-datepicker/dist/react-datepicker.css");
 import moment from "moment";
 
 const Picker = ({ onSelect = () => {}, id, value, minDate }) => {
-  const selectedValue = new Date(moment(value, "D/M/YYYY").format());
-  const minDateValue = new Date(moment(minDate).format("DD-MM-YYYY"));
+  const selectedValue = new Date(moment(value, "D/M/YYYY").format('YYYY-MM-DD'));
+  const minDateValue = new Date(minDate);
   const CustomInput = ({ value, onClick }) => (
     <div
       style={{
