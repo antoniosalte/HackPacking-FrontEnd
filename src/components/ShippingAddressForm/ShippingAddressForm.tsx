@@ -2,11 +2,15 @@ import "./scss/index.scss";
 
 import classNames from "classnames";
 import * as React from "react";
+import { useState } from 'react';
 
 import { Button, Form, Select, TextField } from "..";
 import { ShopContext } from "../ShopProvider/context";
 import { FormAddressType, IShippingAddressFormProps } from "./types";
 import { getFormData } from "./utils";
+
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
   data,
@@ -15,9 +19,15 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
   loading,
   onSubmit,
   children,
+  phone,
+  updatePhone,
+  destination,
   shippingAsBilling = false,
   type = "shipping",
-}) => (
+}) => {
+  
+  return (
+  
   <div className="address-form">
     <ShopContext.Consumer>
       {({ countries, geolocalization, defaultCountry }) => (
@@ -27,7 +37,7 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
             evt.preventDefault();
             onSubmit(data);
           }}
-          data={getFormData(geolocalization, defaultCountry, data)}
+          data={getFormData(geolocalization, defaultCountry, destination, data)}
         >
           {children}
           <fieldset disabled={shippingAsBilling}>
@@ -45,25 +55,12 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
                 placeholder="Lastname"
                 required
               />
-
-              <div className='inline-form'>
-                <Select
-                  name="prefix"
-                  options={countries.map(country => ({
-                    label: country.country,
-                    value: country.code,
-                  }))}
-                  autoComplete='off'
-                />
-                <TextField
-                  type="phone"
-                  name="phone"
-                  autoComplete="phone"
-                  placeholder="Phone"
-                  required
-                />
-              </div>
-
+              <PhoneInput
+                placeholder="Enter phone number"
+                value={phone}
+                onChange={updatePhone}
+                enableSearch={true}
+              />
               <TextField
                 type="address-line1"
                 name="streetAddress1"
@@ -110,5 +107,5 @@ const ShippingAddressForm: React.FC<IShippingAddressFormProps> = ({
     </ShopContext.Consumer>
   </div>
 );
-
+}
 export default ShippingAddressForm;

@@ -13,7 +13,7 @@ import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import { maybe } from "../../../core/utils";
 import { CartSummary } from "../Components/cart/index";
-import { getCountryCallingCode } from 'libphonenumber-js'
+/* import { getCountryCallingCode } from 'libphonenumber-js' */
 import { TypedPaymentMethodCreateMutation } from "../../../checkout/views/Payment/queries";
 import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/queries";
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
@@ -459,6 +459,7 @@ class Step7Container extends React.Component {
       setAmount: () => {},
       shippingmethodSelected: null,
       showLogin: false,
+      phone: ""
     };
     this.setDisplayNewModal = this.setDisplayNewModal.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -468,6 +469,9 @@ class Step7Container extends React.Component {
     this.addShippingMethod = this.addShippingMethod.bind(this);
     this.onNewShipping = this.onNewShipping.bind(this);
     this.onAddLastShipping = this.onAddLastShipping.bind(this);
+    this.updatePhone = this.updatePhone.bind(this);
+    this.NewAddressForm = this.NewAddressForm.bind(this);
+    this.ChooseAddressForm = this.ChooseAddressForm.bind(this);
   }
   componentDidUpdate() {
     const { checkout } = this.props;
@@ -539,20 +543,13 @@ class Step7Container extends React.Component {
       this.props.onUpdateShipping(shippingmethodSelected);
     }
   }
+  updatePhone(phone){
+    this.setState({phone})
+  }
   onSubmit(data) {
+    let phone = this.state.phone;
     if (this.props.user) {
       this.setDisplayNewModal(false);
-      let phone = data.phone;
-      if (data.prefix && data.prefix.code) {
-        try {
-          const prefix = getCountryCallingCode(data.prefix.code);
-          if (prefix) {
-            phone = `+${prefix}${data.phone}`;
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      }
 
       const dataShippingAddress = {
         city: data.city,
@@ -572,14 +569,14 @@ class Step7Container extends React.Component {
   getStepText(checkout) {
     if (checkout) {
       if (!checkout.shippingAddress) {
-        return "Add Shipping Address";
+        return "Checkout";
       }
       if (!checkout.shippingMethod) {
-        return "Add Shipping Method";
+        return "Checkout";
       }
       return "Checkout";
     } else {
-      return "Add Shipping Address";
+      return "Checkout";
     }
   }
 
@@ -658,6 +655,9 @@ class Step7Container extends React.Component {
         hide={() => props.setDisplayNewModal(false)}
         buttonText="Add Shipping Address"
         onSubmit={data => props.onSubmit(data)}
+        updatePhone={this.updatePhone}
+        phone={this.state.phone}
+        destination="Lima,Peru"
       >
         <div>
           <p
@@ -781,7 +781,7 @@ class Step7Container extends React.Component {
                 onClick={this.addShippingMethod}
                 disabled={!this.state.shippingmethodSelected}
               >
-                Add Shipping Method
+                Checkout
               </button>
               <br />
             </div>
@@ -797,7 +797,7 @@ class Step7Container extends React.Component {
     return (
       <div className="container">
         <CulqiProvider
-          publicKey="pk_live_ssu1ZoKqgU7HQQqV"
+          publicKey="pk_test_6cZH0KR8piY52AOG"
           amount={(total + shippingPrice) * 100}
           title="HackPacking"
           currency="USD"
