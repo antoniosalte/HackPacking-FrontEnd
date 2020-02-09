@@ -1,4 +1,4 @@
-import { useUpdateCheckoutShippingAddress, useUserDetails } from "@sdk/react";
+import { useUpdateCheckoutShippingAddress, useUserDetails, useUpdateCheckoutBillingAddress } from "@sdk/react";
 import { History } from "history";
 import moment from "moment";
 import * as React from "react";
@@ -132,6 +132,7 @@ async function _onCreateCheckout(
   props,
   createCheckout,
   updateShippingAddress,
+  updateBillingAdress,
   update
 ) {
   if (user && !checkout) {
@@ -185,6 +186,25 @@ async function _onCreateCheckout(
           country: maybe(() => "PE", "PE") as CountryCode,
         },
       });
+      await updateBillingAdress[0]({
+        checkoutId: checkout.id,
+        billingAddress: {
+          firstName:
+            data.firstName,
+          lastName:
+          data.lastName,
+          streetAddress1:
+          data.streetAddress1,
+          phone: data.phone,
+          city: data.city,
+          postalCode:
+          data.postalCode,
+          country: maybe(
+            () => "PE",
+            "PE"
+          ) as CountryCode
+        }
+      });
       await update({
         shippingAsBilling: true,
       });
@@ -202,6 +222,7 @@ async function _onCreateCheckoutWithLastShipping(
   props,
   createCheckout,
   updateShippingAddress,
+  updateBillingAdress,
   update
 ) {
   if (user && !checkout) {
@@ -247,6 +268,19 @@ async function _onCreateCheckoutWithLastShipping(
               postalCode: shippingAddressLast.postalCode,
               streetAddress1: shippingAddressLast.streetAddress1,
             },
+            billingAddress: {
+              firstName: shippingAddressLast.firstName,
+              lastName: shippingAddressLast.lastName,
+              streetAddress1:
+              shippingAddressLast.streetAddress1,
+              city: shippingAddressLast.city,
+              phone: shippingAddressLast.phone,
+              postalCode: shippingAddressLast.postalCode,
+              country: maybe(
+                () => "PE",
+                "PE"
+              ) as CountryCode
+            }
           },
         },
       });
@@ -267,6 +301,25 @@ async function _onCreateCheckoutWithLastShipping(
           streetAddress1: shippingAddressLast.streetAddress1,
         },
       });
+      await updateBillingAdress[0]({
+        checkoutId: checkout.id,
+        billingAddress: {
+          firstName:
+            shippingAddressLast.firstName,
+          lastName:
+            shippingAddressLast.lastName,
+          streetAddress1:
+            shippingAddressLast.streetAddress1,
+          phone: shippingAddressLast.phone,
+          city: shippingAddressLast.city,
+          postalCode:
+            shippingAddressLast.postalCode,
+          country: maybe(
+            () => "PE",
+            "PE"
+          ) as CountryCode
+        }
+      });
       await update({
         shippingAsBilling: true,
       });
@@ -278,6 +331,7 @@ async function _onCreateCheckoutWithLastShipping(
 const Step7 = props => {
   const { data: user } = useUserDetails();
   const updateShippingAddress = useUpdateCheckoutShippingAddress();
+  const updateBillingAdress = useUpdateCheckoutBillingAddress();
   const { clear: clearCheckout } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
@@ -393,6 +447,7 @@ const Step7 = props => {
                                       props,
                                       createCheckout,
                                       updateShippingAddress,
+                                      updateBillingAdress,
                                       update
                                     )
                                   }
@@ -405,6 +460,7 @@ const Step7 = props => {
                                       props,
                                       createCheckout,
                                       updateShippingAddress,
+                                      updateBillingAdress,
                                       update
                                     )
                                   }
@@ -592,6 +648,7 @@ class Step7Container extends React.Component {
                   : "item-selected-shipping-last-gris"
               }
               onClick={() => props.onAddLastShipping(a.id)}
+              key={a.id}
             >
               <p style={{ margin: 0 }}>
                 {a.firstName}&nbsp;{a.lastName}
