@@ -61,7 +61,7 @@ class Wrapper extends React.Component {
   render() {
     const { data, title, subTitle, meta, cart, male } = this.props;
     const edges = data.products.edges.filter(x => this.filterProduct(x));
-    console.log('edges', edges);
+    /* console.log('edges', edges); */
     return (
       <MetaWrapper
         meta={{
