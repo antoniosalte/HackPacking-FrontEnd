@@ -111,6 +111,7 @@ class Step1 extends React.Component {
                       <option
                         value={city}
                         selected={this.props.data.step1.destination === city}
+                        key={city}
                       >
                         {city}
                       </option>
