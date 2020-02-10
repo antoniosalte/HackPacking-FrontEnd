@@ -12,28 +12,28 @@ import { useUserDetails } from "@sdk/react";
 const items = [
   {
     image: about1,
-    text: <h2>"Travel light"</h2>,
+    text: <h2>Travel light</h2>,
     description:
       "Forget about checking luggage, paying extra or waiting at the carrousel. Just get to the airport and board your plane.",
     position: "left",
   },
   {
     image: about2,
-    text: <h2>"Get only what you will use"</h2>,
+    text: <h2>Only get what you will use</h2>,
     description:
       "We will send T-shirts, shirts, pants and underwear with several sizes. Worn but proper and clean.",
     position: "right",
   },
   {
     image: about3,
-    text: <h2>"Receive everything on time"</h2>,
+    text: <h2>Receive everything on time</h2>,
     description:
       "Don’t worry about delays or lost luggage. Your clothes will be at your hotel when you arrive.",
     position: "left",
   },
   {
     image: about4,
-    text: <h2>"Save the environment"</h2>,
+    text: <h2>Save the environment</h2>,
     description:
       "Diminish your carbon footprint by not bringing your luggage with you.",
     position: "right",

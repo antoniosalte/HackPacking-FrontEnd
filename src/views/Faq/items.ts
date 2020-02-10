@@ -5,11 +5,11 @@ export const Items = [
     },
     {
         title:"What if the size I order does not fit me?",
-        description: "We know bodies change. We will send you additional sizes on each order until we are both completely sure that we know your correct dimensions.",
+        description: "We know bodies change. We will send you additional sizes on each order until we are both completely sure that we know your correct size.",
     },
     {
         title:"Do you have more variety of styles?",
-        description:"We think adding more choices will make you think too much. Currently we have a reduced number of colors and types of clothes but we will keep adding more in the future.",
+        description:"We think adding more choices will make you think too much. Currently we have a reduced number of colors and types of clothes but we may add more in the future.",
     },
     {
         title:"When will you add more cities?",
@@ -21,6 +21,6 @@ export const Items = [
     },
     {
         title:"I changed my plans, I will stay more days and need to add more clothes",
-        description:"Don’t worry, just send us an email and we will keep that in mind for your order.",
+        description:"Don’t worry, just send us an email and we will modify your order at your convenience.",
     },
 ]
