@@ -23,4 +23,8 @@ export const Items = [
         title:"I changed my plans, I will stay more days and need to add more clothes",
         description:"Don’t worry, just send us an email and we will modify your order at your convenience.",
     },
+    {
+        title:"I have problems ordering, there is an error on the site or I have a question that is not addressed in this FAQ",
+        description:"Do drop us a message by clicking in any of the social media buttons below and we will get back to you as soon as we can.",
+    },
 ]

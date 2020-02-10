@@ -23,6 +23,9 @@ import { Breadcrumbs, Loader } from "../../components";
 
 const returnTab: any = (path: string, userDetails, history) => {
   let tabContent = <></>;
+  if (!userDetails){
+    return tabContent;
+  }
   switch (path) {
     case accountUrl: {
       tabContent = <AccountTab />;
