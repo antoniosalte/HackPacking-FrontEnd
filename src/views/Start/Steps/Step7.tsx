@@ -603,6 +603,7 @@ class Step7Container extends React.Component {
     this.setState({phone})
   }
   onSubmit(data) {
+    // this is the submit button for a new address.
     let phone = this.state.phone;
     if (this.props.user) {
       this.setDisplayNewModal(false);
@@ -706,12 +707,12 @@ class Step7Container extends React.Component {
       </div>
     );
   }
-  NewAddressForm(props) {
+  NewAddressForm() {
     return (
       <ShippingAdressForm
-        hide={() => props.setDisplayNewModal(false)}
+        hide={() => this.setDisplayNewModal(false)}
         buttonText="Add Shipping Address"
-        onSubmit={data => props.onSubmit(data)}
+        onSubmit={data => this.onSubmit(data)}
         updatePhone={this.updatePhone}
         phone={this.state.phone}
         destination="Lima,Peru"
@@ -724,7 +725,7 @@ class Step7Container extends React.Component {
               padding: "0 20px",
             }}
           >
-            <span onClick={() => props.onNewShipping(false)}>&#8592;</span>
+            <span onClick={() => this.onNewShipping(false)}>&#8592;</span>
             Shipping Address
           </p>
           <br />
@@ -753,11 +754,7 @@ class Step7Container extends React.Component {
             setDisplayNewModal={this.setDisplayNewModal}
           />
         ) : (
-          <this.NewAddressForm
-            setDisplayNewModal={this.setDisplayNewModal}
-            onSubmit={this.onSubmit}
-            onNewShipping={this.onNewShipping}
-          />
+          <this.NewAddressForm/>
         )}
       </div>
     );
