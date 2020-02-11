@@ -20,6 +20,7 @@ import { TypedCompleteCheckoutMutation } from "../../../checkout/views/Review/qu
 import { completeCheckout } from "../../../checkout/views/Review/types/completeCheckout";
 import moment from "moment";
 import EditIcon from "../../../images/edit.svg";
+import DeleteIcon from "../../../images/garbage.svg";
 
 function proceedToBilling(data, update, token) {
   const canProceed = !data.checkoutShippingMethodUpdate.errors.length;
@@ -55,8 +56,9 @@ const completeCheckout = (
 };
 const ComponentCheckout = ({
   checkout,
-  onEditShipping,
-  onEditShippingMethod
+  onEditShipping,// este
+  onEditShippingMethod,
+  onDeleteCheckout
 }) => {
   const {
     shippingAddress: sA,
@@ -70,6 +72,16 @@ const ComponentCheckout = ({
         <img
           src={EditIcon}
           onClick={onEditShipping}
+          style={{
+            width: 16,
+            right: 50,
+            position: "absolute",
+            cursor: "pointer"
+          }}
+        />
+        <img
+          src={DeleteIcon}
+          onClick={onDeleteCheckout}
           style={{
             width: 16,
             right: 20,
@@ -186,6 +198,7 @@ const Step7 = props => {
                                   checkout={checkout}
                                   createCheckout={createCheckout}
                                   errors={errors}
+                                  checkoutLoading={ checkoutLoading }
                                   onPayment={async () => {
                                     const token = checkout.token.id;
                                     if (checkout && token) {
@@ -231,6 +244,11 @@ const Step7 = props => {
                                       console.log(
                                         "Payment cannot be created, invalid token"
                                       );
+                                    }
+                                  }}
+                                  onDeleteCheckout={async data => {
+                                    if (window.confirm("Do you really want to delete checkout?")) { 
+                                      await clearCheckout()
                                     }
                                   }}
                                   onCreateCheckout={async data => {
@@ -859,6 +877,7 @@ class Step7Container extends React.Component {
               <p style={{ color: "red", fontSize: 12 }}>{err.message}</p>
             ))}
           </div>
+
           {checkout && checkout.lines.length > 0 ? (
             <ComponentCheckout
               checkout={checkout}
@@ -870,14 +889,17 @@ class Step7Container extends React.Component {
                 this.setDisplayNewModal(true);
                 this.setContentModal("shippingmethod");
               }}
+              onDeleteCheckout={ this.props.onDeleteCheckout }
             />
           ) : null}
           <Culqi>
             {({ openCulqi, setAmount, amount }) => {
               return (
                 <div className="cnt-btn-checkout">
-                  {(checkout && checkout.lines.length > 0) ||
-                  (!checkout && cart.lines.length > 0) ? (
+                  {( (checkout && checkout.lines.length > 0) ||
+                  (!checkout && cart.lines.length > 0) &&
+                  !this.props.checkoutLoading ) ?
+                  (
                     <button
                       id="openculqi"
                       onClick={() => this.setCulqi(openCulqi, setAmount)}
