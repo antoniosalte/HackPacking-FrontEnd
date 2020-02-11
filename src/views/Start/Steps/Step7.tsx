@@ -6,7 +6,12 @@ import { AlertManager, useAlert } from "react-alert";
 import Modal from "../../../components/Modal";
 import ShippingAdressForm from "../../../components/ShippingAddressForm";
 import LoginForm from "../../../components/LoginForm";
-import { useUserDetails, useUpdateCheckoutShippingAddress, useUpdateCheckoutBillingAddress } from "@sdk/react";
+import {
+  useUserDetails,
+  useUpdateCheckoutShippingAddress,
+  useUpdateCheckoutBillingAddress,
+  useDeleteUserAddresss,
+} from "@sdk/react";
 import { TypedCreateCheckoutMutation } from "../../../checkout/queries";
 import { maybe } from "../../../core/utils";
 import { CheckoutContext } from "../../../checkout/context";
@@ -56,9 +61,8 @@ const completeCheckout = (
 };
 const ComponentCheckout = ({
   checkout,
-  onEditShipping,// este
+  onEditShipping,
   onEditShippingMethod,
-  onDeleteCheckout
 }) => {
   const {
     shippingAddress: sA,
@@ -75,16 +79,6 @@ const ComponentCheckout = ({
           style={{
             width: 16,
             right: 50,
-            position: "absolute",
-            cursor: "pointer"
-          }}
-        />
-        <img
-          src={DeleteIcon}
-          onClick={onDeleteCheckout}
-          style={{
-            width: 16,
-            right: 20,
             position: "absolute",
             cursor: "pointer"
           }}
@@ -140,6 +134,7 @@ const Step7 = props => {
   const { data: user } = useUserDetails();
   const updateShippingAddress = useUpdateCheckoutShippingAddress();
   const updateBillingAdress = useUpdateCheckoutBillingAddress();
+  const [ setDeleteUserAddress ] = useDeleteUserAddresss();
   const { clear: clearCheckout } = React.useContext(CheckoutContext);
   const alert = useAlert();
   const { clear: clearCart } = React.useContext(CartContext);
@@ -199,6 +194,7 @@ const Step7 = props => {
                                   createCheckout={createCheckout}
                                   errors={errors}
                                   checkoutLoading={ checkoutLoading }
+                                  setDeleteUserAddress={ setDeleteUserAddress }
                                   onPayment={async () => {
                                     const token = checkout.token.id;
                                     if (checkout && token) {
@@ -244,11 +240,6 @@ const Step7 = props => {
                                       console.log(
                                         "Payment cannot be created, invalid token"
                                       );
-                                    }
-                                  }}
-                                  onDeleteCheckout={async data => {
-                                    if (window.confirm("Do you really want to delete checkout?")) { 
-                                      await clearCheckout()
                                     }
                                   }}
                                   onCreateCheckout={async data => {
@@ -553,12 +544,6 @@ class Step7Container extends React.Component {
     this.onNewShipping = this.onNewShipping.bind(this);
     this.onAddLastShipping = this.onAddLastShipping.bind(this);
   }
-  componentDidUpdate() {
-    const { checkout } = this.props;
-    if (checkout && !checkout.shippingMethod) {
-      // this.props.onClick();
-    }
-  }
   async setCulqi(culqi, setAmount) {
     this.setState({
       culqi,
@@ -670,7 +655,22 @@ class Step7Container extends React.Component {
                       : "item-selected-shipping-last-gris"
                   }
                   onClick={() => this.onAddLastShipping(a.id)}
+                  style={{position: "relative"}}
                 >
+                <img
+                  src={DeleteIcon}
+                  onClick={ ()=>{
+                    if (window.confirm("Do you really want to delete address?")) { 
+                      this.props.setDeleteUserAddress({addressId: a.id})
+                    }
+                  }}
+                  style={{
+                    width: 16,
+                    right: 20,
+                    position: "absolute",
+                    cursor: "pointer"
+                  }}
+                />
                   <p style={{ margin: 0 }}>
                     {a.firstName}&nbsp;{a.lastName}
                   </p>
@@ -889,7 +889,6 @@ class Step7Container extends React.Component {
                 this.setDisplayNewModal(true);
                 this.setContentModal("shippingmethod");
               }}
-              onDeleteCheckout={ this.props.onDeleteCheckout }
             />
           ) : null}
           <Culqi>
