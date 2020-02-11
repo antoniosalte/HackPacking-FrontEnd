@@ -11,7 +11,7 @@ import "../About/styles.scss";
 const items = [
   {
     description:
-      "Let's keep it simple, like we already do with transportation, accommodation and food delivery. Now you can get basic clothing deliver to your hotel.",
+      "Let's keep it simple, like we already do with transportation, accommodation and food delivery. Now you can get basic clothing delivered to your hotel.",
     image: why1,
     position: "left",
     text: <h2>An outfit is just an outfit</h2>,

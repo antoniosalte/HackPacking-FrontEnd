@@ -161,7 +161,7 @@ class Step1 extends React.Component {
             </div>
           </div>
           <p style={{ fontWeight: "700", fontSize: 12 }}>
-            Important: Currently, the service is only available in Peru
+            Important: Currently, the service is only available for travelers (national and international) going to selected cities in Peru.
           </p>
 
           <br />

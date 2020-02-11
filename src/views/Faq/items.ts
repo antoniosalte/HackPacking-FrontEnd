@@ -13,7 +13,7 @@ export const Items = [
     },
     {
         title:"When will you add more cities?",
-        description:"As soon as possible. For now, we only have operations in Lima, Peru but we will reach other cities soon.",
+        description:"As soon as possible. For now, we only have operations in selected cities in Peru but we will reach other cities soon.",
     },
     {
         title:"I need to add more accessories to my order",
