@@ -9,10 +9,11 @@ import { maybe } from "../../../../core/utils";
 import { VariantList } from "../../../../views/Product/types/VariantList";
 
 const total = (variants, lines, locale) => {
-  if ( lines.length === variants.productVariants.edges.length ) {
-    return getTotal(variants, lines, locale)
-  } return "0.00"
-}
+  if (lines.length === variants.productVariants.edges.length) {
+    return getTotal(variants, lines, locale);
+  }
+  return "0.00";
+};
 
 const Subtotal: React.FC<{
   checkout: Checkout | null;
@@ -29,19 +30,26 @@ const Subtotal: React.FC<{
         <>
           <hr />
           <div
-          style={{display:"flex",
-          alignItems:"center",
-          flexDirection:"column",
-          }}>
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
             <br />
             <br />
             <p
-            style={{
-            margin: "5px 0",
-            }}>Sub Total:&nbsp; { checkout ?
-              <Money money={checkout.subtotalPrice.gross} />:
-              total(variants, lines, locale)
-            }</p>
+              style={{
+                margin: "5px 0",
+              }}
+            >
+              Sub Total:&nbsp;{" "}
+              {checkout ? (
+                <Money money={checkout.subtotalPrice.gross} />
+              ) : (
+                total(variants, lines, locale)
+              )}
+            </p>
           </div>
         </>
       );

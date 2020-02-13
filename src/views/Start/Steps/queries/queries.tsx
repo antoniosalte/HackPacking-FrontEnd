@@ -239,15 +239,17 @@ export const TypedStep7Query = TypedMutation<Checkout, {}>(Step7Query);
 
 // shipping
 export const ShippingAddressQuery = gql`
-query {
-  user(id:"VXNlcjo0Mw=="){
-    addresses{
-      id,
-      firstName,
-      phone
+  query {
+    user(id: "VXNlcjo0Mw==") {
+      addresses {
+        id
+        firstName
+        phone
+      }
     }
   }
-}
 `;
 
-export const TypedShippingAddressQuery = TypedQuery<Shipping, {}>(ShippingAddressQuery);
+export const TypedShippingAddressQuery = TypedQuery<Shipping, {}>(
+  ShippingAddressQuery
+);
