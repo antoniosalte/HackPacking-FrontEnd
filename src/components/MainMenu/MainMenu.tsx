@@ -2,7 +2,7 @@ import {
   mediumScreen,
 } from "../../globalStyles/scss/variables.scss";
 import "./scss/index.scss";
-import { useSignOut } from "@sdk/react";
+import { useSignOut, useUserDetails } from "@sdk/react";
 import * as React from "react";
 import Media from "react-media";
 import { Link } from "react-router-dom";
@@ -12,11 +12,16 @@ import { Trans } from "@lingui/react";
 import {
   OverlayContext,
   OverlayTheme,
-  OverlayType
+  OverlayType,
+  MenuDropdown,
+  Offline,
+  Online,
 } from "..";
 import {
   baseUrl,
+  accountUrl
 } from "../../routes";
+
 import { TypedMainMenuQuery } from "./queries";
 import hamburgerImg from "../../images/hamburger.svg";
 import logoImg from "../../images/hp-logo-svg.svg";
@@ -24,15 +29,6 @@ import iconuser from "../../images/hp-iconuser.png";
 import Modal from "../../components/Modal";
 import LoginForm from "../LoginForm";
 import RegisterForm from "../OverlayManager/Login/RegisterForm";
-import { useUserDetails } from "@sdk/react";
-import {
-  MenuDropdown,
-  Offline,
-  Online,
-} from "..";
-import {
-  accountUrl,
-} from "../../routes";
 
 const MainMenu: React.FC = () => {
   const [signOut] = useSignOut();

@@ -21,13 +21,13 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
     "green",
     "yellow",
     "pink",
-    "purple"
+    "purple",
   ];
-  var color = "white";
+  let color = "white";
 
   const split = name.split("/");
   split.forEach(element => {
-    var re = / /gi;
+    const re = / /gi;
     element = element.replace(re, "").toLowerCase();
     colors.forEach(element_color => {
       if (element_color === element) {
@@ -35,11 +35,13 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
       }
     });
   });
-  var width = window.innerWidth;
-  var show = width >= 500 ? true : false;
+  const width = window.innerWidth;
+  const show = width >= 500 ? true : false;
   return (
-    <tr key={id}  >
-      <td align="center" style={{ textAlign: "start" }}>{product.name}</td>
+    <tr key={id}>
+      <td align="center" style={{ textAlign: "start" }}>
+        {product.name}
+      </td>
       <td align="center" style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex" }}>
           <div
@@ -47,7 +49,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
             style={
               loading
                 ? {
-                    backgroundColor: "#84bd005c"
+                    backgroundColor: "#84bd005c",
                   }
                 : {}
             }
@@ -61,7 +63,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
             style={
               loading
                 ? {
-                    backgroundColor: "#84bd005c"
+                    backgroundColor: "#84bd005c",
                   }
                 : {}
             }
@@ -84,7 +86,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
             className="color-point"
             style={{
               backgroundColor: color,
-              margin: "0 auto"
+              margin: "0 auto",
             }}
           />
         </td>
@@ -119,8 +121,10 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
           </span>
         )}
       </td>
-      <td style={{ paddingLeft: 0, paddingRight: 0,textAlign: "end"}}>
-        <span>$ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}</span>
+      <td style={{ paddingLeft: 0, paddingRight: 0, textAlign: "end" }}>
+        <span>
+          $ {(Number(pricing.price.gross.amount) * Number(quantity)).toFixed(2)}
+        </span>
       </td>
       <td>
         <div
@@ -135,7 +139,7 @@ const Line: React.FC<Omit<LineI, "totalPrice">> = props => {
             width: 20,
             cursor: "pointer",
             height: 20,
-            fontSize: 10
+            fontSize: 10,
           }}
         >
           &#10005;

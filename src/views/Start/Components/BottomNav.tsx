@@ -1,63 +1,70 @@
 import * as React from "react";
-import "./bottom.scss";
 import Trip from "../../../images/hp-trip.svg";
 import TripGreen from "../../../images/TripInformation-green.png";
+
 import Upper from "../../../images/hp-upwear.svg";
 import UpperGreen from "../../../images/Upperwear-green.png";
+
 import Lower from "../../../images/hp-lower.svg";
 import LowerGreen from "../../../images/Lowerwear-green.png";
+
 import Under from "../../../images/hp-under.svg";
 import UnderGreen from "../../../images/Underwear-green.png";
+
 import Socks from "../../../images/hp-socks.svg";
 import SocksGreen from "../../../images/Socks-green.png";
-import Accesories from "../../../images/hp-accesories.svg";
+
 import AccesoriesGreen from "../../../images/Accesories-green.png";
+import Accesories from "../../../images/hp-accesories.svg";
+
 import Overview from "../../../images/hp-overview.svg";
 import OverviewBlack from "../../../images/Overview-black.png";
+
+import "./bottom.scss";
 
 const items = [
   {
     id: 1,
+    image: Trip,
+    imageGreen: TripGreen,
     title: "Trip Information",
     url: "trip-information",
-    image: Trip,
-    imageGreen: TripGreen
   },
   {
     id: 2,
+    image: Upper,
+    imageGreen: UpperGreen,
     title: "Upperwear",
     url: "upperwear",
-    image: Upper,
-    imageGreen: UpperGreen
   },
   {
     id: 3,
+    image: Lower,
+    imageGreen: LowerGreen,
     title: "Lowerwear",
     url: "lowerwear",
-    image: Lower,
-    imageGreen: LowerGreen
   },
   {
     id: 4,
+    image: Under,
+    imageGreen: UnderGreen,
     title: "Underwear",
     url: "underwear",
-    image: Under,
-    imageGreen: UnderGreen
   },
   {
     id: 5,
+    image: Socks,
+    imageGreen: SocksGreen,
     title: "Socks",
     url: "socks",
-    image: Socks,
-    imageGreen: SocksGreen
   },
   {
     id: 6,
+    image: Accesories,
+    imageGreen: AccesoriesGreen,
     title: "Accesories",
     url: "accesories",
-    image: Accesories,
-    imageGreen: AccesoriesGreen
-  }
+  },
 ];
 const BottomNav = props => {
   return (
@@ -73,12 +80,12 @@ const BottomNav = props => {
           >
             <div>
               <img
-                src={props.step == item.id ? item.imageGreen : item.image}
+                src={props.step === item.id ? item.imageGreen : item.image}
                 alt="icon"
               />
               <p
                 style={
-                  props.step == item.id
+                  props.step === item.id
                     ? { color: "#84BD00", fontWeight: 500 }
                     : {}
                 }
@@ -97,9 +104,9 @@ const BottomNav = props => {
         className="container-bottomnav__item-o"
       >
         <div>
-          <img src={props.step == 7 ? OverviewBlack : Overview} alt="icon" />
+          <img src={props.step === 7 ? OverviewBlack : Overview} alt="icon" />
           <p
-            style={props.step == 7 ? { color: "black", fontWeight: 500 } : {}}
+            style={props.step === 7 ? { color: "black", fontWeight: 500 } : {}}
           >
             Overview
           </p>

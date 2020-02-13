@@ -125,7 +125,7 @@ export const PasswordChangeForm: React.FC<{
                   disabled={isSubmitting || !isValid}
                   size="sm"
                   style={{
-                  height: 32
+                  height: 32,
                   }}
                 >
                   Save

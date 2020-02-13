@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { useUserDetails } from "@sdk/react";
 import { smallScreen } from "@styles/constants";
 import AddressBook from "../../account/AddressBook/AddressBook";
+import Footer from "../Home/Footer";
 
 import "./scss/index.scss";
 
@@ -13,7 +14,7 @@ import {
   addressBookUrl,
   baseUrl,
   orderHistoryUrl,
-  paymentOptionsUrl
+  paymentOptionsUrl,
 } from "../../routes";
 
 import { AccountMenu, AccountMenuMobile } from "@components/molecules";
@@ -22,6 +23,9 @@ import { Breadcrumbs, Loader } from "../../components";
 
 const returnTab: any = (path: string, userDetails, history) => {
   let tabContent = <></>;
+  if (!userDetails){
+    return tabContent;
+  }
   switch (path) {
     case accountUrl: {
       tabContent = <AccountTab />;
@@ -58,6 +62,7 @@ const Account: React.FC<RouteComponentProps> = ({ history, match }) => {
   }
 
   return (
+    <div style={{ backgroundColor: "#E5E5E5" }}>
     <div className="container">
       <Breadcrumbs breadcrumbs={[{ link: match.path, value: "My Account" }]} />
       <div className="account">
@@ -75,6 +80,8 @@ const Account: React.FC<RouteComponentProps> = ({ history, match }) => {
           {returnTab(match.path, user, history)}
         </div>
       </div>
+    </div>
+    <Footer user />
     </div>
   );
 };

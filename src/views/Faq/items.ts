@@ -5,15 +5,15 @@ export const Items = [
     },
     {
         title:"What if the size I order does not fit me?",
-        description: "We know bodies change. We will send you additional sizes on each order until we are both completely sure that we know your correct dimensions.",
+        description: "We know bodies change. We will send you additional sizes on each order until we are both completely sure that we know your correct size.",
     },
     {
         title:"Do you have more variety of styles?",
-        description:"We think adding more choices will make you think too much. Currently we have a reduced number of colors and types of clothes but we will keep adding more in the future.",
+        description:"We think adding more choices will make you think too much. Currently we have a reduced number of colors and types of clothes but we may add more in the future.",
     },
     {
         title:"When will you add more cities?",
-        description:"As soon as possible. For now, we only have operations in Lima, Peru but we will reach other cities soon.",
+        description:"As soon as possible. For now, we only have operations in selected cities in Peru but we will reach other cities soon.",
     },
     {
         title:"I need to add more accessories to my order",
@@ -21,6 +21,10 @@ export const Items = [
     },
     {
         title:"I changed my plans, I will stay more days and need to add more clothes",
-        description:"Don’t worry, just send us an email and we will keep that in mind for your order.",
+        description:"Don’t worry, just send us an email and we will modify your order at your convenience.",
+    },
+    {
+        title:"I have problems ordering, there is an error on the site or I have a question that is not addressed in this FAQ",
+        description:"Do drop us a message by clicking in any of the social media buttons below and we will get back to you as soon as we can.",
     },
 ]

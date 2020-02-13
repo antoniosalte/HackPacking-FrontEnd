@@ -13,7 +13,7 @@ import { CartInterface } from "../../components/CartProvider/context";
 import {
   extractCartLines,
   extractCheckoutLines,
-  getTotal
+  getTotal,
 } from "../../components/CartProvider/utils";
 import { OverlayContextInterface } from "../../components/Overlay/context";
 import { getShop_shop } from "../../components/ShopProvider/types/getShop";

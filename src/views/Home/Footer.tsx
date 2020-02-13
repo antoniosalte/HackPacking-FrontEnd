@@ -35,13 +35,14 @@ const Footer = props => {
             <div className="footer-c2__c1">
               <div className="column-f">
                 <p>Product</p>
-                {
-                  !props.user ?
+                {!props.user ? (
                   <>
                     <Link to="/login">Login</Link>
                     <Link to="/register">Register</Link>
-                  </> : <Link to="/account">My account</Link>
-                }
+                  </>
+                ) : (
+                  <Link to="/account">My account</Link>
+                )}
                 <Link to="/start?step=overview">Shopping cart</Link>
                 <Link to="/account">Status of your order</Link>
                 <Link to="/faq">Support</Link>
@@ -61,7 +62,7 @@ const Footer = props => {
                 >
                   <ReactSVG
                     svgStyle={{
-                      width: 42
+                      width: 42,
                     }}
                     path={FacebookIcon}
                   />
@@ -72,7 +73,7 @@ const Footer = props => {
                 >
                   <ReactSVG
                     svgStyle={{
-                      width: 42
+                      width: 42,
                     }}
                     path={InstagramIcon}
                   />
@@ -83,7 +84,7 @@ const Footer = props => {
                 >
                   <ReactSVG
                     svgStyle={{
-                      width: 42
+                      width: 42,
                     }}
                     path={WhatsappIcon}
                   />
@@ -91,7 +92,7 @@ const Footer = props => {
                 <a href="https://twitter.com/HackPacking_" target="_blank">
                   <ReactSVG
                     svgStyle={{
-                      width: 42
+                      width: 42,
                     }}
                     path={TwitterIcon}
                   />
